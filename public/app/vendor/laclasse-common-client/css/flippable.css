@@ -1,0 +1,31 @@
+.flippable {
+    perspective: 600px;
+    transform-origin: 50% 10%;
+}
+.flippable .front,
+.flippable .back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    transition: all 0.4s ease-in-out 0s;
+}
+.flippable .front {
+    transform: rotateY(0deg);
+    z-index: 900;
+}
+.flippable .back {
+    transform: rotateY(-179deg);
+    z-index: 800;
+}
+
+.flippable.show-back .front {
+    transform: rotateY(180deg);
+}
+.flippable.show-back .back {
+    transform: rotateY(0deg);
+    z-index: 1000;
+}

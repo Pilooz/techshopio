@@ -1,0 +1,47 @@
+# -*- coding: utf-8 -*-
+
+#
+# Configuration du Serveur d'Authentification Central CAS
+#
+module CASAUTH
+  CONFIG = {
+    host: 'v3dev.laclasse.com',
+    ssl: true,
+    port: 443,
+    disable_ssl_verification: true,
+    login_url: '/sso/login',
+    service_validate_url: '/sso/serviceValidate',
+    logout_url: '/sso/logout',
+    logout_saml_url: '/saml/saml2/idp/SingleLogoutService.php',
+    full_host: 'https://v3dev.laclasse.com', # Fixes OmniAuthCAS+Rack X-Forwarded-Proto crap
+    restmod_url: '/sso/api/v1/tickets'
+  }
+end
+
+#
+# Configuration du service d'annuaire de l'ENT
+#
+ANNUAIRE = {
+  url: 'https://v3dev.laclasse.com/api',
+  api_key: 'STARTBOX-key',
+  app_id: 'STARTBOX',
+  api_mode: 'v3'
+}
+
+
+module Configuration
+ APP_PREFIX = '/suivi'
+ GIT_COMMIT = ''
+ ENVIRONMENT = 'development'
+ LOGSTASH_SERVER=""
+ LOGSTASH_PORT=""
+end
+
+#
+# Configuration du service REDIS
+#
+REDIS = {
+  host: 'redis.dev.laclasse.lan',
+  port: 6379,
+  redis_root: 'com.laclasse.v3localhost'
+}

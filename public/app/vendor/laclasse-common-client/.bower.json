@@ -1,0 +1,18 @@
+{
+  "name": "laclasse-common-client",
+  "private": true,
+  "main": "css/main.css",
+  "ignore": [],
+  "dependencies": {},
+  "devDependencies": {},
+  "homepage": "https://github.com/laclasse-com/laclasse-common-client",
+  "_release": "f3c9c931fc",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "f3c9c931fcc3be716c87a53512a847d9c054250d"
+  },
+  "_source": "https://github.com/laclasse-com/laclasse-common-client.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/laclasse-com/laclasse-common-client.git"
+}

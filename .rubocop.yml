@@ -1,0 +1,30 @@
+#inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'config/**/*'
+    - 'public/**/*'
+    - 'spec/fixtures/**/*'
+    - Guardfile
+
+Style/SpaceInsideBrackets:
+  Enabled: false
+
+Style/SpaceInsideHashLiteralBraces:
+  Enabled: false
+
+Style/SpaceInsideParens:
+  Enabled: false
+
+Style/SpaceInsideRangeLiteral:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
+
+Metrics/ClassLength:
+  Max: 300
+
+Metrics/MethodLength:
+  Max: 200

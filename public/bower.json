@@ -1,0 +1,43 @@
+{
+  "name": "app",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "latest",
+    "json3": "latest",
+    "es5-shim": "latest",
+    "jquery": "latest",
+    "bootstrap": "latest",
+    "angular-resource": "latest",
+    "angular-cookies": "latest",
+    "angular-sanitize": "latest",
+    "angular-ui-router": "latest",
+    "angular-bootstrap": "latest",
+    "Font-Awesome": "latest",
+    "underscore": "latest",
+      "laclasse-common-client": "https://github.com/laclasse-com/laclasse-common-client.git#latest",
+    "angular-animate": "latest",
+    "ngAnimate": "latest",
+    "angular-i18n": "latest",
+    "ng-file-upload": "latest",
+    "ng-flow": "latest",
+      "angular-moment": "latest",
+    "ng-switcher": "*",
+      "angular-ui-sortable": "latest",
+      "angular-delay": "latest",
+    "ng-color-picker": "https://github.com/cycojesus/ng-color-picker.git#latest",
+      "angular-touch": "latest",
+      "angular-carousel": "latest",
+      "ngFitText": "latest",
+      "angular-konami": "latest",
+      "blockrain": "latest",
+      "angular-bootstrap-checkbox": "latest",
+      "angular-toastr": "latest"
+  },
+    "devDependencies": {
+	"angular-mocks": "latest",
+	"angular-scenario": "latest"
+    },
+    "resolutions": {
+	"angular": "~1.3"
+    }
+}

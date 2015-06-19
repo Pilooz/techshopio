@@ -1,0 +1,39 @@
+language: ruby
+rvm:
+  - "2.2.0"
+
+before_install:
+  - gem update --system
+  - gem --version
+  - gem install rspec
+
+before_script:
+  - cp ./config/options.sample ./config/options.rb
+  #- cp ./config/database.sample ./config/database.rb
+  - cp ./config/common.rb.sample ./config/common.rb
+
+  # - mysql -e 'create database suivi;'
+  # - mysql < ./db/scripts/suivi.sql
+
+script: 
+  - "bundle exec rspec"
+  - "bundle exec rubocop -D --format simple"
+
+gemfile:
+  - Gemfile
+
+services: 
+  - mysql
+  - redis-server
+
+branches:
+  only:   
+    - master
+    - develop
+
+notifications:
+  slack:
+    rooms:
+      - erasme:IWf0zN63Kuw5HgeJVwhnhxAC#laclassebeta
+    on_success: change
+    on_failure: change

@@ -1,0 +1,49 @@
+.floating-button {
+    position: absolute;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 1em;
+    box-shadow: 8px 5px 5px #16161d;
+    cursor: pointer;
+    font-size: 2em;
+    bottom: 1em;
+    z-index: 9999;
+}
+
+.floating-button.big {
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    right: 1em;
+}
+.floating-button.small {
+    height: 1.5em;
+    width: 1.5em;
+    line-height: 1.55em;
+    right: 1.25em;
+}
+
+.floating-button.toggle {
+    background-size: 70%;
+}
+.floating-button.toggle.off {
+    background-image: url('../images/icon_admin-outils-gris.svg');
+}
+
+.floating-button.toggle.on {
+    background-image: url('../images/icon_admin-outils-blancs.svg');
+
+}
+.floating-button.save {
+    background-image: url('../images/icon_admin-valider.svg');
+    bottom: 5.5em;
+}
+.floating-button.cancel {
+    background-image: url('../images/icon_admin-annuler.svg');
+    bottom: 3.5em;
+}
+.floating-button.action1 {
+    background-image: url('../images/icon_admin-ajouter.svg');
+    right: 3.5em;
+    bottom: 1.25em;
+}

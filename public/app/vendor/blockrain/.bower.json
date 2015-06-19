@@ -1,0 +1,42 @@
+{
+  "name": "blockrain",
+  "version": "0.1.0",
+  "description": "Add a game of tetris to your site",
+  "main": "dist/blockrain.jquery.min.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Aerolab/blockrain.js.git"
+  },
+  "license": "MIT",
+  "authors": [
+    "Aerolab <hey@aerolab.co>"
+  ],
+  "keywords": [
+    "tetris",
+    "blockrain",
+    "ui",
+    "game",
+    "jquery"
+  ],
+  "ignore": [
+    "assets",
+    "dist/blockrain.zip",
+    ".gitignore",
+    "Copyright",
+    "gulpfile.js",
+    "index.html",
+    "package.json",
+    "node_modules",
+    "bower_components"
+  ],
+  "homepage": "https://github.com/Aerolab/blockrain.js",
+  "_release": "0.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.0",
+    "commit": "b370d1d38cec0f5db8192c8a1573b0d0b1655ee9"
+  },
+  "_source": "git://github.com/Aerolab/blockrain.js.git",
+  "_target": "*",
+  "_originalSource": "blockrain"
+}

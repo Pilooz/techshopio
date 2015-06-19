@@ -1,0 +1,8 @@
+Comment ça marche ?
+===================
+
+Ajoutez
+<pre>
+	"laclasse-common-client": "https://github.com/laclasse-com/laclasse-common-client.git#latest"
+</pre>
+dans le bower.json du projet
