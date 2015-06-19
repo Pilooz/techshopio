@@ -26,4 +26,13 @@ class SinatraApp < Sinatra::Base
           <pre>
           </pre><hr>"
   end
+
+  get APP_PATH + '/out' do
+    erb :out
+  end
+
+  get APP_PATH + '/in' do
+    erb :in
+  end
+
 end

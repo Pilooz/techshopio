@@ -29,7 +29,7 @@ group :development do
   gem 'logger'
 end
 
-group :test do
+group :development, :test do
   gem 'coveralls'
   gem 'rack-test'
   gem 'simplecov'
