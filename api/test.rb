@@ -6,4 +6,8 @@ class TestApi < Grape::API
   get '/' do
     { message: 'Hello Word !' }
   end
+
+  get '/status' do
+    { status: 'OK', reason: "L'application fonctionne ! " }
+  end
 end
