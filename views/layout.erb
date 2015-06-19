@@ -12,7 +12,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
 
-  <title>Shopio</title>
+  <title>TechShopIO</title>
 
   <script type="text/javascript">
    if ( top != self ) top.location.replace( location );
@@ -36,25 +36,53 @@
 
     <body>
 
-    <div class="container">
-
-      <!-- Static navbar -->
-      <div class="navbar navbar-default" role="navigation">
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">ShopIO - La solution simplissime de gestion de techshop de mix</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Project name</a>
         </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
+    </nav>
 
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="col-md-12" style="background-color:#E7E7E7;">
-        <%= yield %>
+    <!-- Begin page content -->
+    <div class="container">
+      <div class="page-header">
+        <h1><%=@main_title%></h1>
       </div>
+        <%= yield %>
+    </div>
 
-    </div> <!-- /container -->
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Place sticky footer content here.</p>
+      </div>
+    </footer>
 
 
   <!-- Bootstrap core JavaScript
@@ -62,30 +90,7 @@
   <!-- Placed at the end of the document so the pages load faster -->
       <script src="<%= APP_PATH %>/app/vendor/jquery/dist/jquery.min.js?v=<%=APP_VERSION%>"></script>
       <script src="<%= APP_PATH %>/app/vendor/jquery-ui/jquery-ui.min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/underscore/underscore-min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/ng-file-upload/angular-file-upload-shim.min.js?v=<%=APP_VERSION%>"></script>
       <script src="<%= APP_PATH %>/app/vendor/moment/moment.js?v=<%=APP_VERSION%>"></script>
       <script src="<%= APP_PATH %>/app/vendor/moment/locale/fr.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/blockrain/dist/blockrain.jquery.min.js?v=<%=APP_VERSION%>"></script>
-
-      <script src="<%= APP_PATH %>/app/vendor/angular/angular.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/angular-i18n/angular-locale_fr-fr.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/angular-resource/angular-resource.min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/angular-touch/angular-touch.min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/angular-ui-router/release/angular-ui-router.min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/angular-animate/angular-animate.min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/ng-file-upload/angular-file-upload.min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/ng-flow/dist/ng-flow-standalone.min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/angular-moment/angular-moment.min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/ng-switcher/dist/ng-switcher.min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/angular-ui-sortable/sortable.min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/angular-delay/build/angular-delay.min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/ng-color-picker/color-picker.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/angular-carousel/dist/angular-carousel.min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/ngFitText/src/ng-FitText.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/angular-konami/angular-konami.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/angular-toastr/dist/angular-toastr.tpls.min.js?v=<%=APP_VERSION%>"></script>
     </body>
 </html>

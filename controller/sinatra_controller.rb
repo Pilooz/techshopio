@@ -18,13 +18,13 @@ class SinatraApp < Sinatra::Base
     # dont_reload '/path/to/other/file'
   end
 
+  helpers do
+
+  end
+
   get APP_PATH + '/' do
-      erb "<h4>Hello world !</h4>
-          Test d'Api Grape :
-          <a href='#{APP_PATH}/api/test'>Api simple</a>
-          Test du status : <a href='#{APP_PATH}/api/status'>Status</a>
-          <pre>
-          </pre><hr>"
+    @main_title = 'Bienvenue sur TechShopIO'
+    erb :index
   end
 
   get APP_PATH + '/out' do
