@@ -19,11 +19,15 @@ class SinatraApp < Sinatra::Base
   end
 
   helpers do
+    # Text Translation function
+    def _t(s)
+      TRANSLATE[s][APP_LANG]
+    end
 
   end
 
-  get APP_PATH + '/' do
-    @main_title = 'Bienvenue sur TechShopIO'
+  get APP_PATH + '/?' do
+    @main_title = _t 'Welcome on TechShopIO !'
     erb :index
   end
 
