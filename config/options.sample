@@ -13,3 +13,6 @@ APP_VERSION = '1.0.0'
 
 # Langage de l'application
 APP_LANG = :fr
+
+# Nom de la base SQLite.
+DB_FILENAME = APP_ROOT + '/db/files/test.db'

@@ -19,6 +19,8 @@ puts '----------> configs <----------'
 require __dir__('config/init')
 puts '----------> helpers <----------'
 require __dir__('helpers/init')
+puts '----------> libs <----------'
+require __dir__('lib/init')
 puts '----------> api <--------------'
 require __dir__('api/init')
 puts '----------> controllers <------'
