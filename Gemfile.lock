@@ -16,7 +16,6 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.3.8)
     akami (1.3.0)
       gyoku (>= 0.4.0)
       nokogiri
@@ -123,13 +122,6 @@ GEM
     notiffany (0.0.6)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    omniauth (1.2.2)
-      hashie (>= 1.2, < 4)
-      rack (~> 1.0)
-    omniauth-cas (1.1.0)
-      addressable (~> 2.3)
-      nokogiri (~> 1.5)
-      omniauth (~> 1.2.0)
     parser (2.2.2.2)
       ast (>= 1.1, < 3.0)
     powerpack (0.1.1)
@@ -254,8 +246,6 @@ DEPENDENCIES
   logger
   mysql2
   nokogiri
-  omniauth
-  omniauth-cas
   pry
   puma
   rack
