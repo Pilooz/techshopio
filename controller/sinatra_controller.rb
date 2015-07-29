@@ -21,21 +21,34 @@ class SinatraApp < Sinatra::Base
   helpers do
     # Text Translation function
     def _t(s)
-      TRANSLATE[s][APP_LANG]
+      if !TRANSLATE[s].nil?
+        s = TRANSLATE[s][APP_LANG]
+      end
+      s
     end
+  end
 
+  before do
+    @nav_list = ""
+    @nav_in = ""
+    @nav_out = ""
   end
 
   get APP_PATH + '/?' do
     @main_title = _t 'Welcome on TechShopIO !'
+    @nav_list = "active"
     erb :index
   end
 
   get APP_PATH + '/out' do
+    @main_title = _t 'Outing stuff'
+    @nav_out = "active"
     erb :out
   end
 
   get APP_PATH + '/in' do
+    @main_title = _t 'Bringing back stuff in TechShop'
+    @nav_in = "active"
     erb :in
   end
 
