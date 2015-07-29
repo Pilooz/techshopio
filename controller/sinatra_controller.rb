@@ -29,14 +29,12 @@ class SinatraApp < Sinatra::Base
   end
 
   before do
-    @nav_list = ""
     @nav_in = ""
     @nav_out = ""
   end
 
   get APP_PATH + '/?' do
     @main_title = _t 'Welcome on TechShopIO !'
-    @nav_list = 'active'
     @placeholder =  _t 'type or scan reference'
     erb :index
   end
