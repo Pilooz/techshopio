@@ -29,6 +29,7 @@ class SinatraApp < Sinatra::Base
   before do
     @nav_in = ''
     @nav_out = ''
+    @nav_barcode = ''
     @code = params['code']
   end
 
@@ -71,5 +72,11 @@ class SinatraApp < Sinatra::Base
     @main_title = _t 'Adding stuff in TechShop'
     @nav_new = 'active'
     erb :new
+  end
+
+  get APP_PATH + '/barcode?' do
+    @main_title = _t 'Generate barecodes'
+    @nav_barcode = 'active'
+    erb :barcode
   end
 end

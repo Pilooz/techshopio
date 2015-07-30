@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-  <meta charset="utf-8">
-  <meta http-equiv="content-language" content="fr">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portail Laclasse.com">
-  <meta name="author" content="">
-  <link rel="shortcut icon" href="img/favicon.png">
+      <meta charset="utf-8">
+      <meta http-equiv="content-language" content="fr">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="Portail Laclasse.com">
+      <meta name="author" content="">
+      <link rel="shortcut icon" href="img/favicon.png">
 
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="mobile-web-app-capable" content="yes">
 
-  <title>TechShopIO</title>
+      <title>TechShopIO</title>
 
-  <script type="text/javascript">
-   if ( top != self ) top.location.replace( location );
-  </script>
+      <script type="text/javascript">
+       if ( top != self ) top.location.replace( location );
+      </script>
 
-  <link href="<%= APP_PATH %>/app/vendor/bootstrap/dist/css/bootstrap.min.css?v=<%=APP_VERSION%>" rel="stylesheet" />
-  <link href="<%= APP_PATH %>/app/vendor/Font-Awesome/css/font-awesome.min.css?v=<%=APP_VERSION%>" rel="stylesheet" />
+      <link href="<%= APP_PATH %>/app/vendor/bootstrap/dist/css/bootstrap.min.css?v=<%=APP_VERSION%>" rel="stylesheet" />
+      <link href="<%= APP_PATH %>/app/vendor/Font-Awesome/css/font-awesome.min.css?v=<%=APP_VERSION%>" rel="stylesheet" />
 
-  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-  <![endif]-->
+      <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
+
+      <script src="<%= APP_PATH %>/app/vendor/jquery/dist/jquery.min.js?v=<%=APP_VERSION%>"></script>
+      <script src="<%= APP_PATH %>/app/vendor/jquery-ui/jquery-ui.min.js?v=<%=APP_VERSION%>"></script>
     </head>
 
     <body>
@@ -46,6 +49,7 @@
           <ul class="nav navbar-nav">
             <li class="<%=@nav_in %>"><a href="<%= APP_PATH %>/in"><%= _t('In') %></a></li>
             <li class="<%=@nav_out %>"><a href="<%= APP_PATH %>/out"><%= _t('Out') %></a></li>
+            <li class="<%=@nav_barcode %>"><a href="<%= APP_PATH %>/barcode"><%= _t('Barcodes') %></a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -66,6 +70,7 @@
           <h1 class="page-header"><%=@main_title%></h1>
         </div>
 
+<% if @nav_barcode.empty? %>
         <div class="row">
           <div class="col-md-4 col-md-offset-2">
             <form method="get">
@@ -73,7 +78,7 @@
                 <span class="input-group-addon" id="code">
                   <span class="glyphicon glyphicon-barcode"></span>
                 </span>
-                <input type="text" class="form-control" name="code" placeholder="<%=@placeholder %>" aria-describedby="code" value="<%=@code %>" size="30">
+                <input type="text" class="form-control" name="code" placeholder="<%=@placeholder %>" aria-describedby="code" value="<%=@code %>">
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button">Go!</button>
                 </span>
@@ -81,7 +86,7 @@
               </form>
           </div>
         </div>
-
+<% end %>
         <div class="row">
           <%= yield %>
         </div>
@@ -97,8 +102,6 @@
   <!-- Bootstrap core JavaScript
       ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
-      <script src="<%= APP_PATH %>/app/vendor/jquery/dist/jquery.min.js?v=<%=APP_VERSION%>"></script>
-      <script src="<%= APP_PATH %>/app/vendor/jquery-ui/jquery-ui.min.js?v=<%=APP_VERSION%>"></script>
       <script src="<%= APP_PATH %>/app/vendor/moment/moment.js?v=<%=APP_VERSION%>"></script>
       <script src="<%= APP_PATH %>/app/vendor/moment/locale/fr.js?v=<%=APP_VERSION%>"></script>
     </body>

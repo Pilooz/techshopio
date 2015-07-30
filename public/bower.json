@@ -6,6 +6,7 @@
     "json3": "latest",
     "es5-shim": "latest",
     "jquery": "latest",
-    "bootstrap": "latest"
+    "bootstrap": "latest",
+    "jquery-barcode": "latest"
   }
  }

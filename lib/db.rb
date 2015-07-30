@@ -6,7 +6,7 @@ class Db
   attr_accessor :db
   def initialize
     @db = SQLite3::Database.new DB_FILENAME
-    create_scheme
+    #create_scheme
   end
 
   # Create a table
