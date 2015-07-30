@@ -21,6 +21,10 @@ class SinatraApp < Sinatra::Base
   helpers do
     # Text Translation function
     def _t(s)
+      if TRANSLATE[s].nil?
+        s = "@@-- #{s} --@@"
+        return s
+      end
       s = TRANSLATE[s][APP_LANG] unless TRANSLATE[s].nil?
       s
     end
