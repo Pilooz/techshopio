@@ -34,7 +34,7 @@ class SinatraApp < Sinatra::Base
 
   get APP_PATH + '/?' do
     # @code = params['code']
-    unless @code.nil?
+    unless @code.nil? || @code.empty?
       puts "========> #{DB.exists? @code}"
       # See where we have to go now... don't exists => In, else Out
       if !DB.exists? @code
