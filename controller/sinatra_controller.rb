@@ -21,34 +21,55 @@ class SinatraApp < Sinatra::Base
   helpers do
     # Text Translation function
     def _t(s)
-      if !TRANSLATE[s].nil?
-        s = TRANSLATE[s][APP_LANG]
-      end
+      s = TRANSLATE[s][APP_LANG] unless TRANSLATE[s].nil?
       s
     end
   end
 
   before do
-    @nav_in = ""
-    @nav_out = ""
+    @nav_in = ''
+    @nav_out = ''
+    @code = params['code']
   end
 
   get APP_PATH + '/?' do
+    # @code = params['code']
+    unless @code.nil?
+      puts "========> #{DB.exists? @code}"
+      # See where we have to go now... don't exists => In, else Out
+      if !DB.exists? @code
+        # Item doesn't exist in inventory, add it.
+        redirect to APP_PATH + "/new?code=#{@code}"
+      else
+        # Item exist, if it was out, then check-in
+        if DB.checkout?(@code)
+          redirect to APP_PATH + "/in?code=#{@code}"
+        else
+          # If it is allready in, propose to modify it or checkout it
+          redirect to APP_PATH + "/out?code=#{@code}"
+        end
+      end
+    end
     @main_title = _t 'Welcome on TechShopIO !'
     @placeholder =  _t 'type or scan reference'
     erb :index
   end
 
-  get APP_PATH + '/out' do
+  get APP_PATH + '/out?' do
     @main_title = _t 'Outing stuff'
     @nav_out = 'active'
     erb :out
   end
 
-  get APP_PATH + '/in' do
-    @main_title = _t 'Bringing back stuff in TechShop'
+  get APP_PATH + '/in?' do
+    @main_title = _t 'Check-in stuff in TechShop'
     @nav_in = 'active'
     erb :in
   end
 
+  get APP_PATH + '/new?' do
+    @main_title = _t 'Adding stuff in TechShop'
+    @nav_new = 'active'
+    erb :new
+  end
 end
