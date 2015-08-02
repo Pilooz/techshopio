@@ -3,8 +3,13 @@
 	display: none;
 }
 
-#barcodeTarget,  #canvasTarget {
+#barcodeTarget, #canvasTarget {
 	margin-top: 20px;
+}
+
+#barcodeTarget .gen {
+	float:left;
+	margin-bottom: 10px;
 }
 </style>
 
@@ -12,7 +17,8 @@
 <script type="text/javascript">
 
   function generateBarcode(){
-    var value = $("#barcodeValue").val();
+    var value = $("#barcodeValueFrom").val();
+    var value2 = $("#barcodeValueTo").val();
     var btype = $("input[name=btype]:checked").val();
     var renderer = 'css'; // $("input[name=renderer]:checked").val();
     
@@ -35,10 +41,25 @@
     if ($("#rectangular").is(':checked') || $("#rectangular").attr('checked')){
       value = {code:value, rect: true};
     }
-	$("#canvasTarget").hide();
-	$("#barcodeTarget").html("").show().barcode(value, btype, settings);
+ 	if (checkValues(value, value2)) {
+
+		$("#canvasTarget").hide();
+		$("#barcodeTarget").html("").show();
+		// Creates divs
+ 		for ( var v = value; v <= value2; v++ ) {
+ 			$("#barcodeTarget").append("<div id='code-"+ v +"' class='gen'>"+ v +"</div>");
+ 			$("#code-" + v ).barcode( "" + v, btype, settings);
+		}
+ 	} else {
+ 		alert('Please check values. Only Numeric are allowed for the moment...');
+ 	}
   }
-      
+    
+  function checkValues(v1, v2) {
+  	if (v2 >= v1) return true;
+  	return false;
+  } 
+
   function showConfig1D(){
     $('.barcode1D').show();
     $('.barcode2D').hide();
@@ -147,12 +168,12 @@
 		        <span class="input-group-addon" id="codefrom">
 		        	<%= _t 'From' %> : 
 		        </span>
-		        <input type="text" class="form-control" id="barcodeValue" name="barcodeValue" placeholder="<%=@placeholder %>" aria-describedby="barcodeValue" value="">
+		        <input type="text" class="form-control" id="barcodeValueFrom" name="barcodeValueFrom" placeholder="<%=@placeholder %>" aria-describedby="barcodeValueFrom" value="1">
 
 		        <span class="input-group-addon" id="codeto">
 		        	<%= _t 'To' %> : 
 		        </span>
-		        <input type="text" class="form-control" name="codeto" placeholder="<%=@placeholder %>" aria-describedby="codeto" value="">
+		        <input type="text" class="form-control" id="barcodeValueTo" name="barcodeValueTo" placeholder="<%=@placeholder %>" aria-describedby="barcodeValueTo" value="4">
 		        <span class="input-group-btn">
 		          <button class="btn btn-primary" type="button" onclick="generateBarcode();"><%= _t 'Generate !' %></button>
 		        </span>
@@ -165,7 +186,7 @@
 </div>
 
 <div clas="row">
-	<div class="col-md-12 col-md-offset-2">
+	<div class="col-md-9 col-md-offset-2">
 		<div id="barcodeTarget" class="barcodeTarget"></div>
 		<canvas id="canvasTarget" width="150" height="150"></canvas>
 	</div>
