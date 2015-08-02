@@ -17,8 +17,9 @@
 <script type="text/javascript">
 
   function generateBarcode(){
+  	var radical = $("#barcodeValueRadical").val();
     var value = $("#barcodeValueFrom").val();
-    var value2 = $("#barcodeValueTo").val();
+    var value2 = $("#barcodeValueTo").val() == "" ? value : $("#barcodeValueTo").val();
     var btype = $("input[name=btype]:checked").val();
     var renderer = 'css'; // $("input[name=renderer]:checked").val();
     
@@ -41,23 +42,30 @@
     if ($("#rectangular").is(':checked') || $("#rectangular").attr('checked')){
       value = {code:value, rect: true};
     }
- 	if (checkValues(value, value2)) {
+
+    // Verify if values are numbers
+ 	if (checkOrder(value, value2)) {
 
 		$("#canvasTarget").hide();
 		$("#barcodeTarget").html("").show();
 		// Creates divs
  		for ( var v = value; v <= value2; v++ ) {
  			$("#barcodeTarget").append("<div id='code-"+ v +"' class='gen'>"+ v +"</div>");
- 			$("#code-" + v ).barcode( "" + v, btype, settings);
+ 			$("#code-" + v ).barcode( "" + radical + v, btype, settings);
 		}
  	} else {
- 		alert('Please check values. Only Numeric are allowed for the moment...');
+ 		
  	}
   }
-    
-  function checkValues(v1, v2) {
+  
+  function checkOrder(v1, v2) {
+  	v1 = v1 =="" ? 0 : v1;
+  	v2 = v2 =="" ? 0 : v2;
   	if (v2 >= v1) return true;
-  	return false;
+  	else {
+  		alert("<%= _t 'Please check values. You should put numeric values in order to generate several barcodes.' %>");
+  		return false;
+  	}
   } 
 
   function showConfig1D(){
@@ -161,19 +169,24 @@
 <div clas="row">
 	<div class="col-md-12 col-md-offset-2">
 		<div class="row">
-		  <div class="col-md-4">
+		  <div class="col-md-6">
 		    <form method="get">
 
 		      <div class="input-group input-group-ld">
+		        <span class="input-group-addon" id="codefradical">
+		        	<%= _t 'Radical' %> : 
+		        </span>
+		        <input type="text" class="form-control" id="barcodeValueRadical" name="barcodeValueRadical" placeholder="<%=_t "Used on every barcode" %>" aria-describedby="barcodeValueRadical" value="">
+
 		        <span class="input-group-addon" id="codefrom">
 		        	<%= _t 'From' %> : 
 		        </span>
-		        <input type="text" class="form-control" id="barcodeValueFrom" name="barcodeValueFrom" placeholder="<%=@placeholder %>" aria-describedby="barcodeValueFrom" value="1">
+		        <input type="text" class="form-control" id="barcodeValueFrom" name="barcodeValueFrom" placeholder="<%=@placeholder %>" aria-describedby="barcodeValueFrom" value="">
 
 		        <span class="input-group-addon" id="codeto">
 		        	<%= _t 'To' %> : 
 		        </span>
-		        <input type="text" class="form-control" id="barcodeValueTo" name="barcodeValueTo" placeholder="<%=@placeholder %>" aria-describedby="barcodeValueTo" value="4">
+		        <input type="text" class="form-control" id="barcodeValueTo" name="barcodeValueTo" placeholder="<%=@placeholder %>" aria-describedby="barcodeValueTo" value="">
 		        <span class="input-group-btn">
 		          <button class="btn btn-primary" type="button" onclick="generateBarcode();"><%= _t 'Generate !' %></button>
 		        </span>
