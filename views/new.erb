@@ -1,3 +1,102 @@
-<div class="col-md-12 col-md-offset-2">
-new Item
+<style>
+.input-group {
+	margin-bottom:10px;
+}
+
+</style>
+<div class="col-md-5 col-md-offset-1">
+    <form method="post" action="<%=APP_PATH + '/new?' %>">
+    <div class="well">
+		<div class="input-group">
+		  <span class="input-group-addon input-group-lg" id="basic-addon0"><span class="glyphicon glyphicon-barcode"></span></span>
+		  <input type="text" class="form-control" id="code" name="code" placeholder="<%= _t 'Code' %>" aria-describedby="basic-addon0" value="<%= @code %>">
+		</div>
+
+		<div class="input-group">
+		  <span class="input-group-addon input-group-lg" id="basic-addon1"><span class="glyphicon glyphicon-bookmark"></span></span>
+		  <input type="text" class="form-control" id="name" name="name" placeholder="<%= _t 'Name' %>" aria-describedby="basic-addon1">
+		</div>
+
+		<div class="input-group">
+		  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-list-alt"></span></span>
+		  <textarea class="form-control" id="desc" name="desc" placeholder="<%= _t 'description' %>" aria-describedby="basic-addon2" rows="3"></textarea>
+		</div>
+
+		<div class="input-group">
+		  <span class="input-group-addon input-group-lg" id="basic-addon3"><span class="glyphicon glyphicon-picture"></span></span>
+		  <input type="file" class="form-control" id="imagelink" name="imagelink" placeholder="<%= _t 'Take or upload a picture' %>" aria-describedby="basic-addon3">
+          <span class="input-group-btn">
+			  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-camera"></span></button>
+		  </span>
+
+		</div>
+
+		<div class="input-group">
+			<span class="input-group-addon input-group-lg" id="basic-addon5"><span class="glyphicon glyphicon-export"></span></span>
+			<div class="form-control">
+				<label class="radio-inline">
+				  <input type="radio" name="checkout" id="checkoutY" value="true" aria-describedby="basic-addon5"> <%= _t 'yes' %>
+				</label>
+				<label class="radio-inline">
+				  <input type="radio" name="checkout" id="checkoutN" value="false" checked> <%= _t 'no' %>
+				</label>
+			</div>
+		</div>
+
+		<div class="input-group">
+		  <span class="input-group-addon input-group-lg" id="basic-addon6"><span class="glyphicon glyphicon-tags"></span></span>
+		  <input type="text" class="form-control" id="tags" name="tags" placeholder="<%= _t 'Tags (comma separated)' %>" aria-describedby="basic-addon6">
+		</div>
+
+		<button type="button" class="btn btn-default"><%= _t 'Cancel' %></button>
+		<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus">&nbsp;<%= _t 'Add' %></button>
+	</div>
+	</form>
+</div>
+<div class="col-md-5">
+	<div class="well">
+		<ul class="list-group">
+			<li class="list-group-item">
+				<span class="glyphicon glyphicon-barcode"></span>&nbsp;
+				<%= _h 'help-new-barcode' %>
+			</li>
+			<li class="list-group-item">
+				<span class="glyphicon glyphicon-bookmark"></span>&nbsp;
+				<%= _h 'help-new-bookmark' %>
+			</li>
+			<li class="list-group-item">
+				<span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+				<%= _h 'help-new-list-alt' %>
+			</li>
+			<li class="list-group-item">
+				<span class="glyphicon glyphicon-picture"></span>&nbsp;
+				<%= _h 'help-new-picture' %>
+			</li>
+			<li class="list-group-item">
+				<span class="glyphicon glyphicon-camera"></span>&nbsp;
+				<%= _h 'help-new-camera' %>
+			</li>
+			<li class="list-group-item">
+				<span class="glyphicon glyphicon-export"></span>&nbsp;
+				<%= _h 'help-new-export' %>
+			</li>
+			<li class="list-group-item">
+				<span class="glyphicon glyphicon-tags"></span>&nbsp;
+				<%= _h 'help-new-tags' %>
+			</li>
+			<li class="list-group-item">
+				<span class="glyphicon glyphicon-plus"></span>&nbsp;
+				<%= _h 'help-new-plus' %>
+			</li>
+		</ul>
+
+		<pre>
+	  		code varchar(50),
+	        name varchar(255),
+	        description varchar(2000),
+	        image_link varchar2(2000),
+	        checkout boolean default false,
+	        tags varchar2(2000)
+		</pre>
+	</div>
 </div>

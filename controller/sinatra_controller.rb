@@ -28,11 +28,22 @@ class SinatraApp < Sinatra::Base
       s = TRANSLATE[s][APP_LANG] unless TRANSLATE[s].nil?
       s
     end
+
+    # Help Translation function
+    def _h(s)
+      if HELP[s].nil?
+        s = "@@-- #{s} --@@"
+        return s
+      end
+      s = HELP[s][APP_LANG] unless HELP[s].nil?
+      s
+    end
   end
 
   before do
     @nav_in = ''
     @nav_out = ''
+    @nav_new = ''
     @nav_barcode = ''
     @code = params['code']
   end
