@@ -176,17 +176,17 @@
 		        <span class="input-group-addon" id="codefradical">
 		        	<%= _t 'Radical' %> : 
 		        </span>
-		        <input type="text" class="form-control" id="barcodeValueRadical" name="barcodeValueRadical" placeholder="<%=_t "Used on every barcode" %>" aria-describedby="barcodeValueRadical" value="">
+		        <input type="text" class="form-control" id="barcodeValueRadical" name="barcodeValueRadical" placeholder="<%=_t "Used on every barcode" %>" aria-describedby="barcodeValueRadical" value="<%= @radical %>">
 
 		        <span class="input-group-addon" id="codefrom">
 		        	<%= _t 'From' %> : 
 		        </span>
-		        <input type="text" class="form-control" id="barcodeValueFrom" name="barcodeValueFrom" placeholder="<%=@placeholder %>" aria-describedby="barcodeValueFrom" value="">
+		        <input type="text" class="form-control" id="barcodeValueFrom" name="barcodeValueFrom" placeholder="<%=@placeholder %>" aria-describedby="barcodeValueFrom" value="<%= @from %>">
 
 		        <span class="input-group-addon" id="codeto">
 		        	<%= _t 'To' %> : 
 		        </span>
-		        <input type="text" class="form-control" id="barcodeValueTo" name="barcodeValueTo" placeholder="<%=@placeholder %>" aria-describedby="barcodeValueTo" value="">
+		        <input type="text" class="form-control" id="barcodeValueTo" name="barcodeValueTo" placeholder="<%=@placeholder %>" aria-describedby="barcodeValueTo" value="<%= @to %>">
 		        <span class="input-group-btn">
 		          <button class="btn btn-primary" type="button" onclick="generateBarcode();"><%= _t 'Generate !' %></button>
 		        </span>

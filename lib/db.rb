@@ -5,8 +5,16 @@ require 'sqlite3'
 class Db
   attr_accessor :db
   def initialize
-    @db = SQLite3::Database.new DB_FILENAME
-    #create_scheme
+    # begin
+      @db = SQLite3::Database.new DB_FILENAME
+      @db.results_as_hash = true
+    # rescue SQLite3::Exception => e 
+    #     puts "Exception occurred"
+    #     puts e
+    # ensure
+    #   @db.close if @db
+    # end
+    # create_scheme
   end
 
   # Create a table
@@ -76,6 +84,15 @@ class Db
   # Delete all tags
   def delete_tags(code)
     @db.execute "update items set tags = '' where code = '?'", code
+  end
+
+  # Get the highest id from db
+  def lastid
+    r = @db.get_first_row 'select max(code) as max from items'
+    if r['max'].nil?
+      r['max'] = "0"
+    end 
+    r['max'] 
   end
 end
 
