@@ -45,7 +45,8 @@ TRANSLATE = {
   'Tags' => {fr: 'Tags'},
   'Picture' => {fr: 'Image'},
   'Checkout ?' => {fr: 'Sorti ?'},
-  'Actions ?' => {fr: 'Actions'}
+  'Actions' => {fr: 'Actions'},
+  'Modifying stuff in TechShop' => {fr: 'Modifier un matériel'}
 
 }
 
