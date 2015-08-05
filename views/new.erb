@@ -19,12 +19,12 @@
 
 		<div class="input-group">
 		  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-list-alt"></span></span>
-		  <textarea class="form-control" id="desc" name="desc" placeholder="<%= _t 'description' %>" aria-describedby="basic-addon2" rows="3"></textarea>
+		  <textarea class="form-control" id="desc" name="desc" placeholder="<%= _t 'Description' %>" aria-describedby="basic-addon2" rows="3"></textarea>
 		</div>
 
 		<div class="input-group">
 		  <span class="input-group-addon input-group-lg" id="basic-addon3"><span class="glyphicon glyphicon-picture"></span></span>
-		  <input type="file" class="form-control" id="imagelink" name="imagelink" placeholder="<%= _t 'Take or upload a picture' %>" aria-describedby="basic-addon3">
+		  <input type="file" class="form-control" id="imagelink" name="imagelink" aria-describedby="basic-addon3">
           <span class="input-group-btn">
 			  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-camera"></span></button>
 		  </span>
@@ -35,10 +35,10 @@
 			<span class="input-group-addon input-group-lg" id="basic-addon5"><span class="glyphicon glyphicon-export"></span></span>
 			<div class="form-control">
 				<label class="radio-inline">
-				  <input type="radio" name="checkout" id="checkoutY" value="true" aria-describedby="basic-addon5"> <%= _t 'yes' %>
+				  <input type="radio" name="checkout" id="checkoutY" value="true" aria-describedby="basic-addon5"> <%= _t 'Yes' %>
 				</label>
 				<label class="radio-inline">
-				  <input type="radio" name="checkout" id="checkoutN" value="false" checked> <%= _t 'no' %>
+				  <input type="radio" name="checkout" id="checkoutN" value="false" checked> <%= _t 'No' %>
 				</label>
 			</div>
 		</div>
@@ -49,7 +49,7 @@
 		</div>
 
 		<button type="button" class="btn btn-default"><%= _t 'Cancel' %></button>
-		<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus">&nbsp;<%= _t 'Add' %></button>
+		<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>&nbsp;<%= _t 'Add' %></button>
 	</div>
 	</form>
 </div>
@@ -62,11 +62,11 @@
 			</li>
 			<li class="list-group-item">
 				<span class="glyphicon glyphicon-bookmark"></span>&nbsp;
-				<%= _h 'help-new-bookmark' %>
+				<%= _h 'help-new-name' %>
 			</li>
 			<li class="list-group-item">
 				<span class="glyphicon glyphicon-list-alt"></span>&nbsp;
-				<%= _h 'help-new-list-alt' %>
+				<%= _h 'help-new-desc' %>
 			</li>
 			<li class="list-group-item">
 				<span class="glyphicon glyphicon-picture"></span>&nbsp;
@@ -78,7 +78,7 @@
 			</li>
 			<li class="list-group-item">
 				<span class="glyphicon glyphicon-export"></span>&nbsp;
-				<%= _h 'help-new-export' %>
+				<%= _h 'help-new-checkout' %>
 			</li>
 			<li class="list-group-item">
 				<span class="glyphicon glyphicon-tags"></span>&nbsp;
@@ -89,14 +89,5 @@
 				<%= _h 'help-new-plus' %>
 			</li>
 		</ul>
-
-		<pre>
-	  		code varchar(50),
-	        name varchar(255),
-	        description varchar(2000),
-	        image_link varchar2(2000),
-	        checkout boolean default false,
-	        tags varchar2(2000)
-		</pre>
 	</div>
 </div>
