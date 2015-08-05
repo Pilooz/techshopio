@@ -47,6 +47,7 @@ class SinatraApp < Sinatra::Base
     @nav_barcode = ''
     @nav_populate = ''
     @code = params['code']
+    @item = DB.read @code
   end
 
   get APP_PATH + '/?' do
@@ -57,7 +58,7 @@ class SinatraApp < Sinatra::Base
         redirect to APP_PATH + "/new?code=#{@code}"
       else
         # Item exist, if it was out, then check-in
-        if DB.checkout?(@code)
+        if !DB.checkout? @code
           redirect to APP_PATH + "/in?code=#{@code}"
         else
           # If it is allready in, propose to modify it or checkout it
@@ -66,7 +67,7 @@ class SinatraApp < Sinatra::Base
       end
     end
     # Propose list of TechShop on index page
-    #@items = DB.select_all_items
+    @items = DB.select_all_items
     @main_title = _t 'Welcome on TechShopIO !'
     @placeholder =  _t 'type or scan reference'
     erb :index
@@ -87,7 +88,13 @@ class SinatraApp < Sinatra::Base
   get APP_PATH + '/new?' do
     @main_title = _t 'Adding stuff in TechShop'
     @nav_new = 'active'
-    erb :new
+    erb :new_modify
+  end
+
+  get APP_PATH + '/modify?' do
+    @main_title = _t 'Modifying stuff in TechShop'
+    @nav_new = 'active'
+    erb :new_modify
   end
 
   get APP_PATH + '/barcode?' do

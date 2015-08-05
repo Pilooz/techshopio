@@ -1,3 +1,59 @@
-<div class="col-md-12 col-md-offset-2">
-index
+<div class="col-md-10 col-md-offset-1">
+	<div class="table-responsive">
+	    <table class="table table-bordered table-striped">
+	      <thead>
+	        <tr>
+	          <th>
+	          	<%= _t 'Picture' %>
+	          </th>
+	          <th>
+	          	<%= _t 'Code' %>
+	          </th>
+	          <th>
+	          	<%= _t 'Name' %>
+	          </th> 
+	          <th>
+	          	<%= _t 'Tags' %>
+	          </th>
+	          <th>
+	          	<%= _t 'Checkout ?' %>
+	          </th>
+	          <th>
+	          	<%= _t 'Actions' %>
+	          </th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	      <% @items.each { | item | %>
+	      	<% if item[4].to_b %>
+	      	<tr class='warning'>
+	        <% else %>
+	        <tr>
+	        <% end %>
+	        	<td>
+	        	<% if !item[3].empty? %>
+	        		<img src="<%= item[3] %>" alt="<%= item[1] %>" class="img-responsive img-rounded">
+	        	<% else %>
+	        		&nbsp;
+	        	<% end %>
+	        	</td>
+	        	<td class="strikable"><%= item[0] %></td>
+	        	<td class="strikable"><%= item[1] %></td>
+	        	<td><%= item[5] %></td>
+	        	<td><%= item[4] %></td>
+	        	<td>
+	        		<% if item[4].to_b %>
+	        		<a href="<%=APP_PATH + '/in?code=' + item[0] %>" class="btn btn-success" id="btnCheckin"><span class="glyphicon glyphicon-import"></a>
+	        		<% else %>
+	        		<a href="<%=APP_PATH + '/out?code=' + item[0] %>" class="btn btn-info" id="btnCheckout"><span class="glyphicon glyphicon-export"></a>
+	        		<% end %>
+	        		<a href="" class="btn btn-info" id="btnCamera"><span class="glyphicon glyphicon-camera"></a>
+	        		<a href="<%=APP_PATH + '/modify?code=' + item[0] %>" class="btn btn-info" id="btnModify"><span class="glyphicon glyphicon-pencil"></a>
+	        		<a href="<%=APP_PATH + '/delete?code=' + item[0] %>" class="btn btn-danger" id="btnDelete"><span class="glyphicon glyphicon-trash"></a>
+	        		</td>
+	        </tr>
+	      <% } %>
+	      </tbody>
+	    </table>
+	  </div>
 </div>

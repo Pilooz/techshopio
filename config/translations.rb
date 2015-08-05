@@ -22,7 +22,6 @@ TRANSLATE = {
   'Bar color' => {fr: 'Couleur des barres'},
   'Bar width' => {fr: 'Largeur'},
   'Bar height' => {fr: 'Hauteur'},
-  'From' => {fr: 'De'},
   'Size' => {fr: 'Taille'},
   'Quiet zone module' => {fr: 'Zone de silence'},
   'Rectangular' => {fr: 'Rectangle'},
@@ -42,6 +41,11 @@ TRANSLATE = {
   'New Item' => {fr: 'Nouveau matériel'},
   'Send' => {fr: 'Envoyer'},
   'Upload CSV File' => {fr: 'Charger un fichier CSV'},
+  'Code' => {fr: 'Code'},
+  'Tags' => {fr: 'Tags'},
+  'Picture' => {fr: 'Image'},
+  'Checkout ?' => {fr: 'Sorti ?'},
+  'Actions ?' => {fr: 'Actions'}
 
 }
 

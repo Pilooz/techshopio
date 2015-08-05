@@ -15,6 +15,7 @@ class Db
     #   @db.close if @db
     # end
     create_schema unless schema?
+    @item = empty_row
   end
 
   # Create a table
@@ -41,30 +42,36 @@ class Db
     end
   end
 
+  def empty_row
+    [{'code' => '', 'name' => '', 'description' => '',  'image_link' => '', 'checkout' => '', 'tags' => ''}]
+  end
+
   # select data
-  def select(sql)
-    @db.execute( sql )
+  def select_all_items
+    @db.execute "select * from items order by name"
   end
 
   def read(code)
-    @db.execute 'select * from items where code = ?', code
-    # r = @db.execute "select * from items where code = '1234'"
-    # puts "#{r}"
+    r = @db.execute 'select * from items where code = ?', code
+    if r[0].nil?
+      return empty_row
+    end
+    r
   end
 
   # see if this item exists in database
   def exists?(code)
-    item = read code
-    !item.empty?
+    @item = empty_row
+    @item = read code
+    !@item[0]['code'].empty?
   end
 
   # Is item checked out ?
   def checkout?(code)
     if exists? code
-      item['checkout']
-    else
-      false
+      return @item[0]['checkout']
     end
+    false
   end
 
   # Adds an item
