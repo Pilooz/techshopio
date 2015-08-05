@@ -39,7 +39,9 @@ TRANSLATE = {
   'Cancel' => {fr: 'Annuler'},
   'Add' => {fr: 'Ajouter'},
   'Help' => {fr: 'Aide en ligne'},
-  'New Item' => {fr: 'Nouveau matériel'}
+  'New Item' => {fr: 'Nouveau matériel'},
+  'Send' => {fr: 'Envoyer'},
+  'Upload CSV File' => {fr: 'Charger un fichier CSV'},
 
 }
 
@@ -54,7 +56,9 @@ HELP =  {
   'help-new-camera' => {en: 'Take a picture with insight camera.', fr: "Prendre une photo avec l'appareil photo intégré."},
   'help-new-checkout' => {en: "Check 'yes' if the item is out of Techshop", fr: "Cochez 'Oui' si le matériel est sorti de la Techshop."},
   'help-new-tags' => {en: 'Add every tags you need.', fr: 'Ajouter vos tags.'},
-  'help-new-plus' => {en: 'Click this button to create item in database.', fr: "Enregistrez votre saisie en cliquant sur le bouton 'ajouter'."}
+  'help-new-plus' => {en: 'Click this button to create item in database.', fr: "Enregistrez votre saisie en cliquant sur le bouton 'ajouter'."},
+  'help-upload-csv' => {en: '', fr: "Votre fichier doit comporter les champs <code>code, name, description, tags</code> dans cet ordre. Le séparateur de champs est le point-virgule <code>;</code>. Le champ 'tags' peut comporter plusieurs tags tant qu'ils sont spéarés par une virgule."},
+  'help-upload-button' => {en: '', fr: "Insérez vos données dans la base en cliquant sur le bouton 'Charger'."},
 
 }
 

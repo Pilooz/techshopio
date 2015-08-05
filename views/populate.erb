@@ -1,3 +1,173 @@
-<div class="col-md-10 col-md-offset-2">
-  populate with csv files !
+<script>
+var inputType = "local";
+
+function setPanelStatus(what, msg) {
+	$('#panel-form-csv .panel-heading #msg').html("");
+	$('#panel-form-csv').removeClass("panel-default panel-danger panel-success");
+	$('#panel-form-csv').addClass("panel-" + what);
+	if (msg) {
+		$('#panel-form-csv .panel-heading #msg').html(msg);
+	}
+}
+
+function completeFn(results)
+{
+	if (results && results.errors)
+	{
+		if (results.errors)
+		{
+			errorCount = results.errors.length;
+			firstError = results.errors[0];
+			setPanelStatus("danger");
+		} 
+		if (results.data && results.data.length > 0)
+			rowCount = results.data.length;
+	}
+
+	console.log("    Results:", results);
+	// Checking applicatives errors of csv structure
+	cols = results.data[0];
+	if (cols[0] != "code" || 
+		cols[1] != "name" || 
+		cols[2] != "description" || 
+		cols[3] != "tags" ) {
+
+		setPanelStatus("danger", "Some columns are misnamed or are in wrong order ! <code>" + cols + "</code>");
+	} else {
+		// Success here ! Setting status 'OK'
+		setPanelStatus("success", "Cool ! Your file is perfect...");
+		$("#jsondata").val(JSON.stringify(results.data));
+	}
+
+	
+	// icky hack
+	setTimeout(enableButton, 100);
+}
+
+function errorFn(err, file)
+{
+	console.log("ERROR:", err, file);
+	enableButton();
+}
+
+function enableButton()
+{
+	$('#submit').prop('disabled', false);
+}
+
+
+$(function(){
+
+	// Parsing file
+	$('#submit').click(function()
+	{
+		if ($(this).prop('disabled') == "true")	return;	
+
+		stepped = 0;
+		rowCount = 0;
+		errorCount = 0;
+		firstError = undefined;
+
+		var config = {
+			delimiter: ";",
+			header: false,
+			dynamicTyping: false,
+			skipEmptyLines: false,
+			preview: 0,
+			step: undefined,
+			encoding: 'UTF-8',
+			worker: false,
+			comments: undefined,
+			complete: completeFn,
+			error: errorFn,
+			download: false
+		};
+
+		var input = $('#input').val();
+
+
+		// Allow only one parse at a time
+		$(this).prop('disabled', true);
+
+		if (inputType == "local")
+		{
+			if (!$('#csvfile')[0].files.length)
+			{
+				setPanelStatus("danger", "Please choose at least one file to parse.");
+				return enableButton();
+			}
+			
+			$('#csvfile').parse({
+				config: config,
+				before: function(file, inputElem)
+				{
+					console.log("Parsing file...", file);
+				},
+				error: function(err, file)
+				{
+					console.log("ERROR:", err, file);
+					firstError = firstError || err;
+					errorCount++;
+				},
+				complete: function()
+				{
+					console.log("Done with all files");
+					// sanding data to serveur
+					$("#formCSV").submit();
+				}
+			});
+		}
+		else
+		{
+			var results = Papa.parse(input, config);
+			console.log("Synchronous results:", results);
+			if (config.worker || config.download)
+				console.log("Running...");
+		}
+	});
+
+});
+
+</script>
+
+<div class="col-md-5 col-md-offset-1">
+	<div class="panel panel-default" id="panel-form-csv">
+		<div class="panel-heading">
+	    	<h3 class="panel-title"><%= _t 'Upload CSV File' %></h3>
+	    	&nbsp;<span id="msg"></span>
+	  	</div>
+		<div class="panel-body">
+
+		    <form method="post" id="formCSV" action="<%=APP_PATH + '/populate' %>">
+		    	<input type="hidden" id="jsondata" name="jsondata" value="">
+			</form>
+
+			<div class="input-group">
+			  <span class="input-group-addon input-group-lg" id="lbl-csvfile"><span class="glyphicon glyphicon-align-justify"></span></span>
+			  <input type="file" class="form-control" id="csvfile" name="csvfile" aria-describedby="lbl-csvfile" multiple>
+			</div>
+
+			<button type="button" id="submit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;<%= _t 'Send' %></button>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-5">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+	    	<h3 class="panel-title"><%= _t 'Help' %></h3>
+	  	</div>
+		<div class="panel-body">
+			<ul class="list-group">
+				<li class="list-group-item">
+					<span class="glyphicon glyphicon-align-justify"></span>&nbsp;
+					<%= _h 'help-upload-csv' %>
+				</li>
+				<li class="list-group-item">
+					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;
+					<%= _h 'help-upload-button' %>
+				</li>
+			</ul>
+		</div>
+	</div>
 </div>

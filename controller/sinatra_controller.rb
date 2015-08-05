@@ -105,10 +105,18 @@ class SinatraApp < Sinatra::Base
     erb :barcode
   end
 
-  get APP_PATH + '/populate?' do
+  get APP_PATH + '/populate' do
     @main_title = _t 'Populate TechShop massively'
     @nav_populate = 'active'
     erb :populate
+  end
+
+  # Receive csv data
+  post '/techshopio/populate' do
+    "#{params['jsondata']}"
+    # TODO : See how to get barcode, if code are in csv file, perhaps will we have to produce these codes ?
+    # Redirect to the Techshop's list
+    redirect to APP_PATH + "/"
   end
 
 end
