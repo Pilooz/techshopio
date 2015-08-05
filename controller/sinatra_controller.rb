@@ -50,9 +50,7 @@ class SinatraApp < Sinatra::Base
   end
 
   get APP_PATH + '/?' do
-    # @code = params['code']
     unless @code.nil? || @code.empty?
-      puts "========> #{DB.exists? @code}"
       # See where we have to go now... don't exists => In, else Out
       if !DB.exists? @code
         # Item doesn't exist in inventory, add it.
@@ -67,6 +65,8 @@ class SinatraApp < Sinatra::Base
         end
       end
     end
+    # Propose list of TechShop on index page
+    #@items = DB.select_all_items
     @main_title = _t 'Welcome on TechShopIO !'
     @placeholder =  _t 'type or scan reference'
     erb :index
@@ -113,8 +113,8 @@ class SinatraApp < Sinatra::Base
 
   # Receive csv data
   post '/techshopio/populate' do
-    "#{params['jsondata']}"
     # TODO : See how to get barcode, if code are in csv file, perhaps will we have to produce these codes ?
+    DB.add_serveral_items  JSON.parse params['jsondata'] unless params['jsondata'].nil?
     # Redirect to the Techshop's list
     redirect to APP_PATH + "/"
   end

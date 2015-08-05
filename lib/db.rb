@@ -14,11 +14,11 @@ class Db
     # ensure
     #   @db.close if @db
     # end
-    # create_scheme
+    create_schema unless schema?
   end
 
   # Create a table
-  def create_scheme
+  def create_schema
     @db.execute '
       create table items (
         code varchar(50),
@@ -28,6 +28,17 @@ class Db
         checkout boolean default false,
         tags varchar2(2000)
       );'
+  end
+
+  #Is the db schema exists ?
+  def schema?
+    begin
+      r = db.prepare "select * from Items"
+      true
+    rescue
+      puts "need to create db schema..."
+      false
+    end
   end
 
   # select data
@@ -56,13 +67,25 @@ class Db
     end
   end
 
-  # Adds an itme
-  def add_item(code, name, desc, image_link)
-    @db.execute 'INSERT INTO items (code, name, desc,
-      image_link) VALUES (?, ?, ?, ?)', [code, name, desc, image_link]
+  # Adds an item
+  def add_item(code, name, desc, image_link, tags)
+    @db.execute 'INSERT INTO items (code, name, description,
+      image_link, tags) VALUES (?, ?, ?, ?, ?)', [code.to_s, name.to_s, desc.to_s, image_link.to_s, tags.to_s]
   end
 
-  # deletes an itme
+  def add_serveral_items (data)
+    n = 0
+    data.reject! { 
+      |k, v| k == 'code' 
+    }.each { |row|
+      puts "adding #{row[1]} ##{row[0]}"
+      add_item(row[0], row[1], row[2], '', row[3]) unless row[0].empty?
+      n = n + 1
+    }
+    puts "#{n} inserted rows"
+  end
+
+  # deletes an item
   def delete_item(code)
     @db.execute "delete from items where code = '?'", code
   end
