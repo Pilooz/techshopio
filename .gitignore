@@ -20,5 +20,6 @@ doc/
 
 
 # Config
-config/*.rb
+config/init.rb
+config/options.rb
 config/*.yml
