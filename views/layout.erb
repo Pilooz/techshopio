@@ -70,7 +70,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
           <h1 class="page-header"><%=@main_title%></h1>
         </div>
-<% if @nav_barcode.empty? && @nav_new.empty? %>
+<% if @nav_barcode.empty? && @nav_new.empty? && @nav_populate.empty? %>
         <div class="row">
           <div class="col-md-4 col-md-offset-1">
             <form method="get">

@@ -45,6 +45,7 @@ class SinatraApp < Sinatra::Base
     @nav_out = ''
     @nav_new = ''
     @nav_barcode = ''
+    @nav_populate = ''
     @code = params['code']
   end
 
@@ -103,4 +104,11 @@ class SinatraApp < Sinatra::Base
     @to = @from + 100
     erb :barcode
   end
+
+  get APP_PATH + '/populate?' do
+    @main_title = _t 'Populate TechShop massively'
+    @nav_populate = 'active'
+    erb :populate
+  end
+
 end
