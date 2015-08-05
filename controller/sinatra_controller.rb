@@ -72,7 +72,7 @@ class SinatraApp < Sinatra::Base
   end
 
   get APP_PATH + '/out?' do
-    @main_title = _t 'Outing stuff'
+    @main_title = _t 'Check-out stuff from Techshop'
     @nav_out = 'active'
     erb :out
   end
