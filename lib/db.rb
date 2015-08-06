@@ -28,6 +28,7 @@ class Db
     @db.execute 'create table tags (
         id integer,
         tag varchar(255),
+        color varchar(50)
         );'
     puts "  Creating table tags_items..."
     @db.execute 'create table tags_items (
@@ -139,16 +140,18 @@ class Db
     #              where t.id = ti.tag_id 
     #              group by t.id, t.tag
     #              order by t.tag"
-    @db.execute "select id, tag
-                 from tags
-                 order by tag"
+    @db.execute "select t.id, t.tag, t.color, count(ti.item_code) count_items
+                 from tags t left join tags_items ti
+                 on t.id = ti.tag_id
+                 group by t.id, t.tag, t.color
+                 order by t.tag"
   end
 
   # add tag
-  def add_tag(tag)
+  def add_tag(tag, color)
     unless tag.empty?
       newid = lastid('tags', col='id').to_i + 1
-      @db.execute "insert into tags values ( ?, ?)", [newid, tag]
+      @db.execute "insert into tags values ( ?, ?, ?)", [newid, tag, color]
     end
   end
 end

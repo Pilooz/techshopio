@@ -46,7 +46,10 @@ TRANSLATE = {
   'Picture' => {fr: 'Image'},
   'Checkout ?' => {fr: 'Sorti ?'},
   'Actions' => {fr: 'Actions'},
-  'Modifying stuff in TechShop' => {fr: 'Modifier un matériel'}
+  'Modifying stuff in TechShop' => {fr: 'Modifier un matériel'},
+  'Dealing with tags stuff' => {fr: 'Gestion des tags'},
+  'List of tags' => {fr: 'Liste des tags disponibles'},
+  'Create a new tag' => {fr: 'Ajouter un tag'}
 
 }
 

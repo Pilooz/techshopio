@@ -1,0 +1,60 @@
+<style type="text/css">
+	.selected {
+		border: 3px solid black;
+	}
+	#tags-list-panel .panel-body button {
+		margin-bottom: 5px;
+	}
+</style>
+
+<script>
+$(function(){
+	// Handeling color buttons
+	$('.colorpicker').click(function()
+	{
+		$("#color").val($(this).attr("class").split(' ')[1]);
+		$(".colorpicker").removeClass("selected");
+		$(this).addClass("selected");
+	});
+
+});
+</script>
+
+<div class="col-md-5 col-md-offset-1">
+	<div class="panel panel-default" id="tags-list-panel">
+		<div class="panel-heading">
+	    	<h3 class="panel-title"><%= _t 'List of tags' %></h3>
+	  	</div>
+		<div class="panel-body">
+		  <% @tags.each { | tag | %>
+			<button class="btn <%= tag['color'] %>" type="button">
+			  <%= tag['tag'] %> <span class="badge"><%= tag['count_items'] %></span>
+			</button>&nbsp; 
+		  <% } %>
+		 </div>
+	</div>
+</div>
+
+<div class="col-md-5">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+	    	<h3 class="panel-title"><%= _t 'Create a new tag' %></h3>
+	  	</div>
+		<div class="panel-body">
+		<form method="post" action="<%=APP_PATH + '/tags?' %>">
+			<input type="text" name="tag" id="tag">
+			<input type="hidden" id="color" name="color" value="">
+
+			<button type="button" class="btn btn-default colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-primary colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-success colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-info colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-warning colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-danger colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-link colorpicker">&nbsp;</button>
+
+			<button class="btn btn-info" type="submit"><%= _t 'Add' %></button> 			
+		</form>
+		 </div>
+	</div>
+</div>

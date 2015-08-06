@@ -129,15 +129,14 @@ class SinatraApp < Sinatra::Base
 
   get APP_PATH + '/tags' do
     @tags = DB.select_all_tags
-    puts "#{@tags}"
-    @main_title = _t 'Adding tags'
+    @main_title = _t 'Dealing with tags stuff'
     @nav_tags = 'active'
     erb :tags
   end
 
   # Receive tags data
   post APP_PATH + '/tags' do
-    DB.add_tag  params['tag']
+    DB.add_tag  params['tag'], params['color']
     # Redirect to the tags' list
     redirect to APP_PATH + "/tags"
   end
