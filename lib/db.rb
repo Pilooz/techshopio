@@ -5,30 +5,35 @@ require 'sqlite3'
 class Db
   attr_accessor :db
   def initialize
-    # begin
-      @db = SQLite3::Database.new DB_FILENAME
-      @db.results_as_hash = true
-    # rescue SQLite3::Exception => e 
-    #     puts "Exception occurred"
-    #     puts e
-    # ensure
-    #   @db.close if @db
-    # end
+    @db = SQLite3::Database.new DB_FILENAME
+    @db.results_as_hash = true
     create_schema unless schema?
     @item = empty_row
   end
 
   # Create a table
   def create_schema
+    puts "  Creating db schema..."
+    puts "  Creating table items..."
     @db.execute '
       create table items (
-        code varchar(50),
+        code varchar(50) PRIMARY KEY,
         name varchar(255),
         description varchar(2000),
         image_link varchar2(2000),
         checkout boolean default false,
         tags varchar2(2000)
       );'
+    puts "  Creating table tags..."
+    @db.execute 'create table tags (
+        id integer,
+        tag varchar(255)
+        );'
+    puts "  Creating table tags_items..."
+    @db.execute 'create table tags_items (
+        item_code varchar(50),
+        tag_id integer
+        );'
   end
 
   #Is the db schema exists ?
@@ -37,7 +42,6 @@ class Db
       r = db.prepare "select * from Items"
       true
     rescue
-      puts "need to create db schema..."
       false
     end
   end
@@ -72,6 +76,14 @@ class Db
       return @item[0]['checkout']
     end
     false
+  end
+
+  def checkout(code)
+    @db.execute "update items set checkout = true where code = '?'", code
+  end
+
+  def checkin(code)
+    @db.execute "update items set checkout = false where code = '?'", code
   end
 
   # Adds an item
