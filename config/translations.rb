@@ -62,7 +62,7 @@ HELP =  {
   'help-new-checkout' => {en: "Check 'yes' if the item is out of Techshop", fr: "Cochez 'Oui' si le matériel est sorti de la Techshop."},
   'help-new-tags' => {en: 'Add every tags you need.', fr: 'Ajouter vos tags.'},
   'help-new-plus' => {en: 'Click this button to create item in database.', fr: "Enregistrez votre saisie en cliquant sur le bouton 'ajouter'."},
-  'help-upload-csv' => {en: '', fr: "Votre fichier doit comporter les champs <code>code, name, description, tags</code> dans cet ordre. Le séparateur de champs est le point-virgule <code>;</code>. Le champ 'tags' peut comporter plusieurs tags tant qu'ils sont spéarés par une virgule."},
+  'help-upload-csv' => {en: '', fr: "Votre fichier doit comporter les champs <code>code, name, description, tags</code> dans cet ordre. Le séparateur de champs est le point-virgule <code>;</code>. Le champ 'tags' peut comporter plusieurs tags tant qu'ils sont spéarés par une virgule.</p><p>Attention, il est important que c<b>haque code soit unique</b> dans votre fichier.</p>"},
   'help-upload-button' => {en: '', fr: "Insérez vos données dans la base en cliquant sur le bouton 'Charger'."},
 
 }

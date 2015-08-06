@@ -62,6 +62,7 @@
             <li class="<%=@nav_out %>"><a href="<%= APP_PATH %>/out"><%= _t('Out') %></a></li>
             <li class="<%=@nav_barcode %>"><a href="<%= APP_PATH %>/barcode"><%= _t('Barcodes') %></a></li>
             <li class="<%=@nav_populate %>"><a href="<%= APP_PATH %>/populate"><%= _t('Populate DB') %></a></li>
+            <li class="<%=@nav_tags %>"><a href="<%= APP_PATH %>/tags"><%= _t('Tags') %></a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -81,7 +82,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
           <h1 class="page-header"><%=@main_title%></h1>
         </div>
-<% if @nav_barcode.empty? && @nav_new.empty? && @nav_populate.empty? %>
+<% if @nav_barcode.empty? && @nav_new.empty? && @nav_populate.empty?  && @nav_tags.empty? %>
         <div class="row">
           <div class="col-md-4 col-md-offset-1">
             <form method="get">

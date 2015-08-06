@@ -17,11 +17,11 @@ function completeFn(results)
 		if (results.errors)
 		{
 			errorCount = results.errors.length;
+			s = errorCount > 1 ? "s" : "";
 			firstError = results.errors[0];
-			setPanelStatus("danger");
+			setPanelStatus("danger", errorCount + " error" + s + " occured in csv parsing, first : <code>" + results.errors[0] + "</code>");
 		} 
-		if (results.data && results.data.length > 0)
-			rowCount = results.data.length;
+		if (results.data && results.data.length > 0) rowCount = results.data.length;
 	}
 
 	console.log("    Results:", results);
@@ -39,7 +39,6 @@ function completeFn(results)
 		$("#jsondata").val(JSON.stringify(results.data));
 	}
 
-	
 	// icky hack
 	setTimeout(enableButton, 100);
 }

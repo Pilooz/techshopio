@@ -27,7 +27,7 @@ class Db
     puts "  Creating table tags..."
     @db.execute 'create table tags (
         id integer,
-        tag varchar(255)
+        tag varchar(255),
         );'
     puts "  Creating table tags_items..."
     @db.execute 'create table tags_items (
@@ -44,6 +44,15 @@ class Db
     rescue
       false
     end
+  end
+
+    # Get the highest id from a table
+  def lastid(table_name, col='code')
+    r = @db.get_first_row 'select max('+col+') as max from ' + table_name
+    if r['max'].nil?
+      r['max'] = "0"
+    end 
+    r['max'] 
   end
 
   def empty_row
@@ -109,13 +118,6 @@ class Db
     @db.execute "delete from items where code = '?'", code
   end
 
-  # add tags
-  def add_tag(code, tag)
-    item = read code
-    newtags = item['tags'] + ', ' + tag
-    @db.execute "update items set tags = '?' where code = '?'", [newtags, code]
-  end
-
   # delete one tag
   def delete_tag(code, tag)
     item = read code
@@ -128,13 +130,26 @@ class Db
     @db.execute "update items set tags = '' where code = '?'", code
   end
 
-  # Get the highest id from db
-  def lastid
-    r = @db.get_first_row 'select max(code) as max from items'
-    if r['max'].nil?
-      r['max'] = "0"
-    end 
-    r['max'] 
+  #
+  # Tags routines
+  #
+  def select_all_tags
+    # @db.execute "select t.id, t.tag, count(ti.item_code) 
+    #              from tags t, tags_items ti 
+    #              where t.id = ti.tag_id 
+    #              group by t.id, t.tag
+    #              order by t.tag"
+    @db.execute "select id, tag
+                 from tags
+                 order by tag"
+  end
+
+  # add tag
+  def add_tag(tag)
+    unless tag.empty?
+      newid = lastid('tags', col='id').to_i + 1
+      @db.execute "insert into tags values ( ?, ?)", [newid, tag]
+    end
   end
 end
 

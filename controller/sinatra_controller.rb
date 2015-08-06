@@ -46,6 +46,7 @@ class SinatraApp < Sinatra::Base
     @nav_new = ''
     @nav_barcode = ''
     @nav_populate = ''
+    @nav_tags = ''
     @code = params['code']
     @item = DB.read @code
   end
@@ -101,7 +102,7 @@ class SinatraApp < Sinatra::Base
     @main_title = _t 'Generate barecodes'
     @nav_barcode = 'active'
     # Reading last id from db
-    lastid = DB.lastid
+    lastid = DB.lastid 'items'
     if lastid =~ /[A-z]/ 
       # Extracting numerical part and alphabetical part
       @radical = lastid.tr('0-9', '')
@@ -125,5 +126,21 @@ class SinatraApp < Sinatra::Base
     # Redirect to the Techshop's list
     redirect to APP_PATH + "/"
   end
+
+  get APP_PATH + '/tags' do
+    @tags = DB.select_all_tags
+    puts "#{@tags}"
+    @main_title = _t 'Adding tags'
+    @nav_tags = 'active'
+    erb :tags
+  end
+
+  # Receive tags data
+  post APP_PATH + '/tags' do
+    DB.add_tag  params['tag']
+    # Redirect to the tags' list
+    redirect to APP_PATH + "/tags"
+  end
+
 
 end
