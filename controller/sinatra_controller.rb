@@ -77,7 +77,9 @@ class SinatraApp < Sinatra::Base
   get APP_PATH + '/out?' do
     @main_title = _t 'Check-out stuff from Techshop'
     @nav_out = 'active'
-    erb :out
+    # Getting all accessibles tags
+    @tags = DB.select_all_tags
+    erb :out 
   end
 
   get APP_PATH + '/in?' do

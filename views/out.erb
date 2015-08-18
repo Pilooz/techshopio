@@ -1,3 +1,115 @@
-<div class="col-md-10 col-md-offset-2">
-  List of tags to add to item before checking it out.
+
+<style>
+
+[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+ 
+#tags-list .tag {
+    cursor: alias;
+}
+
+#tags-list-panel .tag {
+    cursor: grab;
+}
+
+.tag {
+	margin: 2px;
+}
+
+.tag-title {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+}
+
+.dropTarget {
+	background-color: #fafafa;
+	border: 1px dashed #269ABC;
+}
+
+</style>
+
+<div class="col-md-5 col-md-offset-1">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+	    	<h3 class="panel-title">#<%= @code %></h3>
+	  	</div>
+		<div class="panel-body">
+				<div class="input-group">
+				  <span class="input-group-addon input-group-lg" id="basic-addon3">
+				  <% unless @item[0]['image_link'].empty? %>
+				  	<img src="<%= @item[0]['image_link'] %>" class="img img-responsive img-rounded" alt=""/>
+				  <% else %>
+				  <span class="glyphicon glyphicon-picture"></span>
+				  <% end %>
+				  </span>
+				</div>
+
+				<div class="input-group">
+				  <span class="input-group-addon input-group-lg" id="basic-addon1"><span class="glyphicon glyphicon-bookmark"></span></span>
+				  <input type="text" class="form-control" value="<%= @item[0]['name'] %>">
+				</div>
+
+				<div class="input-group">
+				  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-list-alt"></span></span>
+				  <input type="text" class="form-control" value="<%= @item[0]['description'] %>">
+				</div>
+
+				<div class="input-group input-group-lg">
+				  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-tags"></span></span>
+				  <div class="form-control" id="tags-list" name="tags-list">
+				  	<%= _t 'Add tags here !' %>
+				  </div>
+				</div>
+		</div>
+	</div>
 </div>
+
+<div class="col-md-5">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+	    	<h3 class="panel-title"><%= _t 'List of tags' %></h3>
+	  	</div>
+		<div class="panel-body" id="tags-list-panel">
+		  <% @tags.each { | tag | %>
+			<div class="tag btn <%= tag['color'] %>" id="tag<%= tag['id'] %>">
+			  <span class="tag-title"><%= tag['tag'] %></span> 
+			  <!--span class="badge"><%= tag['count_items'] %></span-->
+			</div>
+		  <% } %>
+		 </div>
+	</div>
+</div>
+
+<!-- <div class="col-md-10 col-md-offset-1">
+	<button type="button" class="btn btn-default"><%= _t 'Cancel' %></button>
+	<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>&nbsp;<%= _t 'Checkout' %></button>
+</div>
+ -->
+<script>
+
+var things = $('#tags-list-panel, #tags-list');
+var firstAdd = true;
+things.each(function( index ) {
+  // for every click on or in this element
+  things.eq(index).on('click', '> *', function() {
+    // append will remove the element
+    // Number( !0 ) => 1, Number( !1 ) => 0
+    if ( Number(!index) == 0) {
+		if (firstAdd) {
+	    	things.eq( Number(!index) ).html("");
+	    	firstAdd = false;
+	    }
+	    console.log("Adding...");
+    } else {
+    	console.log("Removing...");
+    }
+    things.eq( Number(!index) ).append( this );
+  });
+});
+
+
+</script>
