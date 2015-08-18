@@ -122,7 +122,7 @@ class SinatraApp < Sinatra::Base
   end
 
   # Receive csv data
-  post '/techshopio/populate' do
+  post APP_PATH + '/populate' do
     # TODO : See how to get barcode, if code are in csv file, perhaps will we have to produce these codes ?
     DB.add_serveral_items  JSON.parse params['jsondata'] unless params['jsondata'].nil?
     # Redirect to the Techshop's list
@@ -143,5 +143,14 @@ class SinatraApp < Sinatra::Base
     redirect to APP_PATH + "/tags"
   end
 
+  # Linking Tag to item
+  get APP_PATH + '/tags/add/' do
+    "Ok Man ! #{params['id']}"
+  end
+
+  # Unlinking Tag from item
+  get APP_PATH + '/tags/remove/' do
+    "Ok Man ! #{params['id']}"
+  end
 
 end

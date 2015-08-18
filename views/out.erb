@@ -91,23 +91,36 @@
  -->
 <script>
 
-var things = $('#tags-list-panel, #tags-list');
-var firstAdd = true;
-things.each(function( index ) {
+var cnt = $('#tags-list-panel, #tags-list');
+var firstAdd = true; 
+cnt.each(function( index ) {
+  var action = "";
   // for every click on or in this element
-  things.eq(index).on('click', '> *', function() {
+  cnt.eq(index).on('click', '> *', function() {
     // append will remove the element
     // Number( !0 ) => 1, Number( !1 ) => 0
     if ( Number(!index) == 0) {
+    	// Adding tags
+    	// TODO Ajax call adding tags
+    	action = "add";
 		if (firstAdd) {
-	    	things.eq( Number(!index) ).html("");
+	     cnt.eq( Number(!index) ).html("");
 	    	firstAdd = false;
 	    }
-	    console.log("Adding...");
     } else {
-    	console.log("Removing...");
+    	// Removing Tags
+    	// Ajax call removing stuff
+    	action = "remove";
     }
-    things.eq( Number(!index) ).append( this );
+    // Sending ajax request
+	$.ajax({
+	  url: "<%= APP_PATH %>/tags/" + action + "/?id=" + this.id
+	})
+	  .done(function( msg ) {
+	    console.log( msg );
+	  });
+    // updating the right layer
+    cnt.eq( Number(!index) ).append( this );
   });
 });
 
