@@ -49,7 +49,8 @@ TRANSLATE = {
   'Modifying stuff in TechShop' => {fr: 'Modifier un matériel'},
   'Dealing with tags stuff' => {fr: 'Gestion des tags'},
   'List of tags' => {fr: 'Liste des tags disponibles'},
-  'Create a new tag' => {fr: 'Ajouter un tag'}
+  'Create a new tag' => {fr: 'Ajouter un tag'},
+  'Checkout' => {fr: 'Retirer du stock'}
 
 }
 

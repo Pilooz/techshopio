@@ -15,15 +15,15 @@ class Db
   def create_schema
     puts "  Creating db schema..."
     puts "  Creating table items..."
-    @db.execute '
+    @db.execute "
       create table items (
         code varchar(50) PRIMARY KEY,
         name varchar(255),
         description varchar(2000),
         image_link varchar2(2000),
-        checkout boolean default false,
+        checkout varchar(1) default 'N',
         tags varchar2(2000)
-      );'
+      );"
     puts "  Creating table tags..."
     @db.execute 'create table tags (
         id integer,
@@ -62,7 +62,12 @@ class Db
 
   # select data
   def select_all_items
-    @db.execute "select * from items order by name"
+    res = @db.execute "select * from items order by name"
+    res.each { |row|
+      taglist = select_tags_for_item(row[0]).flatten
+      row['taglist'] = taglist
+    }
+    res
   end
 
   def read(code)
@@ -72,6 +77,15 @@ class Db
     end
     r
   end
+
+  # # Transforming an arrya in string
+  # def flatten_result(result)
+  #   s = ""
+  #   result.each { |row| 
+  #     s += 
+  #   }
+  # end
+
 
   # see if this item exists in database
   def exists?(code)
@@ -83,17 +97,17 @@ class Db
   # Is item checked out ?
   def checkout?(code)
     if exists? code
-      return @item[0]['checkout']
+      return @item[0]['checkout'] == 'O'
     end
     false
   end
 
   def checkout(code)
-    @db.execute "update items set checkout = true where code = '?'", code
+    @db.execute "update items set checkout = 'O' where code = ?", code
   end
 
   def checkin(code)
-    @db.execute "update items set checkout = false where code = '?'", code
+    @db.execute "update items set checkout = 'N' where code = ?", code
   end
 
   # Adds an item
@@ -134,6 +148,15 @@ class Db
                  group by t.id, t.tag, t.color
                  order by t.tag"
   end
+
+  def select_tags_for_item(code)
+    @db.execute "select t.tag, t.color
+                 from tags t, tags_items ti
+                 where t.id = ti.tag_id
+                   and item_code = ?
+                 order by t.tag", code
+  end
+
 
   # add tag
   def add_tag(tag, color)

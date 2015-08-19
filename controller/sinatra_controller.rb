@@ -115,6 +115,13 @@ class SinatraApp < Sinatra::Base
     erb :barcode
   end
 
+  get APP_PATH + '/tags' do
+    @tags = DB.select_all_tags
+    @main_title = _t 'Dealing with tags stuff'
+    @nav_tags = 'active'
+    erb :tags
+  end
+
   get APP_PATH + '/populate' do
     @main_title = _t 'Populate TechShop massively'
     @nav_populate = 'active'
@@ -129,12 +136,25 @@ class SinatraApp < Sinatra::Base
     redirect to APP_PATH + "/"
   end
 
-  get APP_PATH + '/tags' do
-    @tags = DB.select_all_tags
-    @main_title = _t 'Dealing with tags stuff'
-    @nav_tags = 'active'
-    erb :tags
+   # Checkout item
+  post APP_PATH + '/item/checkout' do
+    if params['code']
+      DB.checkout params['code']
+    end
+    redirect to APP_PATH + "/"
   end
+
+  # Checkin item
+  post APP_PATH + '/item/checkin' do
+    if params['code']
+      DB.checkin params['code']
+    end
+    redirect to APP_PATH + "/"
+  end
+
+  #
+  # CRUD Room service !
+  #
 
   # Receive tags data
   post APP_PATH + '/tags' do

@@ -60,9 +60,7 @@
 
 				<div class="input-group input-group-lg">
 				  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-tags"></span></span>
-				  <div class="form-control" id="tags-list" name="tags-list">
-				  	<%= _t 'Add tags here !' %>
-				  </div>
+				  <div class="form-control" id="tags-list" name="tags-list"></div>
 				</div>
 		</div>
 	</div>
@@ -84,45 +82,57 @@
 	</div>
 </div>
 
-<!-- <div class="col-md-10 col-md-offset-1">
+<div class="col-md-10 col-md-offset-1">
+	<form id="checkoutForm" action="<%= APP_PATH %>/item/checkout" method="post">
+		<input type="hidden" name="code" value="<%= @code %>">
+	</form>
 	<button type="button" class="btn btn-default"><%= _t 'Cancel' %></button>
-	<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>&nbsp;<%= _t 'Checkout' %></button>
+	<button type="submit" class="btn btn-success" id="checkoutBtn"><%= _t 'Checkout' %>&nbsp;<span class="glyphicon glyphicon-export"></span></button>
 </div>
- -->
+
 <script>
 
+var chkBtn = $( "#checkoutBtn" );
+var frm = $("#checkoutForm");
 var cnt = $('#tags-list-panel, #tags-list');
-var firstAdd = true; 
+var countTags = 0; 
+
+// Initial state of the page
+chkBtn.prop("disabled", true);
+
+
 cnt.each(function( index ) {
-  var action = "";
+  var action = "add";
   // for every click on or in this element
   cnt.eq(index).on('click', '> *', function() {
     // append will remove the element
     // Number( !0 ) => 1, Number( !1 ) => 0
     if ( Number(!index) == 0) {
     	// Adding tags
-    	// TODO Ajax call adding tags
-    	action = "add";
-		if (firstAdd) {
-	     cnt.eq( Number(!index) ).html("");
-	    	firstAdd = false;
-	    }
+    	countTags++;
     } else {
     	// Removing Tags
-    	// Ajax call removing stuff
+    	countTags--;
     	action = "remove";
-    }
+    }  
     // Sending ajax request
 	$.ajax({
 	  url: "<%= APP_PATH %>/tags/" + action + "/?code=<%= @code %>&id=" + this.id.replace('tag', '')
 	})
 	  .done(function( msg ) {
+	  	// TODO : Flash message to say 'Ok!'
 	    console.log( msg );
 	  });
     // updating the right layer
     cnt.eq( Number(!index) ).append( this );
+    // Set right button state
+    chkBtn.prop("disabled", (countTags <= 0) );
   });
 });
 
+// Checkout button Listener
+chkBtn.click(function() {
+	frm.submit();
+});
 
 </script>
