@@ -114,7 +114,7 @@ cnt.each(function( index ) {
     }
     // Sending ajax request
 	$.ajax({
-	  url: "<%= APP_PATH %>/tags/" + action + "/?id=" + this.id
+	  url: "<%= APP_PATH %>/tags/" + action + "/?code=<%= @code %>&id=" + this.id.replace('tag', '')
 	})
 	  .done(function( msg ) {
 	    console.log( msg );

@@ -145,12 +145,18 @@ class SinatraApp < Sinatra::Base
 
   # Linking Tag to item
   get APP_PATH + '/tags/add/' do
-    "Ok Man ! #{params['id']}"
+    if params['code'] && params['id']
+      DB.link_tag params['code'], params['id']
+    end
+    {'result' => 'Ok'}.to_json
   end
 
   # Unlinking Tag from item
   get APP_PATH + '/tags/remove/' do
-    "Ok Man ! #{params['id']}"
+    if params['code'] && params['id']
+      DB.unlink_tag params['code'], params['id']
+    end
+    {'result' => 'Ok'}.to_json
   end
 
 end

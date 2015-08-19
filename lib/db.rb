@@ -119,18 +119,6 @@ class Db
     @db.execute "delete from items where code = '?'", code
   end
 
-  # delete one tag
-  def delete_tag(code, tag)
-    item = read code
-    newtags = item['tags'].split(',').reject { |t| t == tag }.join(',')
-    @db.execute "update items set tags = '?' where code = '?'", [newtags, code]
-  end
-
-  # Delete all tags
-  def delete_tags(code)
-    @db.execute "update items set tags = '' where code = '?'", code
-  end
-
   #
   # Tags routines
   #
@@ -154,6 +142,29 @@ class Db
       @db.execute "insert into tags values ( ?, ?, ?)", [newid, tag, color]
     end
   end
+
+  # delete one tag
+  def delete_tag(id)
+    unlink_tag id
+    @db.execute "delete from tags where id = '?'", id
+  end
+
+  #
+  # Link / unlink tags
+  #
+  def link_tag(code, id)
+    @db.execute "insert into tags_items values (?, ?)", [code, id]
+  end
+
+  def unlink_tag(code, id)
+    @db.execute "delete from tags_items where item_code = ? and tag_id = ?", [code, id]
+  end
+
+  def unlink_item(code)
+    @db.execute "delete from tags_items where item_code = '?'", code
+  end
+
+
 end
 
 # Intaciate once.
