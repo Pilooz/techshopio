@@ -92,47 +92,49 @@
 
 <script>
 
-var chkBtn = $( "#checkoutBtn" );
-var frm = $("#checkoutForm");
-var cnt = $('#tags-list-panel, #tags-list');
-var countTags = 0; 
+$(function(){
 
-// Initial state of the page
-chkBtn.prop("disabled", true);
+	var chkBtn = $( "#checkoutBtn" );
+	var frm = $("#checkoutForm");
+	var cnt = $('#tags-list-panel, #tags-list');
+	var countTags = 0; 
+
+	// Initial state of the page
+	chkBtn.prop("disabled", true);
 
 
-cnt.each(function( index ) {
-  var action = "add";
-  // for every click on or in this element
-  cnt.eq(index).on('click', '> *', function() {
-    // append will remove the element
-    // Number( !0 ) => 1, Number( !1 ) => 0
-    if ( Number(!index) == 0) {
-    	// Adding tags
-    	countTags++;
-    } else {
-    	// Removing Tags
-    	countTags--;
-    	action = "remove";
-    }  
-    // Sending ajax request
-	$.ajax({
-	  url: "<%= APP_PATH %>/tags/" + action + "/?code=<%= @code %>&id=" + this.id.replace('tag', '')
-	})
-	  .done(function( msg ) {
-	  	// TODO : Flash message to say 'Ok!'
-	    console.log( msg );
+	cnt.each(function( index ) {
+	  var action = "add";
+	  // for every click on or in this element
+	  cnt.eq(index).on('click', '> *', function() {
+	    // append will remove the element
+	    // Number( !0 ) => 1, Number( !1 ) => 0
+	    if ( Number(!index) == 0) {
+	    	// Adding tags
+	    	countTags++;
+	    } else {
+	    	// Removing Tags
+	    	countTags--;
+	    	action = "remove";
+	    }  
+	    // Sending ajax request
+		$.ajax({
+		  url: "<%= APP_PATH %>/tags/" + action + "/?code=<%= @code %>&id=" + this.id.replace('tag', '')
+		})
+		  .done(function( res ) {
+		    console.log( res );
+		  });
+	    // updating the right layer
+	    cnt.eq( Number(!index) ).append( this );
+	    // Set right button state
+	    chkBtn.prop("disabled", (countTags <= 0) );
 	  });
-    // updating the right layer
-    cnt.eq( Number(!index) ).append( this );
-    // Set right button state
-    chkBtn.prop("disabled", (countTags <= 0) );
-  });
-});
+	});
 
-// Checkout button Listener
-chkBtn.click(function() {
-	frm.submit();
-});
+	// Checkout button Listener
+	chkBtn.click(function() {
+		frm.submit();
+	});
 
+});
 </script>

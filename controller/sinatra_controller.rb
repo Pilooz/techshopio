@@ -153,12 +153,18 @@ class SinatraApp < Sinatra::Base
   end
 
   #
-  # CRUD Room service !
+  # CRUD and Ajax Room service !
   #
 
   # Receive tags data
-  post APP_PATH + '/tags' do
-    DB.add_tag  params['tag'], params['color']
+  post APP_PATH + '/tag/add' do
+    DB.add_tag params['tag'], params['color']
+    # Redirect to the tags' list
+    redirect to APP_PATH + "/tags"
+  end
+
+  get APP_PATH + '/tag/delete' do
+    DB.delete_tag params['id']
     # Redirect to the tags' list
     redirect to APP_PATH + "/tags"
   end
@@ -178,5 +184,15 @@ class SinatraApp < Sinatra::Base
     end
     {'result' => 'Ok'}.to_json
   end
+
+  # sending Tag infos
+  get APP_PATH + '/tag/info/' do
+    res = nil
+    if params['id']
+      res = DB.select_items_for_tag params['id']
+    end
+    res.to_json
+  end
+
 
 end

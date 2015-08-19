@@ -78,15 +78,6 @@ class Db
     r
   end
 
-  # # Transforming an arrya in string
-  # def flatten_result(result)
-  #   s = ""
-  #   result.each { |row| 
-  #     s += 
-  #   }
-  # end
-
-
   # see if this item exists in database
   def exists?(code)
     @item = empty_row
@@ -137,11 +128,6 @@ class Db
   # Tags routines
   #
   def select_all_tags
-    # @db.execute "select t.id, t.tag, count(ti.item_code) 
-    #              from tags t, tags_items ti 
-    #              where t.id = ti.tag_id 
-    #              group by t.id, t.tag
-    #              order by t.tag"
     @db.execute "select t.id, t.tag, t.color, count(ti.item_code) count_items
                  from tags t left join tags_items ti
                  on t.id = ti.tag_id
@@ -157,6 +143,15 @@ class Db
                  order by t.tag", code
   end
 
+  def select_items_for_tag(id)
+    @db.execute "select t.tag, t.color, i.code, i.name, i.description, i.image_link, i.checkout
+                 from tags t, tags_items ti, items i
+                 where t.id = ti.tag_id
+                   and item_code = i.code
+                   and t.id = ?
+                 order by i.name", id
+  end
+
 
   # add tag
   def add_tag(tag, color)
@@ -169,7 +164,7 @@ class Db
   # delete one tag
   def delete_tag(id)
     unlink_tag id
-    @db.execute "delete from tags where id = '?'", id
+    @db.execute "delete from tags where id = ?", id
   end
 
   #
@@ -179,12 +174,12 @@ class Db
     @db.execute "insert into tags_items values (?, ?)", [code, id]
   end
 
-  def unlink_tag(code, id)
-    @db.execute "delete from tags_items where item_code = ? and tag_id = ?", [code, id]
+  def unlink_tag(id)
+    @db.execute "delete from tags_items where tag_id = ?", id
   end
 
   def unlink_item(code)
-    @db.execute "delete from tags_items where item_code = '?'", code
+    @db.execute "delete from tags_items where item_code = ?", code
   end
 
 
