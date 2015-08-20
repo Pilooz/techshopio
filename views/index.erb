@@ -53,11 +53,11 @@
 	        		<% if item['checkout'] == 'O' %>
 	        		<a href="<%=APP_PATH + '/item/checkin?code=' + item['code'] %>" class="btn btn-success" id="btnCheckin"><span class="glyphicon glyphicon-import"></span></a>
 	        		<% else %>
-	        		<a href="<%=APP_PATH + '/out?code=' + item['code'] %>" class="btn btn-info" id="btnCheckout"><span class="glyphicon glyphicon-export"></span></a>
+	        		<a href="<%=APP_PATH + '/out?code=' + item['code'] %>" class="btn btn-default" id="btnCheckout"><span class="glyphicon glyphicon-export"></span></a>
 	        		<% end %>
-	        		<a href="" class="btn btn-info" id="btnCamera"><span class="glyphicon glyphicon-camera"></span></a>
-	        		<a href="<%=APP_PATH + '/modify?code=' + item['code'] %>" class="btn btn-info" id="btnModify"><span class="glyphicon glyphicon-pencil"></span></a>
-	        		<a href="<%=APP_PATH + '/delete?code=' + item['code'] %>" class="btn btn-danger" id="btnDelete"><span class="glyphicon glyphicon-trash"></span></a>
+	        		<a href="" class="btn btn-default" id="btnCamera"><span class="glyphicon glyphicon-camera"></span></a>
+	        		<a href="<%=APP_PATH + '/modify?code=' + item['code'] %>" class="btn btn-default" id="btnModify"><span class="glyphicon glyphicon-pencil"></span></a>
+	        		<a href="<%=APP_PATH + '/delete?code=' + item['code'] %>" class="btn btn-danger" id="btnDelete"><span class="btn-danger glyphicon glyphicon-trash"></span></a>
 	        		</td>
 	        </tr>
 	      <% } %>
