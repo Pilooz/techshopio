@@ -121,7 +121,8 @@ class Db
 
   # deletes an item
   def delete_item(code)
-    @db.execute "delete from items where code = '?'", code
+    unlink_item code
+    @db.execute "delete from items where code = ?", code
   end
 
   #

@@ -100,6 +100,11 @@ class SinatraApp < Sinatra::Base
     erb :new_modify
   end
 
+  get APP_PATH + '/delete' do
+    DB.delete_item params['code']
+    redirect to APP_PATH + "/"
+  end
+
   get APP_PATH + '/barcode?' do
     @main_title = _t 'Generate barecodes'
     @nav_barcode = 'active'
