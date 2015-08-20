@@ -16,7 +16,7 @@
 	          	<%= _t 'Description' %>
 	          </th>
 	          <th>
-	          	<%= _t 'Checkout ?' %>
+	          	<%= _t 'Available' %> ?
 	          </th>
 	          <th>
 	          	<%= _t 'Actions' %>
@@ -46,12 +46,12 @@
 	        			<span class="label <%= t['color'] %>"><%= t['tag'] %></span> 
 	        		<% } %>
 	        	<% else %>
-	        	In !
+	        	<%= _t 'Available' %>
 	        	<% end %>
 	        	</td>
 	        	<td>
 	        		<% if item['checkout'] == 'O' %>
-	        		<a href="<%=APP_PATH + '/in?code=' + item['code'] %>" class="btn btn-success" id="btnCheckin"><span class="glyphicon glyphicon-import"></span></a>
+	        		<a href="<%=APP_PATH + '/item/checkin?code=' + item['code'] %>" class="btn btn-success" id="btnCheckin"><span class="glyphicon glyphicon-import"></span></a>
 	        		<% else %>
 	        		<a href="<%=APP_PATH + '/out?code=' + item['code'] %>" class="btn btn-info" id="btnCheckout"><span class="glyphicon glyphicon-export"></span></a>
 	        		<% end %>

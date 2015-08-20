@@ -74,7 +74,7 @@ class SinatraApp < Sinatra::Base
     erb :index
   end
 
-  get APP_PATH + '/out?' do
+  get APP_PATH + '/out' do
     @main_title = _t 'Check-out stuff from Techshop'
     @nav_out = 'active'
     # Getting all accessibles tags
@@ -82,19 +82,19 @@ class SinatraApp < Sinatra::Base
     erb :out 
   end
 
-  get APP_PATH + '/in?' do
-    @main_title = _t 'Check-in stuff in TechShop'
-    @nav_in = 'active'
-    erb :in
-  end
+  # get APP_PATH + '/in' do
+  #   @main_title = _t 'Check-in stuff in TechShop'
+  #   @nav_in = 'active'
+  #   erb :in
+  # end
 
-  get APP_PATH + '/new?' do
+  get APP_PATH + '/new' do
     @main_title = _t 'Adding stuff in TechShop'
     @nav_new = 'active'
     erb :new_modify
   end
 
-  get APP_PATH + '/modify?' do
+  get APP_PATH + '/modify' do
     @main_title = _t 'Modifying stuff in TechShop'
     @nav_new = 'active'
     erb :new_modify
@@ -150,8 +150,9 @@ class SinatraApp < Sinatra::Base
   end
 
   # Checkin item
-  post APP_PATH + '/item/checkin' do
+  get APP_PATH + '/item/checkin' do
     if params['code']
+      DB.unlink_item params['code']
       DB.checkin params['code']
     end
     redirect to APP_PATH + "/"
