@@ -16,7 +16,7 @@
 	          	<%= _t 'Description' %>
 	          </th>
 	          <th>
-	          	<%= _t 'Available' %> ?
+	          	<%= _t 'Assigned' %> ?
 	          </th>
 	          <th>
 	          	<%= _t 'Actions' %>
@@ -43,7 +43,7 @@
 	        	<td>
 	        	<% if item['checkout'] == 'O' %>
 	        		<% item['taglist'].each { | t | %>
-	        			<span class="label <%= t['color'] %>"><%= t['tag'] %></span> 
+	        			<span class="btn-xs <%= t['color'] %>"><%= t['tag'] %></span> 
 	        		<% } %>
 	        	<% else %>
 	        	<%= _t 'Available' %>
