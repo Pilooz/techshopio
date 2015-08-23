@@ -60,15 +60,14 @@ class SinatraApp < Sinatra::Base
       else
         # Item exist, if it was out, then check-in
         if !DB.checkout? @code
-          redirect to APP_PATH + "/in?code=#{@code}"
-        else
-          # If it is allready in, propose to modify it or checkout it
           redirect to APP_PATH + "/out?code=#{@code}"
+        else
+          # If it is allready in, propose to modify it or reduce list on it
+          redirect to APP_PATH + "/in?code=#{@code}"
         end
       end
     end
     erb :index
-    #redirect to APP_PATH + "/list"
   end
 
   get APP_PATH + '/list' do

@@ -44,6 +44,7 @@ TRANSLATE = {
   'Code' => {fr: 'Code'},
   'Tags' => {fr: 'Tags'},
   'Picture' => {fr: 'Image'},
+  'Assigned' => {fr: 'Affecté'},
   'Available' => {fr: 'Disponible'},
   'Actions' => {fr: 'Actions'},
   'Modifying stuff in TechShop' => {fr: 'Modifier un matériel'},
