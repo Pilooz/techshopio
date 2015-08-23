@@ -60,7 +60,14 @@
 
 				<div class="input-group input-group-lg">
 				  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-tags"></span></span>
-				  <div class="form-control" id="tags-list" name="tags-list"></div>
+				  <div class="form-control" id="tags-list" name="tags-list">
+					  <% @assigned_tags.each { | tag | %>
+						<div class="tag btn <%= tag['color'] %>" id="tag<%= tag['id'] %>">
+						  <span class="tag-title"><%= tag['tag'] %></span> 
+						  <!--span class="badge"><%= tag['count_items'] %></span-->
+						</div>
+					  <% } %>
+				  </div>
 				</div>
 		</div>
 	</div>
@@ -72,10 +79,9 @@
 	    	<h3 class="panel-title"><%= _t 'List of tags' %></h3>
 	  	</div>
 		<div class="panel-body" id="tags-list-panel">
-		  <% @tags.each { | tag | %>
+		  <% @available_tags.each { | tag | %>
 			<div class="tag btn <%= tag['color'] %>" id="tag<%= tag['id'] %>">
 			  <span class="tag-title"><%= tag['tag'] %></span> 
-			  <!--span class="badge"><%= tag['count_items'] %></span-->
 			</div>
 		  <% } %>
 		 </div>
@@ -97,8 +103,7 @@ $(function(){
 	var chkBtn = $( "#checkoutBtn" );
 	var frm = $("#checkoutForm");
 	var cnt = $('#tags-list-panel, #tags-list');
-	var countTags = 0; 
-
+	var countTags = $( "#ags-list" ).children(); // TODO : Compter le nombre d'éléments existants
 	// Initial state of the page
 	chkBtn.prop("disabled", true);
 

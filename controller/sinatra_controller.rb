@@ -41,7 +41,7 @@ class SinatraApp < Sinatra::Base
   end
 
   before do
-    @nav_in = ''
+    @nav_list = ''
     @nav_out = ''
     @nav_new = ''
     @nav_barcode = ''
@@ -67,26 +67,28 @@ class SinatraApp < Sinatra::Base
         end
       end
     end
+    erb :index
+    #redirect to APP_PATH + "/list"
+  end
+
+  get APP_PATH + '/list' do
     # Propose list of TechShop on index page
     @items = DB.select_all_items
-    @main_title = _t 'Welcome on TechShopIO !'
+    @nav_list = 'active'
+    @main_title = _t 'List'
     @placeholder =  _t 'type or scan reference'
-    erb :index
+    erb :list
   end
 
   get APP_PATH + '/out' do
     @main_title = _t 'Check-out stuff from Techshop'
     @nav_out = 'active'
+    # Getting all affected tags for this item
+    @assigned_tags = DB.select_tags_for_item @code
     # Getting all accessibles tags
-    @tags = DB.select_all_tags
+    @available_tags = DB.select_available_tags_for_item @code # DB.select_all_tags
     erb :out 
   end
-
-  # get APP_PATH + '/in' do
-  #   @main_title = _t 'Check-in stuff in TechShop'
-  #   @nav_in = 'active'
-  #   erb :in
-  # end
 
   get APP_PATH + '/new' do
     @main_title = _t 'Adding stuff in TechShop'
@@ -146,7 +148,7 @@ class SinatraApp < Sinatra::Base
     if params['code']
       DB.checkout params['code']
     end
-    redirect to APP_PATH + "/"
+    redirect to APP_PATH + "/list"
   end
 
   # Checkin item
@@ -155,7 +157,7 @@ class SinatraApp < Sinatra::Base
       DB.unlink_item params['code']
       DB.checkin params['code']
     end
-    redirect to APP_PATH + "/"
+    redirect to APP_PATH + "/list"
   end
 
   #
@@ -186,7 +188,7 @@ class SinatraApp < Sinatra::Base
   # Unlinking Tag from item
   get APP_PATH + '/tags/remove/' do
     if params['code'] && params['id']
-      DB.unlink_tag params['code'], params['id']
+      DB.unlink_tag_from_item params['code'], params['id']
     end
     {'result' => 'Ok'}.to_json
   end

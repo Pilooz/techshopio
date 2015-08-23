@@ -137,11 +137,22 @@ class Db
   end
 
   def select_tags_for_item(code)
-    @db.execute "select t.tag, t.color
+    @db.execute "select t.id, t.tag, t.color
                  from tags t, tags_items ti
                  where t.id = ti.tag_id
                    and item_code = ?
                  order by t.tag", code
+  end
+
+  def select_available_tags_for_item(code)
+    t1 = @db.execute "select t.id, t.tag, t.color
+                 from tags t, tags_items ti
+                 where t.id = ti.tag_id
+                   and item_code = ?", code
+    t2 = @db.execute "select t.id, t.tag, t.color
+                 from tags t 
+                 order by t.tag"
+    t2 - t1
   end
 
   def select_items_for_tag(id)
@@ -177,6 +188,10 @@ class Db
 
   def unlink_tag(id)
     @db.execute "delete from tags_items where tag_id = ?", id
+  end
+
+  def unlink_tag_from_item(code, id)
+    @db.execute "delete from tags_items where item_code = ? and tag_id = ?", [code, id]
   end
 
   def unlink_item(code)

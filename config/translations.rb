@@ -2,7 +2,7 @@
 # rubocop:disable Metrics/LineLength
 TRANSLATE = {
   'Welcome on TechShopIO !' => { fr: 'Bienvenue sur TechShopIO !'},
-  'In' => { fr: 'Entrées'},
+  'List' => { fr: 'Liste du matériel'},
   'Out' => { fr: 'Sorties'},
   'Populate DB' => { fr: 'Ajouts massifs'},
   'Check-in stuff in TechShop' => { fr: 'Ré-intégration de matériel' },

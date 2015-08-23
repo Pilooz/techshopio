@@ -1,67 +1,14 @@
 <div class="col-md-10 col-md-offset-1">
-	<div class="table-responsive">
-	    <table class="table table-bordered table-striped">
-	      <thead>
-	        <tr>
-	          <th>
-	          	<%= _t 'Picture' %>
-	          </th>
-	          <th>
-	          	<%= _t 'Code' %>
-	          </th>
-	          <th>
-	          	<%= _t 'Name' %>
-	          </th> 
-	          <th>
-	          	<%= _t 'Description' %>
-	          </th>
-	          <th>
-	          	<%= _t 'Available' %> ?
-	          </th>
-	          <th>
-	          	<%= _t 'Actions' %>
-	          </th>
-	        </tr>
-	      </thead>
-	      <tbody>
-	      <% @items.each { | item | %>
-	      	<% if item['checkout'] == 'O' %>
-	      	<tr class='out'>
-	        <% else %>
-	        <tr>
-	        <% end %>
-	        	<td>
-	        	<% if !item['image_link'].empty? %>
-	        		<img src="<%= item['image_link'] %>" alt="<%= item['name'] %>" class="img-responsive img-rounded">
-	        	<% else %>
-	        		&nbsp;
-	        	<% end %>
-	        	</td>
-	        	<td class="strikable"><%= item['code'] %></td>
-	        	<td class="strikable"><%= item['name'] %></td>
-	        	<td class="strikable"><%= item['description'] %></td>
-	        	<td>
-	        	<% if item['checkout'] == 'O' %>
-	        		<% item['taglist'].each { | t | %>
-	        			<span class="label <%= t['color'] %>"><%= t['tag'] %></span> 
-	        		<% } %>
-	        	<% else %>
-	        	<%= _t 'Available' %>
-	        	<% end %>
-	        	</td>
-	        	<td>
-	        		<% if item['checkout'] == 'O' %>
-	        		<a href="<%=APP_PATH + '/item/checkin?code=' + item['code'] %>" class="btn btn-success" id="btnCheckin"><span class="glyphicon glyphicon-import"></span></a>
-	        		<% else %>
-	        		<a href="<%=APP_PATH + '/out?code=' + item['code'] %>" class="btn btn-default" id="btnCheckout"><span class="glyphicon glyphicon-export"></span></a>
-	        		<% end %>
-	        		<a href="" class="btn btn-default" id="btnCamera"><span class="glyphicon glyphicon-camera"></span></a>
-	        		<a href="<%=APP_PATH + '/modify?code=' + item['code'] %>" class="btn btn-default" id="btnModify"><span class="glyphicon glyphicon-pencil"></span></a>
-	        		<a href="<%=APP_PATH + '/delete?code=' + item['code'] %>" class="btn btn-danger" id="btnDelete"><span class="btn-danger glyphicon glyphicon-trash"></span></a>
-	        		</td>
-	        </tr>
-	      <% } %>
-	      </tbody>
-	    </table>
-	  </div>
+<pre>
+Ici l'index du site.
+- QR Code pour tablette
+- Aide sur le lecteur de code barres
+- Aide sur le fonctionnement de l'application
+	- step 1 : imprimer des codes barres et référencer les matériels
+	- step 2 : ajouter par CSV
+	- step 3 : créer une étiquette (tag) par équipe
+	- step 4 : c'est prêt !
+- version
+- liens ??
+</pre>
 </div>
