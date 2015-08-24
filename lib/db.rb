@@ -47,12 +47,14 @@ class Db
   end
 
     # Get the highest id from a table
+    # Can't work with a varchar column.
   def lastid(table_name, col='code')
-    r = @db.get_first_row 'select max('+col+') as max from ' + table_name
-    if r['max'].nil?
-      r['max'] = "0"
-    end 
-    r['max'] 
+    # r = @db.get_first_row 'select max('+col+') as max from ' + table_name
+    # if r['max'].nil?
+    #   r['max'] = "0"
+    # end 
+    # r['max'] 
+    #@db.get_first_row 'select ' + col + ' as max from ' + table_name + ' order by ' + col + ' desc'
   end
 
   def empty_row

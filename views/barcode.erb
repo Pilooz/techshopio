@@ -48,6 +48,7 @@
 
 		$("#canvasTarget").hide();
 		$("#barcodeTarget").html("").show();
+		$("#barcodeResults .modal-title").html("<%= _t 'Barcodes' %> <%= _t 'From' %> "  + value +  " <%= _t 'To' %> " + value2);
 		// Creates divs
  		for ( var v = value; v <= value2; v++ ) {
  			$("#barcodeTarget").append("<div id='code-"+ v +"' class='gen'>"+ v +"</div>");
@@ -63,6 +64,7 @@
   	v2 = v2 =="" ? 0 : v2;
   	if (v2 >= v1) return true;
   	else {
+  		// TODO : display message on a better way
   		alert("<%= _t 'Please check values. You should put numeric values in order to generate several barcodes.' %>");
   		return false;
   	}
@@ -93,6 +95,11 @@
     $('input[name=btype]').click(function(){
       if ($(this).attr('id') == 'datamatrix') showConfig2D(); else showConfig1D();
     });
+
+    $('#printButton').click(function(){
+      print();
+    });
+
   });
 
 </script>
@@ -188,7 +195,7 @@
 		        </span>
 		        <input type="text" class="form-control" id="barcodeValueTo" name="barcodeValueTo" placeholder="<%=@placeholder %>" aria-describedby="barcodeValueTo" value="<%= @to %>">
 		        <span class="input-group-btn">
-		          <button class="btn btn-primary" type="button" onclick="generateBarcode();"><%= _t 'Generate !' %></button>
+		          <button class="btn btn-primary" type="button" onclick="generateBarcode();" data-toggle="modal" data-target="#barcodeResults"><%= _t 'Generate !' %></button>
 		        </span>
 		      </div>
 
@@ -198,11 +205,29 @@
 	</div>
 </div>
 
-<div clas="row">
-	<div class="col-md-9 col-md-offset-1">
-		<div id="barcodeTarget" class="barcodeTarget"></div>
-		<canvas id="canvasTarget" width="150" height="150"></canvas>
-	</div>
-</div>
-
+<!-- Barcode are in a modal window, easier to print. -->
+<div class="modal fade" id="barcodeResults" tabindex="-1" >
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+      	<div class="container-fluid">
+			<div clas="row">
+				<div class="col-md-9 col-md-offset-1">
+					<div id="barcodeTarget" class="barcodeTarget"></div>
+					<canvas id="canvasTarget" width="150" height="150"></canvas>
+				</div>
+			</div>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= _t 'Close' %></button>
+        <button type="button" id="printButton" class="btn btn-primary"><%= _t 'Print' %></button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 

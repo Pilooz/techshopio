@@ -110,7 +110,8 @@ class SinatraApp < Sinatra::Base
     @main_title = _t 'Generate barecodes'
     @nav_barcode = 'active'
     # Reading last id from db
-    lastid = DB.lastid 'items'
+    lastid = 0
+    ##### lastid = DB.lastid 'items' # Can't wwork with a varchar column
     if lastid =~ /[A-z]/ 
       # Extracting numerical part and alphabetical part
       @radical = lastid.tr('0-9', '')
