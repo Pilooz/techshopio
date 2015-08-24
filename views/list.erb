@@ -1,6 +1,6 @@
 <div class="col-md-10 col-md-offset-1">
 	<div class="table-responsive">
-	    <table class="table table-bordered table-striped">
+	    <table class="table table-bordered table-striped" id="techShopList">
 	      <thead>
 	        <tr>
 	          <th>
@@ -26,9 +26,9 @@
 	      <tbody>
 	      <% @items.each { | item | %>
 	      	<% if item['checkout'] == 'O' %>
-	      	<tr class='out'>
+	      	<tr class='out rch'>
 	        <% else %>
-	        <tr>
+	        <tr class="rch">
 	        <% end %>
 	        	<td>
 	        	<% if !item['image_link'].empty? %>
@@ -65,3 +65,33 @@
 	    </table>
 	  </div>
 </div>
+
+<script>
+// Bouton reset
+$("#reset-filter").click(function(){
+  $("#q").val("");
+  $("table#techShopList .rch").show();
+  $("#filter-count").text("").hide();
+  $(this).hide();
+});
+
+$("#q").keyup(function(){
+    var filter = $(this).val();
+    var count = 0;
+    $("#reset-filter span").show();
+    // Loop through the lines list
+    $("table#techShopList .rch").each(function(){
+         // Recherche
+        if ($(this).text().search(new RegExp(filter, "ig")) < 0) {
+          $(this).fadeOut();
+        } else {
+            $(this).show();
+            count++;
+        }
+    });
+
+    s = count > 1 ? "s" : "";
+    $("#filter-count").text(count + " résultat" + s).show();
+  });
+  $("#reset-filter span").hide();
+ </script>

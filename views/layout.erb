@@ -84,15 +84,12 @@
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
           </ul>
-          <!--ul class="nav nav-sidebar">
-            <li><a href="">Nav item</a></li>
-          </ul-->
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
           <h1 class="page-header"><%=@main_title%></h1>
         </div>
-<% if @nav_barcode.empty? && @nav_new.empty? && @nav_populate.empty?  && @nav_tags.empty? %>
         <div class="row">
+<% if @nav_barcode.empty? && @nav_new.empty? && @nav_populate.empty?  && @nav_tags.empty? %>
           <div class="col-md-4 col-md-offset-1">
             <form method="get" action="<%= APP_PATH %>/">
               <div class="input-group input-group-lg">
@@ -101,13 +98,29 @@
                 </span>
                 <input type="text" class="form-control" name="code" placeholder="<%=@placeholder %>" aria-describedby="code" value="<%=@code %>">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">Go!</button>
+                  <button class="btn btn-default" type="button"><%= _t 'Go!' %></button>
                 </span>
               </div>
               </form>
           </div>
-        </div>
 <% end %>
+<% if !@nav_list.empty? %>
+          <div class="col-md-4 col-md-offset-2">
+              <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="qdesc">
+                  <span class="glyphicon glyphicon-search"></span>
+                </span>
+                <input type="text" class="form-control" id="q" name="q" placeholder="<%= _t 'search in list' %>" aria-describedby="qdesc" value="">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" id="reset-filter" type="button">
+                    <span class="glyphicon glyphicon-remove-circle"></span>
+                  </button>
+                </span>
+              </div>
+              <div id="filter-count"></div>
+          </div>
+<% end %>
+        </div>
         <div class="row">
           <%= yield %>
         </div>
