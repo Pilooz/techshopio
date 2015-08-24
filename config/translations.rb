@@ -51,7 +51,8 @@ TRANSLATE = {
   'Dealing with tags stuff' => {fr: 'Gestion des tags'},
   'List of tags' => {fr: 'Liste des tags disponibles'},
   'Create a new tag' => {fr: 'Ajouter un tag'},
-  'Checkout' => {fr: 'Retirer du stock'}
+  'Go!' => {fr: 'Go!'},
+  'Search in list' => {fr: 'Rechercher dans la liste'}
 
 }
 

@@ -104,13 +104,13 @@
               </form>
           </div>
 <% end %>
-<% if !@nav_list.empty? %>
+<% if @nav_list == 'active' %>
           <div class="col-md-4 col-md-offset-2">
               <div class="input-group input-group-lg">
                 <span class="input-group-addon" id="qdesc">
                   <span class="glyphicon glyphicon-search"></span>
                 </span>
-                <input type="text" class="form-control" id="q" name="q" placeholder="<%= _t 'search in list' %>" aria-describedby="qdesc" value="">
+                <input type="text" class="form-control" id="q" name="q" placeholder="<%= _t 'Search in list' %>" aria-describedby="qdesc" value="">
                 <span class="input-group-btn">
                   <button class="btn btn-default" id="reset-filter" type="button">
                     <span class="glyphicon glyphicon-remove-circle"></span>
