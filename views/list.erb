@@ -78,7 +78,7 @@ $("#reset-filter").click(function(){
 $("#q").keyup(function(){
     var filter = $(this).val();
     var count = 0;
-    $("#reset-filter span").show();
+    $("#reset-filter").show();
     // Loop through the lines list
     $("table#techShopList .rch").each(function(){
          // Recherche
@@ -93,5 +93,5 @@ $("#q").keyup(function(){
     s = count > 1 ? "s" : "";
     $("#filter-count").text(count + " résultat" + s).show();
   });
-  $("#reset-filter span").hide();
+  $("#reset-filter").hide();
  </script>
