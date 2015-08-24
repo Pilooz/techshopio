@@ -21,8 +21,7 @@ class Db
         name varchar(255),
         description varchar(2000),
         image_link varchar2(2000),
-        checkout varchar(1) default 'N',
-        tags varchar2(2000)
+        checkout varchar(1) default 'N'
       );"
     puts "  Creating table tags..."
     @db.execute 'create table tags (
@@ -57,7 +56,7 @@ class Db
   end
 
   def empty_row
-    [{'code' => '', 'name' => '', 'description' => '',  'image_link' => '', 'checkout' => '', 'tags' => ''}]
+    [{'code' => '', 'name' => '', 'description' => '',  'image_link' => '', 'checkout' => ''}]
   end
 
   # select data
@@ -104,7 +103,7 @@ class Db
   # Adds an item
   def add_item(code, name, desc, image_link, tags)
     @db.execute 'INSERT INTO items (code, name, description,
-      image_link, tags) VALUES (?, ?, ?, ?, ?)', [code.to_s, name.to_s, desc.to_s, image_link.to_s, tags.to_s]
+      image_link) VALUES (?, ?, ?, ?, ?)', [code.to_s, name.to_s, desc.to_s, image_link.to_s]
   end
 
   def add_serveral_items (data)
