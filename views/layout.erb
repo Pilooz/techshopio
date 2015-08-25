@@ -90,7 +90,7 @@
           <h1 class="page-header"><%=@main_title%></h1>
         </div>
         <div class="row">
-<% if @nav_barcode.empty? && @nav_new.empty? && @nav_populate.empty?  && @nav_tags.empty? %>
+<% if @nav_barcode.empty? && @nav_new.empty? && @nav_populate.empty?  && @nav_tags.empty? &&@nav_picture.empty? %>
           <div class="col-md-4 col-md-offset-1">
             <form method="get" action="<%= APP_PATH %>/">
               <div class="input-group input-group-lg">

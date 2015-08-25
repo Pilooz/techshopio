@@ -47,6 +47,7 @@ class SinatraApp < Sinatra::Base
     @nav_barcode = ''
     @nav_populate = ''
     @nav_tags = ''
+    @nav_picture = ''
     @code = params['code']
     @item = DB.read @code
   end
@@ -133,6 +134,12 @@ class SinatraApp < Sinatra::Base
     @main_title = _t 'Populate TechShop massively'
     @nav_populate = 'active'
     erb :populate
+  end
+
+  get APP_PATH + '/picture' do
+    @main_title = _t 'Take a picture'
+    @nav_picture = 'active'
+    erb :picture
   end
 
   # Receive csv data
