@@ -54,7 +54,8 @@ TRANSLATE = {
   'List of tags' => {fr: 'Liste des tags disponibles'},
   'Create a new tag' => {fr: 'Ajouter un tag'},
   'Go!' => {fr: 'Go!'},
-  'Search in list' => {fr: 'Rechercher dans la liste'}
+  'Search in list' => {fr: 'Rechercher dans la liste'},
+  'elements in the TechShop' => {fr: 'éléments dans la TechShop'}
 
 }
 
@@ -72,7 +73,7 @@ HELP =  {
   'help-new-plus' => {en: 'Click this button to create item in database.', fr: "Enregistrez votre saisie en cliquant sur le bouton 'ajouter'."},
   'help-upload-csv' => {en: '', fr: "Votre fichier doit comporter les champs <code>code, name, description, tags</code> dans cet ordre. Le séparateur de champs est le point-virgule <code>;</code>. Le champ 'tags' peut comporter plusieurs tags tant qu'ils sont spéarés par une virgule.</p><p>Attention, il est important que c<b>haque code soit unique</b> dans votre fichier.</p>"},
   'help-upload-button' => {en: '', fr: "Insérez vos données dans la base en cliquant sur le bouton 'Charger'."},
-
+  'help-empty-techshop' => {en: 'Nothing in the TechShop for the moment ! please <a href="' + APP_PATH + '/populate">try this !</a>', fr: "La TechShop est vide ? <a href='" + APP_PATH + "/populate'>essayez ça !</a>" },
 }
 
 # rubocop:enable Metrics/LineLength

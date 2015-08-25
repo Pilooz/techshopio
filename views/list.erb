@@ -1,5 +1,10 @@
 <div class="col-md-10 col-md-offset-1">
 	<div class="table-responsive">
+	<% if @items %>
+		<p class="text-muted"><%=@items.count %> <%= _t 'elements in the TechShop' %></p>
+	<% else %>
+		<p class="text-warning"><%= _h 'help-empty-techshop' %></p>
+	<% end %>
 	    <table class="table table-bordered table-striped" id="techShopList">
 	      <thead>
 	        <tr>

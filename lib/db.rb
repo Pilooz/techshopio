@@ -103,9 +103,9 @@ class Db
   end
 
   # Adds an item
-  def add_item(code, name, desc, image_link, tags)
-    @db.execute 'INSERT INTO items (code, name, description,
-      image_link) VALUES (?, ?, ?, ?, ?)', [code.to_s, name.to_s, desc.to_s, image_link.to_s]
+  def add_item(code, name, desc, image_link)
+    @db.execute 'INSERT INTO items (code, name, 
+        description, image_link) VALUES (?, ?, ?, ?)', [code.to_s, name.to_s, desc.to_s, image_link.to_s]
   end
 
   def add_serveral_items (data)
@@ -114,7 +114,7 @@ class Db
       |k, v| k == 'code' 
     }.each { |row|
       puts "adding #{row[1]} ##{row[0]}"
-      add_item(row[0], row[1], row[2], '', row[3]) unless row[0].empty?
+      add_item(row[0], row[1], row[2], '') unless row[0].empty?
       n = n + 1
     }
     puts "#{n} inserted rows"
