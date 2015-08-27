@@ -5,10 +5,15 @@
 	  	</div>
 		<div class="panel-body">
 			<p><video id="video" autoplay="autoplay" class="img-thumbnail"></video></p>
-			<p><input type="button" id="buttonSnap" value="Prendre une photo" disabled="disabled" onclick="snapshot()" /></p>
 			<p>
-			<input type="button" id="buttonStart" value="Démarrer" disabled="disabled" onclick="start()" />
-			<input type="button" id="buttonStop" value="Arrêter" disabled="disabled" onclick="stop()" />
+				<button type="button" id="buttonSnap" value="Prendre une photo" class="btn btn-info" disabled="disabled" onclick="snapshot()">
+					<span class="glyphicon glyphicon-camera"></span></button>
+				<button type="button" id="buttonStart" class="btn btn-default" value="Démarrer" disabled="disabled" onclick="start()">
+					démarrer
+				</button>
+				<button type="button" id="buttonStop"  class="btn btn-danger" value="Arrêter" disabled="disabled" onclick="stop()">
+					<span class="glyphicon glyphicon-remove-circle"></span>
+				</button>
 			</p>
 			<p><canvas id="canvas" class="img-thumbnail"></canvas></p>
 		</div>
@@ -37,6 +42,13 @@ var video = document.getElementById('video');
 var canvas = document.getElementById('canvas');
 var videoStream = null;
 var preLog = document.getElementById('preLog');
+var stopButton = document.getElementById('buttonStop');
+var snapButton = document.getElementById('buttonSnap');
+var startButton = document.getElementById('buttonStart');
+
+function buttonState(b, s) {
+	if (b) b.disabled = s;
+}
 
 function log(text)
 {
@@ -58,10 +70,8 @@ function noStream()
 
 function stop()
 {
-	var myButton = document.getElementById('buttonStop');
-	if (myButton) myButton.disabled = true;
-	myButton = document.getElementById('buttonSnap');
-	if (myButton) myButton.disabled = true;
+	buttonState(stopButton, true);
+	buttonState(snapButton, true);
 	if (videoStream)
 	{
 		if (videoStream.stop) videoStream.stop();
@@ -77,14 +87,12 @@ function stop()
 			video.mozSrcObject = null;
 		video.src = "";
 	}
-	myButton = document.getElementById('buttonStart');
-	if (myButton) myButton.disabled = false;
+	buttonState(startButton, false);
 }
 
 function gotStream(stream)
 {
-	var myButton = document.getElementById('buttonStart');
-	if (myButton) myButton.disabled = true;
+	buttonState(startButton, true);
 	videoStream = stream;
 	log('Flux vidéo reçu.');
 	video.onerror = function ()
@@ -106,10 +114,8 @@ function gotStream(stream)
 	}
 	else if (window.URL) video.src = window.URL.createObjectURL(stream);
 	else video.src = stream;
-	myButton = document.getElementById('buttonSnap');
-	if (myButton) myButton.disabled = false;
-	myButton = document.getElementById('buttonStop');
-	if (myButton) myButton.disabled = false;
+	buttonState(snapButton, false);
+	buttonState(stopButton, false);
 }
 
 function start()
