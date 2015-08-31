@@ -1,10 +1,12 @@
 # coding: utf-8
 require 'sinatra/reloader' if ENV['RACK_ENV'] == 'development'
+require 'socket'
 
 # Application Sinatra servant de base
 class SinatraApp < Sinatra::Base
   configure do
     set :app_file, __FILE__
+    set :port, APP_PORT
     set :root, APP_ROOT
     set :public_folder, proc { File.join(root, 'public') }
     set :inline_templates, true
@@ -68,6 +70,8 @@ class SinatraApp < Sinatra::Base
         end
       end
     end
+    ip = Socket.ip_address_list.find { |ai| ai.ipv4? && !ai.ipv4_loopback? }.ip_address.to_s
+    @server_url = "http://" + ip + ":" + APP_PORT.to_s + APP_PATH + "/"
     erb :index
   end
 

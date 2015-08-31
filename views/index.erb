@@ -1,3 +1,12 @@
+<script src="<%= APP_PATH %>/app/vendor/jquery-qrcode-0.12.0/jquery.qrcode-0.12.0.min.js?v=<%=APP_VERSION%>"></script>
+<script>
+	$("#qrcode-area").qrcode({
+    "size": 100,
+    "color": "#3a3",
+    "text": "http://<%= @ip %>:9292<%= APP_PATH %>"
+});
+</script>
+
 <div class="col-md-10 col-md-offset-1">
 <pre>
 Ici l'index du site.
@@ -12,3 +21,28 @@ Ici l'index du site.
 - liens ??
 </pre>
 </div>
+
+<div class="col-md-5 col-md-offset-1">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+	    	<h3 class="panel-title"><%= _t 'Mobile access' %></h3>
+	  	</div>
+		<div class="panel-body">
+			<div class="pull-right" id="qrcode-area"></div>
+			<div>
+				<p>
+					<%= _h 'help-tablet-access' %><br /><br />
+					<b><%= @server_url %></b>
+				</p>
+			</div>
+		 </div>
+	</div>
+</div>
+
+<script>
+	$("#qrcode-area").qrcode({
+    "size": 100,
+    "color": "#3a3",
+    "text": "<%= @server_url %>"
+});
+</script>

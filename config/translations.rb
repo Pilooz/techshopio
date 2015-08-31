@@ -55,7 +55,8 @@ TRANSLATE = {
   'Create a new tag' => {fr: 'Ajouter un tag'},
   'Go!' => {fr: 'Go!'},
   'Search in list' => {fr: 'Rechercher dans la liste'},
-  'elements in the TechShop' => {fr: 'éléments dans la TechShop'}
+  'elements in the TechShop' => {fr: 'éléments dans la TechShop'},
+  'Mobile access' => {fr: 'Accès mobile'},
 
 }
 
@@ -74,6 +75,7 @@ HELP =  {
   'help-upload-csv' => {en: '', fr: "Votre fichier doit comporter les champs <code>code, name, description, tags</code> dans cet ordre. Le séparateur de champs est le point-virgule <code>;</code>. Le champ 'tags' peut comporter plusieurs tags tant qu'ils sont spéarés par une virgule.</p><p>Attention, il est important que c<b>haque code soit unique</b> dans votre fichier.</p>"},
   'help-upload-button' => {en: '', fr: "Insérez vos données dans la base en cliquant sur le bouton 'Charger'."},
   'help-empty-techshop' => {en: 'Nothing in the TechShop for the moment ! please <a href="' + APP_PATH + '/populate">try this !</a>', fr: "La TechShop est vide ? <a href='" + APP_PATH + "/populate'>essayez ça !</a>" },
+  'help-tablet-access' => {en: 'Flash this code to use TechShopIO on your pad or smartphone !', fr: "Retrouvez TechShopIO sur votre tablette ou smartphone en flashant ce QR-code !" },
 }
 
 # rubocop:enable Metrics/LineLength
