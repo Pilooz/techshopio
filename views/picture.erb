@@ -16,6 +16,14 @@
 				</button>
 			</p>
 			<p><canvas id="canvas" class="img-thumbnail"></canvas></p>
+			<p>
+			<button type="button" id="buttonCancel" class="btn btn-default" value="Démarrer" disabled="disabled" onclick="cancel()">
+				Cancel
+			</button>
+			<button type="button" id="buttonSave" value="Sauvegarder" class="btn btn-success" disabled="disabled" onclick="save()">
+				<span class="glyphicon glyphicon-camera"></span>
+			</button>
+			</p>
 		</div>
 	</div>
 </div>
@@ -36,15 +44,16 @@
 </div>
 
 
-<script type="text/javascript">//<![CDATA[
-"use strict";
+<script>
 var video = document.getElementById('video');
 var canvas = document.getElementById('canvas');
 var videoStream = null;
-var preLog = document.getElementById('preLog');
+var preLog = $('#preLog');
 var stopButton = document.getElementById('buttonStop');
 var snapButton = document.getElementById('buttonSnap');
 var startButton = document.getElementById('buttonStart');
+var saveButton = $('#buttonSave');
+var cancelButton = $('#buttonCancel');
 
 function buttonState(b, s) {
 	if (b) b.disabled = s;
@@ -52,15 +61,23 @@ function buttonState(b, s) {
 
 function log(text)
 {
-	if (preLog) preLog.textContent += ('\n' + text);
+	if (preLog) preLog.append('\n' + text);
 	else alert(text);
 }
 
+
 function snapshot()
 {
+	// TODO : Adjust size of video here.
 	canvas.width = video.videoWidth;
 	canvas.height = video.videoHeight;
 	canvas.getContext('2d').drawImage(video, 0, 0);
+	// Add button to save and post image or cancel
+	saveButton.show();
+	cancelButton.show();
+
+	buttonState(saveButton, true);
+	buttonState(cancelButton, true);
 }
 
 function noStream()
@@ -120,6 +137,9 @@ function gotStream(stream)
 
 function start()
 {
+	saveButton.hide();
+	cancelButton.hide();
+
 	if ((typeof window === 'undefined') || (typeof navigator === 'undefined')) log('Cette page requiert un navigateur Web avec les objets window.* et navigator.* !');
 	else if (!(video && canvas)) log('Erreur de contexte HTML !');
 	else
@@ -134,5 +154,8 @@ function start()
 	}
 }
 
+
+
+
 start();
-//]]></script>
+</script>
