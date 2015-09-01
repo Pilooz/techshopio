@@ -1,7 +1,7 @@
 <script src="<%= APP_PATH %>/app/vendor/jquery-qrcode-0.12.0/jquery.qrcode-0.12.0.min.js?v=<%=APP_VERSION%>"></script>
 
 <div class="col-md-5 col-md-offset-1">
-	<div class="panel panel-default">
+	<div class="panel panel-warning">
 		<div class="panel-heading">
 	    	<h3 class="panel-title"><%= _t 'Welcome on TechShopIO' %></h3>
 	  	</div>
@@ -33,18 +33,16 @@
 </div>
 
 <div class="col-md-10 col-md-offset-1">
-	<pre>
-	Ici l'index du site.
-	- QR Code pour tablette
-	- Aide sur le lecteur de code barres
-	- Aide sur le fonctionnement de l'application
-		- step 1 : imprimer des codes barres et référencer les matériels
-		- step 2 : ajouter par CSV
-		- step 3 : créer une étiquette (tag) par équipe
-		- step 4 : c'est prêt !
-	- version
-	- liens ??
-	</pre>
+	<div class="panel panel-warning">
+		<div class="panel-heading">
+	    	<h3 class="panel-title"><%= _t 'Quickstart Manual' %></h3>
+	  	</div>
+		<div class="panel-body">
+				<p>
+					<%= _h 'help-quickstarting' %><br /><br />
+				</p>
+		 </div>
+	</div>
 </div>
 
 
