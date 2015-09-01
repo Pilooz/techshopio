@@ -57,7 +57,8 @@ TRANSLATE = {
   'Search in list' => {fr: 'Rechercher dans la liste'},
   'elements in the TechShop' => {fr: 'éléments dans la TechShop'},
   'Welcome on TechShopIO' => {fr: 'Bienvenue sur TechShopIO'},
-  'Mobile access' => {fr: 'Accès mobile'}
+  'Mobile access' => {fr: 'Accès mobile'},
+  'Quickstart Manual' => {fr: 'Démarrage rapide'},
 
 }
 
@@ -88,11 +89,24 @@ HELP =  {
   'help-empty-techshop' => {en: 'Nothing in the TechShop for the moment ! please <a href="' + APP_PATH + '/populate">try this !</a>',
                             fr: "La TechShop est vide ? <a href='" + APP_PATH + "/populate'>essayez ça !</a>" },
   'help-tablet-access' => {en: 'Flash this code to use TechShopIO on your pad or smartphone !',
-                           fr: 'Retrouvez TechShopIO sur votre tablette ou smartphone en flashant ce QR-code !' },
+                           fr: "Retrouvez TechShopIO sur votre tablette ou smartphone en flashant ce QR-code !<br /><small>(Cela nécessite d'être connecté au même réseau local)</small>" },
   'help-no-lan' => {en: 'It seems that  you are not connected to lan. Please connect your computer to lan to be abble to use mobile features : Your compter will become the TechShopIO server.',
-                    fr: "Votre ordinateur n'est pas connecté au réseau (lan ou Wifi). Pour utiliser les fonctionnalités mobiles, vous devez le connecter au réseau de sorte qu'il devient le serveur TechShopIO.."},
+                    fr: "Votre ordinateur n'est pas connecté au réseau (lan ou Wifi). Pour utiliser les fonctionnalités mobiles, vous devez le connecter au réseau de sorte qu'il devienne le serveur TechShopIO.."},
   'help-general-purpose'  => { en: '',
-                               fr: ''}
+                               fr: "<p>TechShopIO est l'outil de gestion de techshop (prêt et retour de matériel), 
+                               dans le cadre de l'organisation de workshop évènementiels.</p>
+                               <p>TechShopIO s'utilise localement sur votre poste de travail, sans avoir forcément besoin du réseau et 
+                               encore moins d'une connexion internet.</p>
+                               <p>L'application est capable de lire 
+                               plusieurs <a href='" + APP_PATH + "/barcode'>types de codes barres</a> via un lecteur laser.</p>"},
+  'help-quickstarting' => {en: '',
+                           fr: "Pour être efficace rapidement, vous pouvez vous inspirer de la méthode pas-à-pas décrite ici :
+                                <ol>
+                                  <li><a href='" + APP_PATH + "/barcode'>Imprimer des codes barres</a> et référencer les matériels qui vont constituer la TechShop.</li>
+                                  <li>Préparer et ajouter par votre liste de matériels avec le chargement d'un <a href='" + APP_PATH + "/populate'>fichier CSV</a>.</li>
+                                  <li><a href='" + APP_PATH + "/tags'>Créer une étiquette</a> (tag) par personne succeptible d'emprunter du matériel.</li>
+                                  <li>C'est prêt ! Gérez votre <a href='" + APP_PATH + "/list'>liste</a> d'entrées/Sorties...</li>
+                                </ol>"},
 }
 
 # rubocop:enable Metrics/LineLength
