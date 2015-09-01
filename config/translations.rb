@@ -56,7 +56,8 @@ TRANSLATE = {
   'Go!' => {fr: 'Go!'},
   'Search in list' => {fr: 'Rechercher dans la liste'},
   'elements in the TechShop' => {fr: 'éléments dans la TechShop'},
-  'Mobile access' => {fr: 'Accès mobile'},
+  'Welcome on TechShopIO' => {fr: 'Bienvenue sur TechShopIO'},
+  'Mobile access' => {fr: 'Accès mobile'}
 
 }
 
@@ -64,20 +65,34 @@ TRANSLATE = {
 HELP =  {
   'help-barcode-chkval' => { en: 'Please check values. You should put numeric values in order to generate several barcodes.',
                              fr: "Vérifiez vos saisies. Entrez les nombres \\ndans l'ordre croissant pour générer une suite de codes barres."},
-  'help-new-barcode' => { en: 'The scanned barcode that you can modify.', fr: 'Contient le code barre scanné que vous pouvez modifier.'},
-  'help-new-name' => {en: 'A name or short description on item', fr: 'Nom ou libellé du nouveau matériel.'},
-  'help-new-desc' => {en: 'Long item description', fr: 'Description longue.'},
-  'help-new-picture' => {en: 'Picture figuring out item', fr: 'Photo représentant le matériel.'},
-  'help-new-camera' => {en: 'Take a picture with insight camera.', fr: "Prendre une photo avec l'appareil photo intégré."},
-  'help-new-checkout' => {en: "Check 'yes' if the item is out of Techshop", fr: "Cochez 'Oui' si le matériel est sorti de la Techshop."},
-  'help-new-tags' => {en: 'Add every tags you need.', fr: 'Ajouter vos tags.'},
-  'help-new-plus' => {en: 'Click this button to create item in database.', fr: "Enregistrez votre saisie en cliquant sur le bouton 'ajouter'."},
-  'help-upload-csv' => {en: '', fr: "Votre fichier doit comporter les champs <code>code, name, description, tags</code> dans cet ordre. Le séparateur de champs est le point-virgule <code>;</code>. Le champ 'tags' peut comporter plusieurs tags tant qu'ils sont spéarés par une virgule.</p><p>Attention, il est important que c<b>haque code soit unique</b> dans votre fichier.</p>"},
-  'help-upload-button' => {en: '', fr: "Insérez vos données dans la base en cliquant sur le bouton 'Charger'."},
-  'help-empty-techshop' => {en: 'Nothing in the TechShop for the moment ! please <a href="' + APP_PATH + '/populate">try this !</a>', fr: "La TechShop est vide ? <a href='" + APP_PATH + "/populate'>essayez ça !</a>" },
-  'help-tablet-access' => {en: 'Flash this code to use TechShopIO on your pad or smartphone !', fr: "Retrouvez TechShopIO sur votre tablette ou smartphone en flashant ce QR-code !" },
-  'help-no-lan' => {en: 'It seems that  you are not connected to lan. Please connect your computer to lan to be abble to use mobile features : Your compter will become the TechShopIO server.', fr: "Votre ordinateur n'est pas connecté au réseau (lan ou Wifi). Pour utiliser les fonctionnalités mobiles, vous devez le connecter au réseau de sorte qu'il devient le serveur TechShopIO.."},
-
+  'help-new-barcode' => { en: 'The scanned barcode that you can modify.',
+                          fr: 'Contient le code barre scanné que vous pouvez modifier.'},
+  'help-new-name' => {en: 'A name or short description on item',
+                      fr: 'Nom ou libellé du nouveau matériel.'},
+  'help-new-desc' => {en: 'Long item description',
+                      fr: 'Description longue.'},
+  'help-new-picture' => {en: 'Picture figuring out item',
+                         fr: 'Photo représentant le matériel.'},
+  'help-new-camera' => {en: 'Take a picture with insight camera.',
+                        fr: "Prendre une photo avec l'appareil photo intégré."},
+  'help-new-checkout' => {en: "Check 'yes' if the item is out of Techshop",
+                          fr: "Cochez 'Oui' si le matériel est sorti de la Techshop."},
+  'help-new-tags' => {en: 'Add every tags you need.',
+                      fr: 'Ajouter vos tags.'},
+  'help-new-plus' => {en: 'Click this button to create item in database.',
+                      fr: "Enregistrez votre saisie en cliquant sur le bouton 'ajouter'."},
+  'help-upload-csv' => {en: '',
+                        fr: "Votre fichier doit comporter les champs <code>code, name, description, tags</code> dans cet ordre. Le séparateur de champs est le point-virgule <code>;</code>. Le champ 'tags' peut comporter plusieurs tags tant qu'ils sont spéarés par une virgule.</p><p>Attention, il est important que c<b>haque code soit unique</b> dans votre fichier.</p>"},
+  'help-upload-button' => {en: '',
+                           fr: "Insérez vos données dans la base en cliquant sur le bouton 'Charger'."},
+  'help-empty-techshop' => {en: 'Nothing in the TechShop for the moment ! please <a href="' + APP_PATH + '/populate">try this !</a>',
+                            fr: "La TechShop est vide ? <a href='" + APP_PATH + "/populate'>essayez ça !</a>" },
+  'help-tablet-access' => {en: 'Flash this code to use TechShopIO on your pad or smartphone !',
+                           fr: 'Retrouvez TechShopIO sur votre tablette ou smartphone en flashant ce QR-code !' },
+  'help-no-lan' => {en: 'It seems that  you are not connected to lan. Please connect your computer to lan to be abble to use mobile features : Your compter will become the TechShopIO server.',
+                    fr: "Votre ordinateur n'est pas connecté au réseau (lan ou Wifi). Pour utiliser les fonctionnalités mobiles, vous devez le connecter au réseau de sorte qu'il devient le serveur TechShopIO.."},
+  'help-general-purpose'  => { en: '',
+                               fr: ''}
 }
 
 # rubocop:enable Metrics/LineLength
