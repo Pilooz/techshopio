@@ -76,6 +76,8 @@ HELP =  {
   'help-upload-button' => {en: '', fr: "Insérez vos données dans la base en cliquant sur le bouton 'Charger'."},
   'help-empty-techshop' => {en: 'Nothing in the TechShop for the moment ! please <a href="' + APP_PATH + '/populate">try this !</a>', fr: "La TechShop est vide ? <a href='" + APP_PATH + "/populate'>essayez ça !</a>" },
   'help-tablet-access' => {en: 'Flash this code to use TechShopIO on your pad or smartphone !', fr: "Retrouvez TechShopIO sur votre tablette ou smartphone en flashant ce QR-code !" },
+  'help-no-lan' => {en: 'It seems that  you are not connected to lan. Please connect your computer to lan to be abble to use mobile features : Your compter will become the TechShopIO server.', fr: "Votre ordinateur n'est pas connecté au réseau (lan ou Wifi). Pour utiliser les fonctionnalités mobiles, vous devez le connecter au réseau de sorte qu'il devient le serveur TechShopIO.."},
+
 }
 
 # rubocop:enable Metrics/LineLength

@@ -70,8 +70,12 @@ class SinatraApp < Sinatra::Base
         end
       end
     end
-    ip = Socket.ip_address_list.find { |ai| ai.ipv4? && !ai.ipv4_loopback? }.ip_address.to_s
-    @server_url = "http://" + ip + ":" + APP_PORT.to_s + APP_PATH + "/"
+    @ip = ""
+    s = Socket.ip_address_list.find { |ai| ai.ipv4? && !ai.ipv4_loopback? }
+    unless s.nil?
+      @ip = s.ip_address.to_s 
+    end
+    # @server_url = "http://" + ip + ":" + APP_PORT.to_s + APP_PATH + "/"
     erb :index
   end
 
