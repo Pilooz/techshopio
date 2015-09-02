@@ -43,7 +43,7 @@
 	        	<% end %>
 	        	</td>
 	        	<td class="strikable"><%= item['code'] %></td>
-	        	<td class="strikable"><%= item['name'] %></td>
+	        	<td class="strikable" id="name<%= item['code'] %>"><%= item['name'] %></td>
 	        	<td class="strikable"><%= item['description'] %></td>
 	        	<td>
 	        	<% if item['checkout'] == 'O' %>
@@ -60,10 +60,13 @@
 	        		<% else %>
 	        		<a href="<%=APP_PATH + '/out?code=' + item['code'] %>" class="btn btn-default" id="btnCheckout"><span class="glyphicon glyphicon-export"></span></a>
 	        		<% end %>
-	        		<button type="button" class="btn btn-default buttonCamera" data-item-id="<%= item['code'] %>" data-toggle="modal" data-target="#modalPicture">
-	        			<span class="glyphicon glyphicon-camera"></span>
-	        		</button>
-	        		<a href="<%=APP_PATH + '/modify?code=' + item['code'] %>" class="btn btn-default" id="btnModify"><span class="glyphicon glyphicon-pencil"></span></a>
+
+ 					<span class="btn btn-default btn-file" title="<%= _t 'take a picture of this item' %>">
+        				 <span class="glyphicon glyphicon-camera"></span>
+        				 <input type="file" class="btn btn-default" id="picture" name="picture" accept="image/*" capture="camera" />
+    				</span>
+
+ 	        		<a href="<%=APP_PATH + '/modify?code=' + item['code'] %>" class="btn btn-default" id="btnModify"><span class="glyphicon glyphicon-pencil"></span></a>
 	        		<a href="<%=APP_PATH + '/delete?code=' + item['code'] %>" class="btn btn-danger" id="btnDelete"><span class="btn-danger glyphicon glyphicon-trash"></span></a>
 	        		</td>
 	        </tr>
@@ -72,185 +75,3 @@
 	    </table>
 	  </div>
 </div>
-
- <!-- Camera in a modal window. -->
-<div class="modal fade" id="modalPicture" tabindex="-1" >
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" id="buttonCancel" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"></h4>
-      </div>
-      <div class="modal-body">
-      	<div class="container-fluid">
-			<div clas="row">
-				<div class="col-md-10 col-md-offset-1">
-					<video id="video" autoplay="autoplay" class="img-thumbnail"></video>
-					<canvas id="canvas"></canvas>
-					<button type="button" id="buttonSnap" value="Prendre une photo" class="btn btn-info">
-						<span class="glyphicon glyphicon-camera"></span>
-					</button>
-				</div>
-			</div>
-		</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="buttonDismiss" class="btn btn-default" data-dismiss="modal"><%= _t 'Cancel' %></button>
-		<button type="button" id="buttonSave" value="Sauvegarder" class="btn btn-success" data-dismiss="modal">
-			<span class="glyphicon glyphicon-check"></span> <%= _t 'Save' %>
-		</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<script>
-$(function(){
-	// Taking picture stuff
-	var video = document.getElementById('video');
-	var canvas = document.getElementById('canvas');
-	var videoStream = null;
-	var snapButton = $('#buttonSnap'); 
-	var saveButton = $('#buttonSave');
-	var cancelButton = $('#buttonCancel');
-	var itemId = "";
-
-	// Reset button
-	$("#reset-filter").click(function(){
-	  $("#q").val("");
-	  $("table#techShopList .rch").show();
-	  $("#filter-count").text("").hide();
-	  $(this).hide();
-	});
-
-	$("#q").keyup(function(){
-	    var filter = $(this).val();
-	    var count = 0;
-	    $("#reset-filter").show();
-	    // Loop through the lines list
-	    $("table#techShopList .rch").each(function(){
-	         // Recherche
-	        if ($(this).text().search(new RegExp(filter, "ig")) < 0) {
-	          $(this).fadeOut();
-	        } else {
-	            $(this).show();
-	            count++;
-	        }
-	    });
-
-	    s = count > 1 ? "s" : "";
-	    $("#filter-count").text(count + " résultat" + s).show();
-	  });
-	  $("#reset-filter").hide();
-
-
-	// Takes a Snap
-    $('#buttonSnap').click(function(){ 
-		// TODO : Adjust size of video here.
-		// TODO : Put some aweful jquery animation 
-		// to make the picture taking the place of video stram.
-		canvas.width = video.videoWidth;
-		canvas.height = video.videoHeight;
-		canvas.getContext('2d').drawImage(video, 0, 0);
-		// Add button to save and post image or cancel
-		saveButton.show();
-		cancelButton.show();
-
-		saveButton.disabled = true;
-		cancelButton.disabled = true;
-    });
-
-    // Open popup for webcam
-    $('.buttonCamera').click(function(){
-    	itemId = $(this).attr("data-item-id");
-    	// log($(this).attr("data-item-id"));
-    	log('Starting Cam... id = ' + itemId);
-    	start();
-    });
-
-// TODO : fire stop() when leaving page !
-    // $('#buttonCancel, #buttonDismiss').click(function(){
-    // 	log('Canceling picture !');
-    // });
-
-    $('#buttonSave').click(function(){
-    	log('Saving picture !');
-    });
-
-	function log(t)
-	{
-		if (console) console.log(t);
-		else alert(t);
-	}
-
-
-	function noStream()
-	{
-		log('L’accès à la caméra a été refusé !');
-	}
-
-	function start() {
-		saveButton.hide();
-		cancelButton.hide();
-
-		if ((typeof window === 'undefined') || (typeof navigator === 'undefined')) log('Cette page requiert un navigateur Web avec les objets window.* et navigator.* !');
-		else if (!(video && canvas)) log('Erreur de contexte HTML !');
-		else
-		{
-			log('Demande d’accès au flux vidéo…');
-			if (navigator.getUserMedia) navigator.getUserMedia({video:true}, gotStream, noStream);
-			else if (navigator.oGetUserMedia) navigator.oGetUserMedia({video:true}, gotStream, noStream);
-			else if (navigator.mozGetUserMedia) navigator.mozGetUserMedia({video:true}, gotStream, noStream);
-			else if (navigator.webkitGetUserMedia) navigator.webkitGetUserMedia({video:true}, gotStream, noStream);
-			else if (navigator.msGetUserMedia) navigator.msGetUserMedia({video:true, audio:false}, gotStream, noStream);
-			else log('getUserMedia() n’est pas disponible depuis votre navigateur !');
-		}    					
-	}
-
-	function stop() {
-		snapButton.disabled = true;
-		if (videoStream)
-		{
-			if (videoStream.stop) videoStream.stop();
-			else if (videoStream.msStop) videoStream.msStop();
-			videoStream.onended = null;
-			videoStream = null;
-		}
-		if (video)
-		{
-			video.onerror = null;
-			video.pause();
-			if (video.mozSrcObject)
-				video.mozSrcObject = null;
-			video.src = "";
-		}
-	}
-
-	function gotStream(stream)
-	{
-		videoStream = stream;
-		log('Flux vidéo reçu.');
-		video.onerror = function ()
-		{
-			log('video.onerror');
-			if (video) stop();
-		};
-		stream.onended = noStream;
-		if (window.webkitURL) video.src = window.webkitURL.createObjectURL(stream);
-		else if (video.mozSrcObject !== undefined)
-		{//FF18a
-			video.mozSrcObject = stream;
-			video.play();
-		}
-		else if (navigator.mozGetUserMedia)
-		{//FF16a, 17a
-			video.src = stream;
-			video.play();
-		}
-		else if (window.URL) video.src = window.URL.createObjectURL(stream);
-		else video.src = stream;
-		snapButton.disabled = false;
-	}
-
-});
-</script>

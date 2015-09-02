@@ -37,6 +37,7 @@ TRANSLATE = {
   'Tags (comma separated)' => {fr: 'Mots clés (séparés par des vigules)'},
   'Cancel' => {fr: 'Annuler'},
   'Close' => {fr: 'Fermer'},
+  'Save' => {fr: 'Enregistrer'},
   'Print' => {fr: 'Imprimer'},
   'Add' => {fr: 'Ajouter'},
   'Help' => {fr: 'Aide en ligne'},
@@ -59,6 +60,7 @@ TRANSLATE = {
   'Welcome on TechShopIO' => {fr: 'Bienvenue sur TechShopIO'},
   'Mobile access' => {fr: 'Accès mobile'},
   'Quickstart Manual' => {fr: 'Démarrage rapide'},
+  'Taking a picture' => {fr: 'Prendre un photo'},
 
 }
 

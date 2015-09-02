@@ -12,6 +12,7 @@ class SinatraApp < Sinatra::Base
     set :inline_templates, true
     set :protection, true
     set :lock, true
+    set :bind, '0.0.0.0' # allowing acces to the lan
   end
 
   configure :development do
