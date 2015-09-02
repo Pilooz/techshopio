@@ -60,7 +60,7 @@ TRANSLATE = {
   'Welcome on TechShopIO' => {fr: 'Bienvenue sur TechShopIO'},
   'Mobile access' => {fr: 'Accès mobile'},
   'Quickstart Manual' => {fr: 'Démarrage rapide'},
-  'Taking a picture' => {fr: 'Prendre un photo'},
+  'result' => {fr: 'resultat'},
 
 }
 

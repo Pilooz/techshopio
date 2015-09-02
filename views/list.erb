@@ -75,3 +75,58 @@
 	    </table>
 	  </div>
 </div>
+
+<script>
+$(document).ready( function() {
+	//
+	// In Page Search engine
+	//
+	// Reset button
+	$("#reset-filter").click(function(){
+	  $("#q").val("");
+	  $("table#techShopList .rch").show();
+	  $("#filter-count").text("").hide();
+	  $(this).hide();
+	});
+
+	// Search on keyup
+	$("#q").keyup(function(){
+	    var filter = $(this).val();
+	    var count = 0;
+	    $("#reset-filter").show();
+	    // Loop through the lines list
+	    $("table#techShopList .rch").each(function(){
+	         // Recherche
+	        if ($(this).text().search(new RegExp(filter, "ig")) < 0) {
+	          $(this).fadeOut();
+	        } else {
+	            $(this).show();
+	            count++;
+	        }
+	    });
+	    s = count > 1 ? "s" : "";
+	    $("#filter-count").text(count + " <%= _t 'result' %>" + s).show();
+	  });
+
+	//
+	// Picture taking or selection events
+	//
+    // $('.btn-file input[type=file]').on('fileselect', function(event, numFiles, label) {
+    //     console.log(numFiles);
+    //     console.log(label);
+    // });
+
+    // Init States of elements
+    $("#reset-filter").hide();
+
+});
+
+$(document).on('change', '.btn-file :file', function() {
+    var input = $(this),
+    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+	console.log("Saving " + numFiles + " file(s)");
+	console.log(label);
+	// Ajax.post et tout le bastringue...
+});
+</script>
