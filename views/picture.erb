@@ -56,6 +56,8 @@ $(function(){
 	// Takes a Snap
     $('#buttonSnap').click(function(){ 
 		// TODO : Adjust size of video here.
+		// TODO : Put some aweful jquery animation 
+		// to make the picture taking the place of video stram.
 		canvas.width = video.videoWidth;
 		canvas.height = video.videoHeight;
 		canvas.getContext('2d').drawImage(video, 0, 0);
@@ -80,10 +82,6 @@ $(function(){
     $('#buttonSave').click(function(){
     	log('Saving picture !');
     });
-
-	function buttonState(b, s) {
-		b.disabled = s;
-	}
 
 	function log(t)
 	{
