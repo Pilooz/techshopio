@@ -47,18 +47,20 @@
 
 
 <script>
-var ip = "<%= @ip %>";
-var url = "";
-	if (ip != "") {
-		url = "http://<%= @ip %>:<%= APP_PORT %><%= APP_PATH %>/";
-		$("#qrcode-area").qrcode({
-		    "size": 100,
-		    "color": "#3a3",
-		    "text": url
-		});
-		$("#url-area").html(url);
-	} else {
-		$("#qrcode-area").html("<%= _h 'help-no-lan' %>");
-	}
+$(document).ready( function() {
+	var ip = "<%= @ip %>";
+	var url = "";
+		if (ip != "") {
+			url = "http://<%= @ip %>:<%= APP_PORT %><%= APP_PATH %>/";
+			$("#qrcode-area").qrcode({
+			    "size": 100,
+			    "color": "#3a3",
+			    "text": url
+			});
+			$("#url-area").html(url);
+		} else {
+			$("#qrcode-area").html("<%= _h 'help-no-lan' %>");
+		}
+	});
 </script>
 

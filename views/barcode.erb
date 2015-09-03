@@ -15,6 +15,7 @@
 
 <script src="<%= APP_PATH %>/app/vendor/jquery-barcode/jquery-barcode.min.js?v=<%=APP_VERSION%>"></script>
 <script type="text/javascript">
+$(document).ready( function() {
 
   function generateBarcode(){
   	var radical = $("#barcodeValueRadical").val();
@@ -96,12 +97,16 @@
       if ($(this).attr('id') == 'datamatrix') showConfig2D(); else showConfig1D();
     });
 
+    $('#generateButton').click(function(){
+    	generateBarcode();
+    });
+
     $('#printButton').click(function(){
       print();
     });
 
   });
-
+});
 </script>
 
 <div clas="row">
@@ -195,7 +200,7 @@
 		        </span>
 		        <input type="text" class="form-control" id="barcodeValueTo" name="barcodeValueTo" placeholder="<%=@placeholder %>" aria-describedby="barcodeValueTo" value="<%= @to %>">
 		        <span class="input-group-btn">
-		          <button class="btn btn-primary" type="button" onclick="generateBarcode();" data-toggle="modal" data-target="#barcodeResults"><%= _t 'Generate !' %></button>
+		          <button class="btn btn-primary" type="button" id="generateButton" data-toggle="modal" data-target="#barcodeResults"><%= _t 'Generate !' %></button>
 		        </span>
 		      </div>
 

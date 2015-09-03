@@ -1,61 +1,61 @@
 <script>
-var inputType = "local";
+$(document).ready( function() {
+	var inputType = "local";
 
-function setPanelStatus(what, msg) {
-	$('#panel-form-csv .panel-heading #msg').html("");
-	$('#panel-form-csv').removeClass("panel-default panel-danger panel-success");
-	$('#panel-form-csv').addClass("panel-" + what);
-	if (msg) {
-		$('#panel-form-csv .panel-heading #msg').html(msg);
+	function setPanelStatus(what, msg) {
+		$('#panel-form-csv .panel-heading #msg').html("");
+		$('#panel-form-csv').removeClass("panel-default panel-danger panel-success");
+		$('#panel-form-csv').addClass("panel-" + what);
+		if (msg) {
+			$('#panel-form-csv .panel-heading #msg').html(msg);
+		}
 	}
-}
 
-function completeFn(results)
-{
-	if (results && results.errors)
+	function completeFn(results)
 	{
-		if (results.errors)
+		if (results && results.errors)
 		{
-			errorCount = results.errors.length;
-			s = errorCount > 1 ? "s" : "";
-			firstError = results.errors[0];
-			setPanelStatus("danger", errorCount + " error" + s + " occured in csv parsing, first : <code>" + results.errors[0] + "</code>");
-		} 
-		if (results.data && results.data.length > 0) rowCount = results.data.length;
+			if (results.errors)
+			{
+				errorCount = results.errors.length;
+				s = errorCount > 1 ? "s" : "";
+				firstError = results.errors[0];
+				setPanelStatus("danger", errorCount + " error" + s + " occured in csv parsing, first : <code>" + results.errors[0] + "</code>");
+			} 
+			if (results.data && results.data.length > 0) rowCount = results.data.length;
+		}
+
+		console.log("    Results:", results);
+		// Checking applicatives errors of csv structure
+		cols = results.data[0];
+		if (cols[0] != "code" || 
+			cols[1] != "name" || 
+			cols[2] != "description" || 
+			cols[3] != "tags" ) {
+
+			setPanelStatus("danger", "Some columns are misnamed or are in wrong order ! <code>" + cols + "</code>");
+		} else {
+			// Success here ! Setting status 'OK'
+			setPanelStatus("success", "Cool ! Your file is perfect...");
+			$("#jsondata").val(JSON.stringify(results.data));
+		}
+
+		// icky hack
+		setTimeout(enableButton, 100);
 	}
 
-	console.log("    Results:", results);
-	// Checking applicatives errors of csv structure
-	cols = results.data[0];
-	if (cols[0] != "code" || 
-		cols[1] != "name" || 
-		cols[2] != "description" || 
-		cols[3] != "tags" ) {
-
-		setPanelStatus("danger", "Some columns are misnamed or are in wrong order ! <code>" + cols + "</code>");
-	} else {
-		// Success here ! Setting status 'OK'
-		setPanelStatus("success", "Cool ! Your file is perfect...");
-		$("#jsondata").val(JSON.stringify(results.data));
+	function errorFn(err, file)
+	{
+		console.log("ERROR:", err, file);
+		enableButton();
 	}
 
-	// icky hack
-	setTimeout(enableButton, 100);
-}
-
-function errorFn(err, file)
-{
-	console.log("ERROR:", err, file);
-	enableButton();
-}
-
-function enableButton()
-{
-	$('#submit').prop('disabled', false);
-}
+	function enableButton()
+	{
+		$('#submit').prop('disabled', false);
+	}
 
 
-$(function(){
 
 	// Parsing file
 	$('#submit').click(function()
@@ -126,7 +126,6 @@ $(function(){
 	});
 
 });
-
 </script>
 
 <div class="col-md-5 col-md-offset-1">

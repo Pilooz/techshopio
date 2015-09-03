@@ -61,6 +61,7 @@ TRANSLATE = {
   'Mobile access' => {fr: 'Accès mobile'},
   'Quickstart Manual' => {fr: 'Démarrage rapide'},
   'result' => {fr: 'resultat'},
+  'Checkout' => {fr: 'Sortir'},
 
 }
 
