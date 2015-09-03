@@ -49,12 +49,9 @@ class Db
     # Get the highest id from a table
     # Can't work with a varchar column.
   def lastid(table_name, col='code')
-    # r = @db.get_first_row 'select max('+col+') as max from ' + table_name
-    # if r['max'].nil?
-    #   r['max'] = "0"
-    # end 
-    # r['max'] 
-    #@db.get_first_row 'select ' + col + ' as max from ' + table_name + ' order by ' + col + ' desc'
+    r = @db.get_first_row 'select ' + col + ' as max from ' + table_name + ' order by cast(' + col + ' As Int) desc'
+    puts "selecting lastid from #{table_name}.#{col} : #{r['max']}"
+    r['max']
   end
 
   def empty_row
@@ -169,7 +166,8 @@ class Db
   # add tag
   def add_tag(tag, color)
     unless tag.empty?
-      newid = lastid('tags', col='id').to_i + 1
+      newid = lastid('tags', col='id')
+      newid = newid + 1
       @db.execute "insert into tags values ( ?, ?, ?)", [newid, tag, color]
     end
   end

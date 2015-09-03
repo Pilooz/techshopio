@@ -17,7 +17,7 @@ class SinatraApp < Sinatra::Base
 
   configure :development do
     register Sinatra::Reloader
-    # also_reload '/path/to/some/file'
+    also_reload "#{APP_ROOT}/lib/db.rb"
     # dont_reload '/path/to/other/file'
   end
 
@@ -121,7 +121,7 @@ class SinatraApp < Sinatra::Base
     @nav_barcode = 'active'
     # Reading last id from db
     lastid = 0
-    ##### lastid = DB.lastid 'items' # Can't wwork with a varchar column
+    lastid = DB.lastid 'items', 'code'
     if lastid =~ /[A-z]/ 
       # Extracting numerical part and alphabetical part
       @radical = lastid.tr('0-9', '')
