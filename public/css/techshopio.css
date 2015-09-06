@@ -1,0 +1,242 @@
+      .input-group {
+        margin-bottom:10px;
+      }
+      .out .strikable{
+        background-color: #fdfdfd;
+        text-decoration:line-through;
+      }
+      #tags-list-panel button {
+        margin-bottom: 5px;
+        margin-right: 5px;
+      }
+
+      #tags-list {
+        float: none;
+      }
+
+      /* Styling input type=file as buttons 
+        http://stackoverflow.com/questions/11235206/twitter-bootstrap-form-file-element-upload-button
+      */
+      .btn-file {
+          position: relative;
+          overflow: hidden;
+      }
+      .btn-file input[type=file] {
+          position: absolute;
+          top: 0;
+          right: 0;
+          min-width: 100%;
+          min-height: 100%;
+          font-size: 100px;
+          text-align: right;
+          filter: alpha(opacity=0);
+          opacity: 0;
+          outline: none;
+          background: white;
+          cursor: inherit;
+          display: block;
+      }
+
+       /* Some others colors for tags, on twitter bootstrap model */
+       /* 
+          BROWN
+        */
+
+       .btn-brown {
+        color: #ffffff;
+        background-color: #A38566;
+        border-color: #cccccc;
+      }
+
+      .btn-brown:hover,
+      .btn-brown:focus,
+      .btn-brown:active,
+      .btn-brown.active,
+      .open .dropdown-toggle.btn-brown {
+        color: #ffffff;
+        background-color: #855C33;
+        border-color: #adadad;
+      }
+
+      .btn-brown:active,
+      .btn-brown.active,
+      .open .dropdown-toggle.btn-brown {
+        background-image: none;
+      }
+
+      .btn-brown.disabled,
+      .btn-brown[disabled],
+      fieldset[disabled] .btn-brown,
+      .btn-brown.disabled:hover,
+      .btn-brown[disabled]:hover,
+      fieldset[disabled] .btn-brown:hover,
+      .btn-brown.disabled:focus,
+      .btn-brown[disabled]:focus,
+      fieldset[disabled] .btn-brown:focus,
+      .btn-brown.disabled:active,
+      .btn-brown[disabled]:active,
+      fieldset[disabled] .btn-brown:active,
+      .btn-brown.disabled.active,
+      .btn-brown[disabled].active,
+      fieldset[disabled] .btn-brown.active {
+        background-color: #A38566;
+        border-color: #cccccc;
+      }
+
+      .btn-brown .badge {
+        color: #ffffff;
+        background-color: #fff;
+      }
+
+  
+      /* 
+          VIOLET
+       */
+
+       .btn-violet {
+        color: #ffffff;
+        background-color: #D685AD;
+        border-color: #cccccc;
+      }
+
+      .btn-violet:hover,
+      .btn-violet:focus,
+      .btn-violet:active,
+      .btn-violet.active,
+      .open .dropdown-toggle.btn-violet {
+        color: #ffffff;
+        background-color: #CC6699;
+        border-color: #cccccc;
+      }
+
+      .btn-violet:active,
+      .btn-violet.active,
+      .open .dropdown-toggle.btn-violet {
+        background-image: none;
+      }
+
+      .btn-violet.disabled,
+      .btn-violet[disabled],
+      fieldset[disabled] .btn-violet,
+      .btn-violet.disabled:hover,
+      .btn-violet[disabled]:hover,
+      fieldset[disabled] .btn-violet:hover,
+      .btn-violet.disabled:focus,
+      .btn-violet[disabled]:focus,
+      fieldset[disabled] .btn-violet:focus,
+      .btn-violet.disabled:active,
+      .btn-violet[disabled]:active,
+      fieldset[disabled] .btn-violet:active,
+      .btn-violet.disabled.active,
+      .btn-violet[disabled].active,
+      fieldset[disabled] .btn-violet.active {
+        background-color: #E0A3C2;
+        border-color: #cccccc;
+      }
+
+      .btn-violet .badge {
+        color: #ffffff;
+        background-color: #fff;
+      }
+
+      /* 
+          yellow
+      */
+
+       .btn-yellow {
+        color: #1A1A00;
+        background-color: #FFFF33;
+        border-color: #cccccc;
+      }
+
+      .btn-yellow:hover,
+      .btn-yellow:focus,
+      .btn-yellow:active,
+      .btn-yellow.active,
+      .open .dropdown-toggle.btn-yellow {
+        color: #1A1A00;
+        background-color: #FFFF00;
+        border-color: #adadad;
+      }
+
+      .btn-yellow:active,
+      .btn-yellow.active,
+      .open .dropdown-toggle.btn-yellow {
+        background-image: none;
+      }
+
+      .btn-yellow.disabled,
+      .btn-yellow[disabled],
+      fieldset[disabled] .btn-yellow,
+      .btn-yellow.disabled:hover,
+      .btn-yellow[disabled]:hover,
+      fieldset[disabled] .btn-yellow:hover,
+      .btn-yellow.disabled:focus,
+      .btn-yellow[disabled]:focus,
+      fieldset[disabled] .btn-yellow:focus,
+      .btn-yellow.disabled:active,
+      .btn-yellow[disabled]:active,
+      fieldset[disabled] .btn-yellow:active,
+      .btn-yellow.disabled.active,
+      .btn-yellow[disabled].active,
+      fieldset[disabled] .btn-yellow.active {
+        background-color: #FFFF33;
+        border-color: #cccccc;
+      }
+
+      .btn-yellow .badge {
+        color: #1A1A00;
+        background-color: #fff;
+      }
+
+       /* 
+          Black
+        */
+
+       .btn-black {
+        color: #ffffff;
+        background-color: #384048;
+        border-color: #cccccc;
+      }
+
+      .btn-black:hover,
+      .btn-black:focus,
+      .btn-black:active,
+      .btn-black.active,
+      .open .dropdown-toggle.btn-black {
+        color: #ffffff;
+        background-color: #0B0D0E;
+        border-color: #adadad;
+      }
+
+      .btn-black:active,
+      .btn-black.active,
+      .open .dropdown-toggle.btn-black {
+        background-image: none;
+      }
+
+      .btn-black.disabled,
+      .btn-black[disabled],
+      fieldset[disabled] .btn-black,
+      .btn-black.disabled:hover,
+      .btn-black[disabled]:hover,
+      fieldset[disabled] .btn-black:hover,
+      .btn-black.disabled:focus,
+      .btn-black[disabled]:focus,
+      fieldset[disabled] .btn-black:focus,
+      .btn-black.disabled:active,
+      .btn-black[disabled]:active,
+      fieldset[disabled] .btn-black:active,
+      .btn-black.disabled.active,
+      .btn-black[disabled].active,
+      fieldset[disabled] .btn-black.active {
+        background-color: #384048;
+        border-color: #cccccc;
+      }
+
+      .btn-black .badge {
+        color: #ffffff;
+        background-color: #fff;
+      }
+
+

@@ -31,46 +31,7 @@
       <script src="<%= APP_PATH %>/app/vendor/jquery-ui/jquery-ui.min.js?v=<%=APP_VERSION%>"></script>
       <script src="<%= APP_PATH %>/app/vendor/bootstrap/dist/js/bootstrap.min.js?v=<%=APP_VERSION%>"></script>
 
-      <style>
-      .input-group {
-        margin-bottom:10px;
-      }
-      .out .strikable{
-        background-color: #fdfdfd;
-        text-decoration:line-through;
-      }
-      #tags-list-panel button {
-        margin-bottom: 5px;
-        margin-right: 5px;
-      }
-
-      #tags-list {
-        float: none;
-      }
-
-      /* Styling input type=file as buttons 
-        http://stackoverflow.com/questions/11235206/twitter-bootstrap-form-file-element-upload-button
-      */
-      .btn-file {
-          position: relative;
-          overflow: hidden;
-      }
-      .btn-file input[type=file] {
-          position: absolute;
-          top: 0;
-          right: 0;
-          min-width: 100%;
-          min-height: 100%;
-          font-size: 100px;
-          text-align: right;
-          filter: alpha(opacity=0);
-          opacity: 0;
-          outline: none;
-          background: white;
-          cursor: inherit;
-          display: block;
-      }
-      </style>
+      <link href="<%= APP_PATH %>/css/techshopio.css?v=<%=APP_VERSION%>" rel="stylesheet" />
 
     </head>
 
@@ -112,7 +73,7 @@
           <h1 class="page-header"><%=@main_title%></h1>
         </div>
         <div class="row">
-<% if @nav_barcode.empty? && @nav_new.empty? && @nav_populate.empty?  && @nav_tags.empty? &&@nav_picture.empty? %>
+<% if @nav_barcode.empty? && @nav_new.empty? && @nav_populate.empty?  && @nav_tags.empty? %>
           <div class="col-md-4 col-md-offset-1">
             <form method="get" action="<%= APP_PATH %>/">
               <div class="input-group input-group-lg">
