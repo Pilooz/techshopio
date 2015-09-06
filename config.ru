@@ -6,10 +6,8 @@ require ::File.expand_path('../controller/sinatra_controller', __FILE__)
 
 use Rack::Rewrite do
   rewrite %r{/.*/(app)/(.*)}, '/$1/$2'
+  rewrite %r{/.*/(pictures)/(.*)}, '/$1/$2'
+  rewrite %r{/.*/(css)/(.*)}, '/$1/$2'
 end   
-
-map APP_PATH + '/api' do
-  run Api
-end
 
 run SinatraApp
