@@ -1,69 +1,29 @@
-GIT
-  remote: https://github.com/laclasse-com/laclasse-common.git
-  revision: 2bae56396d25b3988b029b868db76bdb2965ad2c
-  specs:
-    laclasse-common (0.2.3)
-      logstash-logger
-      redis-rack (~> 1.5.0)
-      rest-client
-
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.1)
-      i18n (~> 0.7)
-      json (~> 1.7, >= 1.7.7)
-      minitest (~> 5.1)
-      thread_safe (~> 0.3, >= 0.3.4)
-      tzinfo (~> 1.1)
     akami (1.3.0)
       gyoku (>= 0.4.0)
       nokogiri
     ast (2.0.0)
     astrolabe (1.3.0)
       parser (>= 2.2.0.pre.3, < 3.0)
-    axiom-types (0.1.1)
-      descendants_tracker (~> 0.0.4)
-      ice_nine (~> 0.11.0)
-      thread_safe (~> 0.3, >= 0.3.1)
     backports (3.6.4)
     builder (3.2.2)
     celluloid (0.16.0)
       timers (~> 4.0.0)
     coderay (1.1.0)
-    coercible (1.0.0)
-      descendants_tracker (~> 0.0.1)
     coveralls (0.8.1)
       json (~> 1.8)
       rest-client (>= 1.6.8, < 2)
       simplecov (~> 0.10.0)
       term-ansicolor (~> 1.3)
       thor (~> 0.19.1)
-    descendants_tracker (0.0.4)
-      thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
     docile (1.1.5)
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
-    equalizer (0.0.11)
     ffi (1.9.8)
     formatador (0.2.5)
-    grape (0.11.0)
-      activesupport
-      builder
-      hashie (>= 2.1.0)
-      multi_json (>= 1.3.2)
-      multi_xml (>= 0.5.2)
-      rack (>= 1.3.0)
-      rack-accept
-      rack-mount
-      virtus (>= 1.0.0)
-    grape-entity (0.4.5)
-      activesupport
-      multi_json (>= 1.3.2)
-    grape-swagger (0.10.1)
-      grape (>= 0.8.0)
-      grape-entity
     guard (2.12.5)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -86,33 +46,26 @@ GEM
       rubocop (~> 0.20)
     gyoku (1.3.1)
       builder (>= 2.1.2)
-    hashie (3.4.1)
     hitimes (1.2.2)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     httpi (2.4.0)
       rack
-    i18n (0.7.0)
-    ice_nine (0.11.1)
     json (1.8.2)
     listen (2.10.0)
       celluloid (~> 0.16.0)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
     logger (1.2.8)
-    logstash-event (1.2.02)
-    logstash-logger (0.10.1)
-      logstash-event (~> 1.2)
-      stud
     lumberjack (1.0.9)
     macaddr (1.7.1)
       systemu (~> 2.6.2)
     method_source (0.8.2)
     mime-types (2.5)
+    mini_magick (3.8.1)
+      subexec (~> 0.2.1)
     mini_portile (0.6.2)
-    minitest (5.6.1)
     multi_json (1.11.0)
-    multi_xml (0.5.5)
     nenv (0.2.0)
     netrc (0.10.3)
     nokogiri (1.6.6.2)
@@ -131,10 +84,6 @@ GEM
     puma (2.11.2)
       rack (>= 1.1, < 2.0)
     rack (1.6.1)
-    rack-accept (0.4.5)
-      rack (>= 0.4)
-    rack-mount (0.8.3)
-      rack (>= 1.0.0)
     rack-protection (1.5.3)
       rack
     rack-rewrite (1.5.1)
@@ -146,12 +95,6 @@ GEM
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     rb-readline (0.5.2)
-    redis (3.2.1)
-    redis-rack (1.5.0)
-      rack (~> 1.5)
-      redis-store (~> 1.1.0)
-    redis-store (1.1.4)
-      redis (>= 2.2)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
@@ -202,30 +145,22 @@ GEM
       tilt (~> 1.3)
     slop (3.6.0)
     sqlite3 (1.3.10)
-    stud (0.0.19)
+    subexec (0.2.3)
     systemu (2.6.5)
     term-ansicolor (1.3.0)
       tins (~> 1.0)
     thor (0.19.1)
-    thread_safe (0.3.5)
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
     tins (1.5.1)
     travis-lint (2.0.0)
       json
-    tzinfo (1.2.2)
-      thread_safe (~> 0.1)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
     uuid (2.3.7)
       macaddr (~> 1.0)
-    virtus (1.0.5)
-      axiom-types (~> 0.1)
-      coercible (~> 1.0)
-      descendants_tracker (~> 0.0, >= 0.0.3)
-      equalizer (~> 0.0, >= 0.0.9)
     wasabi (3.5.0)
       httpi (~> 2.0)
       nokogiri (>= 1.4.2)
@@ -235,15 +170,13 @@ PLATFORMS
 
 DEPENDENCIES
   coveralls
-  grape
-  grape-swagger
   guard
   guard-bundler
   guard-rspec
   guard-rubocop
   json
-  laclasse-common!
   logger
+  mini_magick
   nokogiri
   pry
   puma
