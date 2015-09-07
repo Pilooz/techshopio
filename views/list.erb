@@ -37,7 +37,7 @@
 	        <% end %>
 	        	<td>
 	        	<% if !item['image_link'].empty? %>
-	        		<img src="<%= APP_PATH %>/pictures/thumb-<%= item['image_link'] %>" alt="<%= item['name'] %>" class="img-responsive img-rounded">
+	        		<img src="<%= APP_PATH %>/pictures/thumb-<%= item['image_link'] %>" alt="<%= item['name'] %>" class="img-responsive img-rounded modalPicture" id="img-<%= item['code'] %>" data-toggle="modal" data-target="#bigPic">
 	        	<% else %>
 	        		<img id="img-<%= item['code'] %>"/>
 	        	<% end %>
@@ -77,6 +77,27 @@
 	  </div>
 </div>
 
+<!-- Modal for full width picture -->
+<div class="modal fade" id="bigPic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+        <div class="center-block">
+        	<img id="bigPicture" src="" width="500"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= _t 'Close' %></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
 $(document).ready( function() {
 	//
@@ -109,8 +130,12 @@ $(document).ready( function() {
 	    $("#filter-count").text(count + " <%= _t 'result' %>" + s).show();
 	  });
 
-    // Init States of elements
-    $("#reset-filter").hide();
+    // View picture in modal popup
+	$(".modalPicture").click(function(){
+	  var src = $(this).attr("src").replace(/thumb-/g, '');
+	  $("#myModalLabel").html($(this).attr("alt"));
+	  $("#bigPicture").attr("src", src);
+	});
 
 });
 
