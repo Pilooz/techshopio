@@ -15,7 +15,8 @@ gem 'rest-client'
 gem 'savon'
 gem 'sequel'
 gem 'sinatra'
-gem 'mini_magick'
+gem 'data_uri'
+# gem 'mini_magick'
 
 group :development do
   gem 'sinatra-contrib'

@@ -1,6 +1,7 @@
 # coding: utf-8
 require 'sinatra/reloader' if ENV['RACK_ENV'] == 'development'
 require 'socket'
+require 'data_uri'
 
 # Application Sinatra servant de base
 class SinatraApp < Sinatra::Base
@@ -50,7 +51,6 @@ class SinatraApp < Sinatra::Base
     @nav_barcode = ''
     @nav_populate = ''
     @nav_tags = ''
-    @nav_picture = ''
     @code = params['code']
     @item = DB.read @code
   end
@@ -113,7 +113,7 @@ class SinatraApp < Sinatra::Base
 
   get APP_PATH + '/delete' do
     DB.delete_item params['code']
-    redirect to APP_PATH + "/"
+    redirect to APP_PATH + "/list"
   end
 
   get APP_PATH + '/barcode?' do
@@ -143,12 +143,6 @@ class SinatraApp < Sinatra::Base
     @main_title = _t 'Populate TechShop massively'
     @nav_populate = 'active'
     erb :populate
-  end
-
-  get APP_PATH + '/picture' do
-    @main_title = _t 'Take a picture'
-    @nav_picture = 'active'
-    erb :picture
   end
 
   # Receive csv data
@@ -218,5 +212,48 @@ class SinatraApp < Sinatra::Base
     res.to_json
   end
 
+  # Posting thumbnail in Base64 mode.
+  post APP_PATH + '/item/picture' do
+    if params['code'] && params['label'] && params['thumblabel'] && params['thumb'] && params['picture']
+      begin
+        uri = URI::Data.new params['thumb']
+        # Writing thumbnail
+        File.open("#{APP_ROOT}/public/pictures/#{params['thumblabel']}", 'wb') do |f|
+          f.write uri.data 
+        end
+        # Writing picture
+        File.open("#{APP_ROOT}/public/pictures/#{params['label']}", 'wb') do |f|
+          f.write (params['picture'][:tempfile].read)
+        end
+        # Updating db.
+        DB.update_item_image_link @code, params['label']
+        {'result' => 'Ok'}.to_json
+      rescue Exception => e
+        puts "#{e.message}"
+        e.backtrace[0..10].each { |t| puts "#{t}"}
+        {'result' => 'Error', "message" => e.message }.to_json
+      end
+    end
+  end
+
+  #   # sending update inmage link
+  # post APP_PATH + '/item/picture' do
+  #   if params['code'] && params['label'] && params['picture']
+  #    begin
+  #       # Writing file
+  #       File.open("#{APP_ROOT}/public/pictures/#{params['label']}", 'wb') do |f|
+  #         f.write (params['picture'][:tempfile].read)
+  #       end
+  #       DB.update_item_image_link @code, params['label']
+
+  #       {'result' => 'Ok'}.to_json
+  #     rescue Exception => e
+  #       puts "#{e.message}"
+  #       e.backtrace[0..10].each { |t| puts "#{t}"}
+  #       {'result' => 'Error', "message" => e.message }.to_json
+  #     end
+  #   end
+  #   {'result' => 'Ok'}.to_json
+  # end
 
 end

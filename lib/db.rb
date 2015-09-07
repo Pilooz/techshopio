@@ -105,6 +105,11 @@ class Db
         description, image_link) VALUES (?, ?, ?, ?)', [code.to_s, name.to_s, desc.to_s, image_link.to_s]
   end
 
+  # Updates an item image_link
+  def update_item_image_link(code,  image_link)
+    @db.execute 'update items set image_link = ? where code = ?', [image_link.to_s, code.to_s]
+  end
+
   def add_serveral_items (data)
     n = 0
     data.reject! { 
