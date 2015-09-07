@@ -236,24 +236,4 @@ class SinatraApp < Sinatra::Base
     end
   end
 
-  #   # sending update inmage link
-  # post APP_PATH + '/item/picture' do
-  #   if params['code'] && params['label'] && params['picture']
-  #    begin
-  #       # Writing file
-  #       File.open("#{APP_ROOT}/public/pictures/#{params['label']}", 'wb') do |f|
-  #         f.write (params['picture'][:tempfile].read)
-  #       end
-  #       DB.update_item_image_link @code, params['label']
-
-  #       {'result' => 'Ok'}.to_json
-  #     rescue Exception => e
-  #       puts "#{e.message}"
-  #       e.backtrace[0..10].each { |t| puts "#{t}"}
-  #       {'result' => 'Error', "message" => e.message }.to_json
-  #     end
-  #   end
-  #   {'result' => 'Ok'}.to_json
-  # end
-
 end
