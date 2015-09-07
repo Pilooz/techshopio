@@ -1,60 +1,46 @@
-<div class="col-md-5 col-md-offset-1">
+<div class="col-md-6 col-md-offset-1">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 	    	<h3 class="panel-title"><%= _t 'New Item' %></h3>
 	  	</div>
 		<div class="panel-body">
 		    <form method="post" action="<%=APP_PATH + '/new?' %>">
-				<div class="input-group">
-				  <span class="input-group-addon input-group-lg" id="basic-addon0"><span class="glyphicon glyphicon-barcode"></span></span>
-				  <input type="text" class="form-control" id="code" name="code" placeholder="<%= _t 'Code' %>" aria-describedby="basic-addon0" value="<%= @code %>">
-				</div>
-
-				<div class="input-group">
-				  <span class="input-group-addon input-group-lg" id="basic-addon1"><span class="glyphicon glyphicon-bookmark"></span></span>
-				  <input type="text" class="form-control" id="name" name="name" placeholder="<%= _t 'Name' %>" aria-describedby="basic-addon1" value="<%= @item[0]['name'] %>">
-				</div>
-
-				<div class="input-group">
-				  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-list-alt"></span></span>
-				  <textarea class="form-control" id="desc" name="desc" placeholder="<%= _t 'Description' %>" aria-describedby="basic-addon2" rows="3"><%= @item[0]['description'] %></textarea>
-				</div>
-
-				<div class="input-group">
-				  <span class="input-group-addon input-group-lg" id="basic-addon3">
-				  <% unless @item[0]['image_link'].empty? %>
-				  	<img src="<%= @item[0]['image_link'] %>" class="img img-responsive img-rounded" alt=""/>
-				  <% else %>
-				  <span class="glyphicon glyphicon-picture"></span>
-				  <% end %>
-				  </span>
-				  <input type="file" class="form-control" id="image_link" name="image_link" aria-describedby="basic-addon3" accept="image/*" capture="camera">
-		          <span class="input-group-btn">
-					  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-camera"></span></button>
-				  </span>
-				</div>
-
-
-				<!-- <div class="input-group">
-					<span class="input-group-addon input-group-lg" id="basic-addon5"><span class="glyphicon glyphicon-export"></span></span>
-					<div class="form-control">
-						<label class="radio-inline">
-						  <input type="radio" name="checkout" id="checkoutY" value="true" aria-describedby="basic-addon5"> <%= _t 'Yes' %>
-						</label>
-						<label class="radio-inline">
-						  <input type="radio" name="checkout" id="checkoutN" value="false" checked> <%= _t 'No' %>
-						</label>
+		    	<div class="col-md-4">
+					<% unless @item[0]['image_link'].empty? %>
+						<img src="<%= APP_PATH %>/pictures/thumb-<%= @item[0]['image_link'] %>" width="200" alt="<%= @item[0]['name'] %>" class="img-responsive img-rounded">
+					<% end %>
+					<br />
+					<span class="btn btn-default btn-file" title="<%= _t 'take a picture of this item' %>">
+						<span class="glyphicon glyphicon-camera"></span>
+						 	<input type="file" class="btn btn-default" id="picture-<%= @item[0]['code'] %>" name="picture" accept="image/png" />
+					</span>
+	    		</div>
+	    		<div class="col-md-8">
+					<div class="input-group">
+					  <span class="input-group-addon input-group-lg" id="basic-addon0"><span class="glyphicon glyphicon-barcode"></span></span>
+					  <input type="text" class="form-control" id="code" name="code" placeholder="<%= _t 'Code' %>" aria-describedby="basic-addon0" value="<%= @code %>">
 					</div>
-				</div> -->
 
-				<button type="button" class="btn btn-default"><%= _t 'Cancel' %></button>
-				<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>&nbsp;<%= _t 'Add' %></button>
+					<div class="input-group">
+					  <span class="input-group-addon input-group-lg" id="basic-addon1"><span class="glyphicon glyphicon-bookmark"></span></span>
+					  <input type="text" class="form-control" id="name" name="name" placeholder="<%= _t 'Name' %>" aria-describedby="basic-addon1" value="<%= @item[0]['name'] %>">
+					</div>
+
+					<div class="input-group">
+					  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-list-alt"></span></span>
+					  <textarea class="form-control" id="desc" name="desc" placeholder="<%= _t 'Description' %>" aria-describedby="basic-addon2" rows="3"><%= @item[0]['description'] %></textarea>
+					</div>
+
+					<button type="button" class="btn btn-default"><%= _t 'Cancel' %></button>
+					<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>&nbsp;<%= _t 'Add' %>
+					</button>
+				</div>
 			</form>
 		</div>
 	</div>
 </div>
 
-<div class="col-md-5">
+<div class="col-md-4">
 	<div class="panel panel-info">
 		<div class="panel-heading">
 	    	<h3 class="panel-title"><%= _t 'Help' %></h3>

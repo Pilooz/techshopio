@@ -64,7 +64,8 @@
  					<span class="btn btn-default btn-file" title="<%= _t 'take a picture of this item' %>">
         				 <span class="glyphicon glyphicon-camera"></span>
         				 <input type="file" class="btn btn-default" id="picture-<%= item['code'] %>" name="picture" accept="image/*" />
-    				</span><!--remove capture="camera" to have to choice of selecting a saved image or take a new one on both Ios and Android-->
+    				</span>
+    				<!--remove capture="camera" to have to choice of selecting a saved image or take a new one on both Ios and Android-->
 
  	        		<a href="<%=APP_PATH + '/modify?code=' + item['code'] %>" class="btn btn-default" id="btnModify"><span class="glyphicon glyphicon-pencil"></span></a>
 	        		<a href="<%=APP_PATH + '/delete?code=' + item['code'] %>" class="btn btn-danger" id="btnDelete"><span class="btn-danger glyphicon glyphicon-trash"></span></a>
