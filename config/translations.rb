@@ -40,6 +40,7 @@ TRANSLATE = {
   'Save' => {fr: 'Enregistrer'},
   'Print' => {fr: 'Imprimer'},
   'Add' => {fr: 'Ajouter'},
+  'Modify' => {fr: 'Modifier'},
   'Help' => {fr: 'Aide en ligne'},
   'New Item' => {fr: 'Nouveau matériel'},
   'Send' => {fr: 'Envoyer'},

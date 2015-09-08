@@ -1,13 +1,13 @@
 <div class="col-md-6 col-md-offset-1">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-	    	<h3 class="panel-title"><%= _t 'New Item' %></h3>
+	    	<h3 class="panel-title"><%= _t @action + ' item' %></h3>
 	  	</div>
 		<div class="panel-body">
-		    <form method="post" action="<%=APP_PATH + '/new?' %>">
+		    <form method="post" action="<%=APP_PATH + '/' + @action + '?' %>">
 		    	<div class="col-md-4">
 					<% unless @item[0]['image_link'].empty? %>
-						<img src="<%= APP_PATH %>/pictures/thumb-<%= @item[0]['image_link'] %>" width="200" alt="<%= @item[0]['name'] %>" class="img-responsive img-rounded">
+						<img src="<%= APP_PATH %>/pictures/<%= @item[0]['image_link'] %>" width="" alt="<%= @item[0]['name'] %>" class="img-responsive img-rounded">
 					<% end %>
 					<br />
 					<span class="btn btn-default btn-file" title="<%= _t 'take a picture of this item' %>">
@@ -32,7 +32,12 @@
 					</div>
 
 					<button type="button" class="btn btn-default"><%= _t 'Cancel' %></button>
-					<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>&nbsp;<%= _t 'Add' %>
+					<button type="button" class="btn btn-success">
+					<% if @action  == 'new' %>
+						<span class="glyphicon glyphicon-plus"></span>&nbsp;<%= _t 'Add' %>
+					<% else %>
+						<span class="glyphicon glyphicon-ok"></span>&nbsp;<%= _t 'Modify' %>
+					<% end %>
 					</button>
 				</div>
 			</form>
@@ -79,3 +84,4 @@
 		</div>
 	</div>
 </div>
+

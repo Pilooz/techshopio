@@ -102,12 +102,14 @@ class SinatraApp < Sinatra::Base
   get APP_PATH + '/new' do
     @main_title = _t 'Adding stuff in TechShop'
     @nav_new = 'active'
+    @action = 'new'
     erb :new_modify
   end
 
   get APP_PATH + '/modify' do
     @main_title = _t 'Modifying stuff in TechShop'
     @nav_new = 'active'
+    @action = 'modify'
     erb :new_modify
   end
 
