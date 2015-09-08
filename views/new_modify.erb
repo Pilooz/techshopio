@@ -18,11 +18,14 @@
 					</span>
 	    		</div>
 	    		<div class="col-md-8">
-					<div class="input-group">
-					  <span class="input-group-addon input-group-lg" id="basic-addon0"><span class="glyphicon glyphicon-barcode"></span></span>
-					  <input type="text" class="form-control" id="code" name="code" placeholder="<%= _t 'Code' %>" aria-describedby="basic-addon0" value="<%= @code %>">
-					</div>
-
+	    			<% if @action == 'modify' %>
+	    				<input type="hidden" name="code" value="<%= @code %>">
+	    			<% else %>
+						<div class="input-group">
+						  <span class="input-group-addon input-group-lg" id="basic-addon0"><span class="glyphicon glyphicon-barcode"></span></span>
+						  <input type="text" class="form-control" id="code" name="code" placeholder="<%= _t 'Code' %>" aria-describedby="basic-addon0" value="<%= @code %>">
+						</div>
+					<% end %>
 					<div class="input-group">
 					  <span class="input-group-addon input-group-lg" id="basic-addon1"><span class="glyphicon glyphicon-bookmark"></span></span>
 					  <input type="text" class="form-control" id="name" name="name" placeholder="<%= _t 'Name' %>" aria-describedby="basic-addon1" value="<%= @item[0]['name'] %>">
@@ -30,7 +33,7 @@
 
 					<div class="input-group">
 					  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-list-alt"></span></span>
-					  <textarea class="form-control" id="desc" name="desc" placeholder="<%= _t 'Description' %>" aria-describedby="basic-addon2" rows="3"><%= @item[0]['description'] %></textarea>
+					  <textarea class="form-control" id="description" name="description" placeholder="<%= _t 'Description' %>" aria-describedby="basic-addon2" rows="3"><%= @item[0]['description'] %></textarea>
 					</div>
 
 					<a href="<%= APP_PATH %>/list" class="btn btn-default">
