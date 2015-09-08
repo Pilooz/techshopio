@@ -155,6 +155,26 @@ class SinatraApp < Sinatra::Base
     redirect to APP_PATH + "/"
   end
 
+   # Create or modify item
+  post APP_PATH + '/item/new_modify' do
+    if params['code']
+      begin
+        if params['action'] == 'new'
+          # TODO : Deals with Image Upload !!
+          DB.add_item params['code'], params['name'], params['description'], params['image_link']
+        else
+          DB.update_item params['code'], params['name'], params['description'], params['image_link']
+        end
+      rescue Exception => e
+        puts "#{e.message}"
+        e.backtrace[0..10].each { |t| puts "#{t}"}
+        {'result' => 'Error', "message" => e.message }.to_json
+      end
+
+    end
+     redirect to APP_PATH + "/list"
+  end
+
    # Checkout item
   post APP_PATH + '/item/checkout' do
     if params['code']

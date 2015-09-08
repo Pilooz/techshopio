@@ -63,6 +63,7 @@ TRANSLATE = {
   'Quickstart Manual' => {fr: 'Démarrage rapide'},
   'result' => {fr: 'resultat'},
   'Checkout' => {fr: 'Sortir'},
+  'Back to list' => {fr: 'Retour à la liste'}
 
 }
 

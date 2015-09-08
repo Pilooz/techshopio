@@ -4,10 +4,12 @@
 	    	<h3 class="panel-title"><%= _t @action + ' item' %></h3>
 	  	</div>
 		<div class="panel-body">
-		    <form method="post" action="<%=APP_PATH + '/' + @action + '?' %>">
+		    <form method="post" id="newModifyFrm" action="<%=APP_PATH + '/item/new_modify' %>">
 		    	<div class="col-md-4">
+		    		<input type="hidden" name="action" value="<%= @action %>">
 					<% unless @item[0]['image_link'].empty? %>
 						<img src="<%= APP_PATH %>/pictures/<%= @item[0]['image_link'] %>" width="" alt="<%= @item[0]['name'] %>" class="img-responsive img-rounded">
+						<input type="hidden" name="image_link" value="<%= @item[0]['image_link'] %>">
 					<% end %>
 					<br />
 					<span class="btn btn-default btn-file" title="<%= _t 'take a picture of this item' %>">
@@ -31,8 +33,10 @@
 					  <textarea class="form-control" id="desc" name="desc" placeholder="<%= _t 'Description' %>" aria-describedby="basic-addon2" rows="3"><%= @item[0]['description'] %></textarea>
 					</div>
 
-					<button type="button" class="btn btn-default"><%= _t 'Cancel' %></button>
-					<button type="button" class="btn btn-success">
+					<a href="<%= APP_PATH %>/list" class="btn btn-default">
+						<span class="glyphicon glyphicon-hand-left"></span>&nbsp;<%= _t 'Back to list' %>
+					</a>
+					<button type="button" class="btn btn-success" id="btnSubmit">
 					<% if @action  == 'new' %>
 						<span class="glyphicon glyphicon-plus"></span>&nbsp;<%= _t 'Add' %>
 					<% else %>
@@ -72,10 +76,6 @@
 					<span class="glyphicon glyphicon-camera"></span>&nbsp;
 					<%= _h 'help-new-camera' %>
 				</li>
-<!-- 				<li class="list-group-item">
-					<span class="glyphicon glyphicon-export"></span>&nbsp;
-					<%= _h 'help-new-checkout' %>
-				</li> -->
 				<li class="list-group-item">
 					<span class="glyphicon glyphicon-plus"></span>&nbsp;
 					<%= _h 'help-new-plus' %>
@@ -84,4 +84,10 @@
 		</div>
 	</div>
 </div>
-
+<script type="text/javascript">
+$(document).ready( function() {
+	$('#btnSubmit').click(function(){
+		$('#newModifyFrm').submit();
+	});
+});
+</script>
