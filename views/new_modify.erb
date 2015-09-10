@@ -10,6 +10,8 @@
 					<% unless @item[0]['image_link'].empty? %>
 						<img src="<%= APP_PATH %>/pictures/<%= @item[0]['image_link'] %>" width="" alt="<%= @item[0]['name'] %>" class="img-responsive img-rounded">
 						<input type="hidden" name="image_link" value="<%= @item[0]['image_link'] %>">
+					<% else %>
+						<img id="img-<%= @item[0]['code'] %>" class="img-responsive img-rounded center-block"/>
 					<% end %>
 					<br />
 					<span class="btn btn-default btn-file" title="<%= _t 'take a picture of this item' %>">

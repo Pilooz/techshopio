@@ -31,7 +31,7 @@ $(document).ready( function() {
 	        }
 	    });
 	    s = count > 1 ? "s" : "";
-	    $("#filter-count").text(count + " items").show(); //" <%= _t 'result' %>" 
+	    $("#filter-count").text(count + " items").show();
 	 });
 
 	//
@@ -49,4 +49,85 @@ $(document).ready( function() {
 	$('#btnSubmit').click(function(){
 		$('#newModifyFrm').submit();
 	});
+
+	//
+	// Auto upload picture
+	//
+	$(document).on('change', '.btn-file :file', function(e) {
+		e.preventDefault();
+
+		// from an input element
+	    var filesToUpload = this.files;
+	    var file = filesToUpload[0];
+
+	    var	code = $(this).attr("id").replace(/^picture-/g, '');
+	    var	numFiles = $(this).get(0).files ? $(this).get(0).files.length : 1;
+	    var	label = $(this).val().replace(/\\/g, '/').replace(/.*\//, '');
+
+		var img = document.createElement("img");
+		var reader = new FileReader();  
+
+		reader.onload = function(e) 
+		{
+	        img.src = e.target.result;
+
+	        var canvas = document.createElement("canvas");
+	        var ctx = canvas.getContext("2d");
+	        ctx.drawImage(img, 0, 0);
+
+	        var maxW = 100;
+	        var maxH = 100;
+	        var width = img.width;
+	        var height = img.height;
+
+	        if (width > height) {
+	          if (width > maxW) {
+	            height *= maxW / width;
+	            width = maxW;
+	          }
+	        } else {
+	          if (height > maxH) {
+	            width *= maxH / height;
+	            height = maxH;
+	          }
+	        }
+	        canvas.width = width;
+	        canvas.height = height;
+	        var ctx = canvas.getContext("2d");
+	        ctx.drawImage(img, 0, 0, width, height);
+
+	        var dataurl = canvas.toDataURL("image/png");
+	        $('#img-'+code).attr("src", dataurl);     
+
+	        // Uploading picture
+			var data = new FormData();
+			data.append('code', code);
+			data.append('label', label);
+			data.append('thumblabel', "thumb-" + label);
+			data.append('thumb', dataurl);
+			data.append('picture', file);
+
+			// Posting data for thumbnail
+			$.ajax({
+			    url: APP_PATH + '/item/picture', 
+			    type: 'POST',
+			    data: data,
+			    cache: false,
+				contentType: 'multipart/form-data',
+			    processData: false,
+			    success : function(response){
+			    	// Refresh the thumbnail on list
+			    	d = new Date();
+			    	$('#img-'+code).attr("src", APP_PATH + '/pictures/thumb-' + label + "?" + d.getTime());
+			     },
+			    error : function(response){
+			    	console.log(response);
+			     }
+			});
+
+	    }
+	    // Load files into file reader
+	    reader.readAsDataURL(file);
+	});
+
 });
