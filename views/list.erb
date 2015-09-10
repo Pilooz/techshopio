@@ -37,7 +37,7 @@
 	        <% end %>
 	        	<td>
 	        	<% if !item['image_link'].empty? %>
-	        		<img src="<%= APP_PATH %>/pictures/thumb-<%= item['image_link'] %>" alt="<%= item['name'] %>" class="img-responsive img-rounded modalPicture" id="img-<%= item['code'] %>" data-toggle="modal" data-target="#bigPic">
+	        		<img src="<%= APP_PATH %>/pictures/thumb-<%= item['image_link'] %>" alt="" class="img-responsive img-rounded modalPicture center-block" id="img-<%= item['code'] %>" data-toggle="modal" data-target="#bigPic">
 	        	<% else %>
 	        		<img id="img-<%= item['code'] %>"/>
 	        	<% end %>
@@ -98,45 +98,6 @@
 </div>
 
 <script>
-$(document).ready( function() {
-	//
-	// In Page Search engine
-	//
-	// Reset button
-	$("#reset-filter").click(function(){
-	  $("#q").val("");
-	  $("table#techShopList .rch").show();
-	  $("#filter-count").text("").hide();
-	  $(this).hide();
-	});
-
-	// Search on keyup
-	$("#q").keyup(function(){
-	    var filter = $(this).val();
-	    var count = 0;
-	    $("#reset-filter").show();
-	    // Loop through the lines list
-	    $("table#techShopList .rch").each(function(){
-	         // Recherche
-	        if ($(this).text().search(new RegExp(filter, "ig")) < 0) {
-	          $(this).fadeOut();
-	        } else {
-	            $(this).show();
-	            count++;
-	        }
-	    });
-	    s = count > 1 ? "s" : "";
-	    $("#filter-count").text(count + " <%= _t 'result' %>" + s).show();
-	  });
-
-    // View picture in modal popup
-	$(".modalPicture").click(function(){
-	  var src = $(this).attr("src").replace(/thumb-/g, '');
-	  $("#myModalLabel").html($(this).attr("alt"));
-	  $("#bigPicture").attr("src", src);
-	});
-
-});
 
 //
 // Auto upload picture

@@ -8,6 +8,7 @@ use Rack::Rewrite do
   rewrite %r{/.*/(app)/(.*)}, '/$1/$2'
   rewrite %r{/.*/(pictures)/(.*)}, '/$1/$2'
   rewrite %r{/.*/(css)/(.*)}, '/$1/$2'
+  rewrite %r{/.*/(js)/(.*)}, '/$1/$2'
 end   
 
 run SinatraApp
