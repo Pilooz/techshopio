@@ -61,8 +61,9 @@ $(document).ready( function() {
 	    var file = filesToUpload[0];
 
 	    var	code = $(this).attr("id").replace(/^picture-/g, '');
-	    var	numFiles = $(this).get(0).files ? $(this).get(0).files.length : 1;
-	    var	label = $(this).val().replace(/\\/g, '/').replace(/.*\//, '');
+		var ext = $(this).val().substr( $(this).val().lastIndexOf('.') );
+	    var	label = code + ext;
+	    var	labelthumb = "thumb-" + code + ".png";
 
 		var img = document.createElement("img");
 		var reader = new FileReader();  
@@ -103,7 +104,7 @@ $(document).ready( function() {
 			var data = new FormData();
 			data.append('code', code);
 			data.append('label', label);
-			data.append('thumblabel', "thumb-" + label);
+			data.append('labelthumb', labelthumb);
 			data.append('thumb', dataurl);
 			data.append('picture', file);
 
@@ -113,7 +114,7 @@ $(document).ready( function() {
 			    type: 'POST',
 			    data: data,
 			    cache: false,
-				contentType: 'multipart/form-data',
+				contentType: false, //'multipart/form-data; charset=utf-8',
 			    processData: false,
 			    success : function(response){
 			    	// Refresh the thumbnail on list

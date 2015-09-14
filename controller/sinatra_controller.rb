@@ -152,7 +152,7 @@ class SinatraApp < Sinatra::Base
     # TODO : See how to get barcode, if code are in csv file, perhaps will we have to produce these codes ?
     DB.add_serveral_items  JSON.parse params['jsondata'] unless params['jsondata'].nil?
     # Redirect to the Techshop's list
-    redirect to APP_PATH + "/"
+    redirect to APP_PATH + "/list"
   end
 
    # Create or modify item
@@ -196,6 +196,30 @@ class SinatraApp < Sinatra::Base
   # CRUD and Ajax Room service !
   #
 
+  # Posting thumbnail in Base64 mode.
+  post APP_PATH + '/item/picture' do  
+    if params['code'] && params['label'] && params['labelthumb'] && params['thumb'] && params['picture']
+      begin
+        uri = URI::Data.new params['thumb']
+        # Writing thumbnail
+        File.open("#{APP_ROOT}/public/pictures/#{params['labelthumb']}", 'wb') do |f|
+          f.write uri.data 
+        end
+        # Writing picture
+        File.open("#{APP_ROOT}/public/pictures/#{params['label']}", 'wb') do |f|
+          f.write (params['picture'][:tempfile].read)
+        end
+        # Updating db.
+        DB.update_item_image_link @code, params['label']
+        {'result' => 'Ok'}.to_json
+      rescue Exception => e
+        puts "#{e.message}"
+        e.backtrace[0..10].each { |t| puts "#{t}"}
+        {'result' => 'Error', "message" => e.message }.to_json
+      end
+    end
+  end
+
   # Receive tags data
   post APP_PATH + '/tag/add' do
     DB.add_tag params['tag'], params['color']
@@ -232,30 +256,6 @@ class SinatraApp < Sinatra::Base
       res = DB.select_items_for_tag params['id']
     end
     res.to_json
-  end
-
-  # Posting thumbnail in Base64 mode.
-  post APP_PATH + '/item/picture' do
-    if params['code'] && params['label'] && params['thumblabel'] && params['thumb'] && params['picture']
-      begin
-        uri = URI::Data.new params['thumb']
-        # Writing thumbnail
-        File.open("#{APP_ROOT}/public/pictures/#{params['thumblabel']}", 'wb') do |f|
-          f.write uri.data 
-        end
-        # Writing picture
-        File.open("#{APP_ROOT}/public/pictures/#{params['label']}", 'wb') do |f|
-          f.write (params['picture'][:tempfile].read)
-        end
-        # Updating db.
-        DB.update_item_image_link @code, params['label']
-        {'result' => 'Ok'}.to_json
-      rescue Exception => e
-        puts "#{e.message}"
-        e.backtrace[0..10].each { |t| puts "#{t}"}
-        {'result' => 'Error', "message" => e.message }.to_json
-      end
-    end
   end
 
 end
