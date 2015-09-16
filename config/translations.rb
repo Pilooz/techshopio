@@ -52,11 +52,13 @@ TRANSLATE = {
   'Quiet zone module' => {fr: 'Zone de silence'},
   'Radical' => {fr: 'Radical'},
   'Rectangular' => {fr: 'Rectangle'},
+  'Reset filter' => {fr: 'Ré-initialisation du filtre'},
   'result' => {fr: 'resultat'},
   'Save' => {fr: 'Enregistrer'},
   'Send' => {fr: 'Envoyer'},
   'Send the file' => {fr: "Envoie du fichier"},
   'Search in list' => {fr: 'Rechercher dans la liste'},
+  'Search by code' => {fr: 'Rechercher avec le code barres'},
   'Size' => {fr: 'Taille'},
   'Tags' => {fr: 'Tags'},
   'Tags (comma separated)' => {fr: 'Mots clés (séparés par des vigules)'},
@@ -66,7 +68,6 @@ TRANSLATE = {
   'Upload CSV File' => {fr: 'Charger un fichier CSV'},
   'Used on every barcode' => {fr: 'utilisé pour tous les code barre'},
   'Welcome on TechShopIO' => {fr: 'Bienvenue sur TechShopIO'},
-  'Welcome on TechShopIO !' => { fr: 'Bienvenue sur TechShopIO !'},
   'Yes' => {fr: 'Oui'},
 
 }

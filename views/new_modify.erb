@@ -39,13 +39,13 @@
 					</div>
 
 					<a href="<%= APP_PATH %>/list" class="btn btn-default">
-						<span class="glyphicon glyphicon-hand-left"></span>&nbsp;<%= _t 'Back to list' %>
+						<span class="glyphicon glyphicon-hand-left" title="<%= _t 'Back to list' %>"></span>&nbsp;<%= _t 'Back to list' %>
 					</a>
 					<button type="button" class="btn btn-success" id="btnSubmit">
 					<% if @action  == 'new' %>
-						<span class="glyphicon glyphicon-plus"></span>&nbsp;<%= _t 'Add' %>
+						<span class="glyphicon glyphicon-plus" title="<%= _t 'Add' %>"></span>&nbsp;<%= _t 'Add' %>
 					<% else %>
-						<span class="glyphicon glyphicon-ok"></span>&nbsp;<%= _t 'Modify' %>
+						<span class="glyphicon glyphicon-ok" title="<%= _t 'Modify' %>"></span>&nbsp;<%= _t 'Modify' %>
 					<% end %>
 					</button>
 				</div>

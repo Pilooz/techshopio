@@ -85,7 +85,7 @@
                 </span>
                 <input type="text" class="form-control" name="code" placeholder="<%=@placeholder %>" aria-describedby="code" value="<%=@code %>">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" type="button"><%= _t 'Go!' %></button>
+                  <button class="btn btn-default" type="button" title="<%= _t 'Search by code' %>"><%= _t 'Go!' %></button>
                 </span>
               </div>
               </form>
@@ -99,7 +99,7 @@
                 </span>
                 <input type="text" class="form-control" id="q" name="q" placeholder="<%= _t 'Search in list' %>" aria-describedby="qdesc" value="">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" id="reset-filter" type="button">
+                  <button class="btn btn-default" id="reset-filter" type="button" title="<%= _t 'Reset filter' %>">
                     <span class="glyphicon glyphicon-remove-circle"></span>
                   </button>
                 </span>
