@@ -14,10 +14,25 @@
 						<img id="img-<%= @item[0]['code'] %>" class="img-responsive img-rounded center-block"/>
 					<% end %>
 					<br />
-					<span class="btn btn-default btn-file" title="<%= _t 'take a picture of this item' %>">
+					<span class="btn btn-default btn-file pull-right" title="<%= _t 'take a picture of this item' %>">
 						<span class="glyphicon glyphicon-camera"></span>
 						 	<input type="file" class="btn btn-default" id="picture-<%= @item[0]['code'] %>" name="picture" accept="image/jpeg,image/jpg,image/gif,image/png" />
 					</span>
+
+					<div class="clearfix"><hr/></div>
+
+					<% if @action == 'modify' %>
+						<div class="row">
+							<div class="col-md-12">
+								<p>
+								  <% @assigned_tags.each { | tag | %>
+									<span class="tag btn-xs <%= tag['color'] %>"><%= tag['tag'] %></span>
+								  <% } %>
+							 	</p>
+						  	</div>
+					  	</div>
+				  	<% end %>
+
 	    		</div>
 	    		<div class="col-md-8">
 	    			<% if @action == 'modify' %>
@@ -37,18 +52,23 @@
 					  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-list-alt"></span></span>
 					  <textarea class="form-control" id="description" name="description" placeholder="<%= _t 'Description' %>" aria-describedby="basic-addon2" rows="3"><%= @item[0]['description'] %></textarea>
 					</div>
-
-					<a href="<%= APP_PATH %>/list" class="btn btn-default">
-						<span class="glyphicon glyphicon-hand-left" title="<%= _t 'Back to list' %>"></span>&nbsp;<%= _t 'Back to list' %>
-					</a>
-					<button type="button" class="btn btn-success" id="btnSubmit">
-					<% if @action  == 'new' %>
-						<span class="glyphicon glyphicon-plus" title="<%= _t 'Add' %>"></span>&nbsp;<%= _t 'Add' %>
-					<% else %>
-						<span class="glyphicon glyphicon-ok" title="<%= _t 'Modify' %>"></span>&nbsp;<%= _t 'Modify' %>
-					<% end %>
-					</button>
 				</div>
+
+				<div class="col-md-12">
+					<div class="pull-right">
+						<a href="<%= APP_PATH %>/list" class="btn btn-default">
+							<span class="glyphicon glyphicon-hand-left" title="<%= _t 'Back to list' %>"></span>&nbsp;<%= _t 'Back to list' %>
+						</a>
+						<button type="button" class="btn btn-success" id="btnSubmit">
+						<% if @action  == 'new' %>
+							<span class="glyphicon glyphicon-plus" title="<%= _t 'Add' %>"></span>&nbsp;<%= _t 'Add' %>
+						<% else %>
+							<span class="glyphicon glyphicon-ok" title="<%= _t 'Modify' %>"></span>&nbsp;<%= _t 'Modify' %>
+						<% end %>
+						</button>
+					</div>
+				</div>
+
 			</form>
 		</div>
 	</div>

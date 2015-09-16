@@ -110,6 +110,8 @@ class SinatraApp < Sinatra::Base
     @main_title = _t 'Modifying stuff in TechShop'
     @nav_new = 'active'
     @action = 'modify'
+    # Getting all affected tags for this item
+    @assigned_tags = DB.select_tags_for_item @code
     erb :new_modify
   end
 
