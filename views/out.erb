@@ -92,8 +92,8 @@
 	<form id="checkoutForm" action="<%= APP_PATH %>/item/checkout" method="post">
 		<input type="hidden" name="code" value="<%= @code %>">
 	</form>
-	<button type="button" class="btn btn-default"><%= _t 'Cancel' %></button>
-	<button type="submit" class="btn btn-success" id="checkoutBtn"><%= _t 'Checkout' %>&nbsp;<span class="glyphicon glyphicon-export"></span></button>
+	<button type="button" class="btn btn-default" title="<%= _t 'Cancel checkout' %>"><%= _t 'Cancel' %></button>
+	<button type="submit" class="btn btn-success" id="checkoutBtn"  title="<%= _t 'Checkout' %>"><%= _t 'Checkout' %>&nbsp;<span class="glyphicon glyphicon-export"></span></button>
 </div>
 
 <script>

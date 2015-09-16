@@ -56,9 +56,9 @@
 	        	</td>
 	        	<td>
 	        		<% if item['checkout'] == 'O' %>
-	        		<a href="<%=APP_PATH + '/item/checkin?code=' + item['code'] %>" class="btn btn-success" id="btnCheckin"><span class="glyphicon glyphicon-import"></span></a>
+	        		<a href="<%=APP_PATH + '/item/checkin?code=' + item['code'] %>" class="btn btn-success" id="btnCheckin" title="<%= _t 'Check in' %>"><span class="glyphicon glyphicon-import"></span></a>
 	        		<% else %>
-	        		<a href="<%=APP_PATH + '/out?code=' + item['code'] %>" class="btn btn-default" id="btnCheckout"><span class="glyphicon glyphicon-export"></span></a>
+	        		<a href="<%=APP_PATH + '/out?code=' + item['code'] %>" class="btn btn-default" id="btnCheckout" title="<%= _t 'Checkout' %>"><span class="glyphicon glyphicon-export"></span></a>
 	        		<% end %>
 
  					<span class="btn btn-default btn-file" title="<%= _t 'take a picture of this item' %>">
@@ -67,8 +67,8 @@
     				</span>
     				<!--remove capture="camera" to have to choice of selecting a saved image or take a new one on both Ios and Android-->
 
- 	        		<a href="<%=APP_PATH + '/modify?code=' + item['code'] %>" class="btn btn-default" id="btnModify"><span class="glyphicon glyphicon-pencil"></span></a>
-	        		<a href="<%=APP_PATH + '/delete?code=' + item['code'] %>" class="btn btn-danger" id="btnDelete"><span class="btn-danger glyphicon glyphicon-trash"></span></a>
+ 	        		<a href="<%=APP_PATH + '/modify?code=' + item['code'] %>" class="btn btn-default" id="btnModify" title="<%= _t 'Modify' %>"><span class="glyphicon glyphicon-pencil"></span></a>
+	        		<a href="<%=APP_PATH + '/delete?code=' + item['code'] %>" class="btn btn-danger" id="btnDelete" title="<%= _t 'Delete' %>"><span class="btn-danger glyphicon glyphicon-trash"></span></a>
 	        		</td>
 	        </tr>
 	      <% } %>
@@ -82,7 +82,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="<%= _t 'Close' %>"><span aria-hidden="true" title="<%= _t 'Close' %>">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"></h4>
       </div>
       <div class="modal-body">
