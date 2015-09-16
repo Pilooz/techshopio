@@ -36,7 +36,7 @@ Elle est compatible tablette et smartphone.
 ### installation
 
 - Installer ruby
-- `git clone git@github.com:laclasse-com/service-laclasse-startbox.git`
+- `git clone git@github.com:pilooz/stechshopio.git`
 - `bundle install`
 - copier les config/\*.sample en config/\*.rb
 - `bundle exec rackup -o 0.0.0.0`
