@@ -23,9 +23,11 @@
 	          <th>
 	          	<%= _t 'Assigned' %> ?
 	          </th>
+	          <% unless @publiclist %>
 	          <th>
 	          	<%= _t 'Actions' %>
 	          </th>
+	          <% end %>
 	        </tr>
 	      </thead>
 	      <tbody>
@@ -54,6 +56,8 @@
 	        	<%= _t 'Available' %>
 	        	<% end %>
 	        	</td>
+
+	        	<% unless @publiclist %>
 	        	<td>
 	        		<% if item['checkout'] == 'O' %>
 	        		<a href="<%=APP_PATH + '/item/checkin?code=' + item['code'] %>" class="btn btn-success" id="btnCheckin" title="<%= _t 'Check in' %>"><span class="glyphicon glyphicon-import"></span></a>
@@ -69,7 +73,8 @@
 
  	        		<a href="<%=APP_PATH + '/modify?code=' + item['code'] %>" class="btn btn-default" id="btnModify" title="<%= _t 'Modify' %>"><span class="glyphicon glyphicon-pencil"></span></a>
 	        		<a href="<%=APP_PATH + '/delete?code=' + item['code'] %>" class="btn btn-danger" id="btnDelete" title="<%= _t 'Delete' %>"><span class="btn-danger glyphicon glyphicon-trash"></span></a>
-	        		</td>
+	        	</td>
+	        	<% end %>
 	        </tr>
 	      <% } %>
 	      </tbody>

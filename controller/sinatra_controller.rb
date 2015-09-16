@@ -53,6 +53,7 @@ class SinatraApp < Sinatra::Base
     @nav_tags = ''
     @code = params['code']
     @item = DB.read @code
+    @publiclist = false
   end
 
   get APP_PATH + '/?' do
@@ -80,12 +81,24 @@ class SinatraApp < Sinatra::Base
     erb :index
   end
 
+  # Route for admin list of the TechShop
   get APP_PATH + '/list' do
     # Propose list of TechShop on index page
     @items = DB.select_all_items
     @nav_list = 'active'
     @main_title = _t 'List'
     @placeholder =  _t 'type or scan reference'
+    erb :list
+  end
+
+  # Route for the public version (without admin features) of techShop list
+  get APP_PATH + '/catalog' do
+    # Propose list of TechShop on index page
+    @items = DB.select_all_items
+    @nav_publiclist = 'active'
+    @main_title = _t 'List'
+    @placeholder =  _t 'type or scan reference'
+    @publiclist = true
     erb :list
   end
 

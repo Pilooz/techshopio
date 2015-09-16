@@ -1,6 +1,6 @@
 <script src="<%= APP_PATH %>/app/vendor/jquery-qrcode-0.12.0/jquery.qrcode-0.12.0.min.js?v=<%=APP_VERSION%>"></script>
 
-<div class="col-md-5 col-md-offset-1">
+<div class="col-md-4 col-md-offset-1">
 	<div class="panel panel-warning">
 		<div class="panel-heading">
 	    	<h3 class="panel-title"><%= _t 'Welcome on TechShopIO' %></h3>
@@ -15,17 +15,34 @@
 	</div>
 </div>
 
-<div class="col-md-5">
+<div class="col-md-3">
 	<div class="panel panel-info">
 		<div class="panel-heading">
 	    	<h3 class="panel-title"><%= _t 'Mobile access' %></h3>
 	  	</div>
 		<div class="panel-body">
-			<div class="pull-right" id="qrcode-area"></div>
+			<div class="pull-right" id="qrcode-admin-list-area"></div>
 			<div>
 				<p>
 					<%= _h 'help-tablet-access' %><br /><br />
 					<b id="url-area"></b>
+				</p>
+			</div>
+		 </div>
+	</div>
+</div>
+
+<div class="col-md-3">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+	    	<h3 class="panel-title"><%= _t 'Public catalog access' %></h3>
+	  	</div>
+		<div class="panel-body">
+			<div class="pull-right" id="qrcode-public-catalog-area"></div>
+			<div>
+				<p>
+					<%= _h 'help-public-catalog-access' %><br /><br />
+					<b id="url-public-catalog-area"></b>
 				</p>
 			</div>
 		 </div>
@@ -51,15 +68,25 @@ $(document).ready( function() {
 	var ip = "<%= @ip %>";
 	var url = "";
 		if (ip != "") {
-			url = "http://<%= @ip %>:<%= APP_PORT %><%= APP_PATH %>/";
-			$("#qrcode-area").qrcode({
+			admin_url = "http://<%= @ip %>:<%= APP_PORT %><%= APP_PATH %>/list";
+			public_url = "http://<%= @ip %>:<%= APP_PORT %><%= APP_PATH %>/catalog";
+			// admin
+			$("#qrcode-admin-list-area").qrcode({
 			    "size": 100,
 			    "color": "#3a3",
-			    "text": url
+			    "text": admin_url
 			});
-			$("#url-area").html(url);
+			$("#url-area").html(admin_url);
+			// Public
+			$("#qrcode-public-catalog-area").qrcode({
+			    "size": 100,
+			    "color": "#3a3",
+			    "text": public_url
+			});
+			$("#url-public-catalog-area").html(public_url);
 		} else {
-			$("#qrcode-area").html("<%= _h 'help-no-lan' %>");
+			$("#qrcode-admin-list-area").html("<%= _h 'help-no-lan' %>");
+			$("#qrcode-public-catalog-area").html("<%= _h 'help-no-lan' %>");
 		}
 	});
 </script>

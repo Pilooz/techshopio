@@ -35,7 +35,7 @@ TRANSLATE = {
   'List' => { fr: 'Liste du matériel'},
   'List of tags' => {fr: 'Liste des tags disponibles'},
   'Micellenous' => {fr: 'Paramètres avancés'},
-  'Mobile access' => {fr: 'Accès mobile'},
+  'Mobile access (admin features)' => {fr: 'Accès mobile <small>(administration de la Techshop)</small>'},
   'Modify' => {fr: 'Modifier'},
   'Modifying stuff in TechShop' => {fr: 'Modifier un matériel'},
   'Module size' => {fr: 'Taille de la matrice'},
@@ -48,6 +48,7 @@ TRANSLATE = {
   'Populate DB' => { fr: 'Ajouts massifs'},
   'Populate TechShop massively' => {fr: 'Ajout massifs dans la TechShop'},
   'Print' => {fr: 'Imprimer'},
+  'Public catalog access' => {fr: 'Accès au catalog public'},
   'Quickstart Manual' => {fr: 'Démarrage rapide'},
   'Quiet zone module' => {fr: 'Zone de silence'},
   'Radical' => {fr: 'Radical'},
@@ -98,7 +99,7 @@ HELP =  {
                            fr: "Insérez vos données dans la base en cliquant sur le bouton 'Charger'."},
   'help-empty-techshop' => {en: 'Nothing in the TechShop for the moment ! please <a href="' + APP_PATH + '/populate">try this !</a>',
                             fr: "La TechShop est vide ? <a href='" + APP_PATH + "/populate'>essayez ça !</a>" },
-  'help-tablet-access' => {en: 'Flash this code to use TechShopIO on your pad or smartphone !',
+  'help-tablet-access' => {en: 'Flash this code to use TechShopIO on your tablet or smartphone !',
                            fr: "Retrouvez TechShopIO sur votre tablette ou smartphone en flashant ce QR-code !<br /><small>(Cela nécessite d'être connecté au même réseau local)</small>" },
   'help-no-lan' => {en: 'It seems that  you are not connected to lan. Please connect your computer to lan to be abble to use mobile features : Your compter will become the TechShopIO server.',
                     fr: "Votre ordinateur n'est pas connecté au réseau (lan ou Wifi). Pour utiliser les fonctionnalités mobiles, vous devez le connecter au réseau de sorte qu'il devienne le serveur TechShopIO.."},
@@ -117,6 +118,8 @@ HELP =  {
                                   <li><a href='" + APP_PATH + "/tags'>Créer une étiquette</a> (tag) par personne succeptible d'emprunter du matériel.</li>
                                   <li>C'est prêt ! Gérez votre <a href='" + APP_PATH + "/list'>liste</a> d'entrées/Sorties...</li>
                                 </ol>"},
+  'help-public-catalog-access' => {en: 'Flash this code to access to TechShopIO public catalog on your tablet or smartphone !',
+                                   fr: "Accédez au catalogue public de la TechShop sur votre tablette ou smartphone en flashant ce QR-code !<br /><small>(Cela nécessite d'être connecté au même réseau local)</small>"},
 }
 
 # rubocop:enable Metrics/LineLength
