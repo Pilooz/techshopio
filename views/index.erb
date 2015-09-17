@@ -18,14 +18,14 @@
 <div class="col-md-3">
 	<div class="panel panel-info">
 		<div class="panel-heading">
-	    	<h3 class="panel-title"><%= _t 'Mobile access' %></h3>
+	    	<h3 class="panel-title"><%= _t 'Mobile access <small>(admin features)</small>' %></h3>
 	  	</div>
 		<div class="panel-body">
-			<div class="pull-right" id="qrcode-admin-list-area"></div>
+			<div class="pull-right" id="qrcode-admin-list"></div>
 			<div>
 				<p>
 					<%= _h 'help-tablet-access' %><br /><br />
-					<b id="url-area"></b>
+					<b id="url-admin-list"></b>
 				</p>
 			</div>
 		 </div>
@@ -38,11 +38,11 @@
 	    	<h3 class="panel-title"><%= _t 'Public catalog access' %></h3>
 	  	</div>
 		<div class="panel-body">
-			<div class="pull-right" id="qrcode-public-catalog-area"></div>
+			<div class="pull-right" id="qrcode-public-catalog"></div>
 			<div>
 				<p>
 					<%= _h 'help-public-catalog-access' %><br /><br />
-					<b id="url-public-catalog-area"></b>
+					<b id="url-public-catalog"></b>
 				</p>
 			</div>
 		 </div>
@@ -65,29 +65,25 @@
 
 <script>
 $(document).ready( function() {
-	var ip = "<%= @ip %>";
-	var url = "";
+	function generate_qr(id, url) {
+		var ip = "<%= @ip %>";
+		var path = "http://<%= @ip %>:<%= APP_PORT %><%= APP_PATH %>/";
 		if (ip != "") {
-			admin_url = "http://<%= @ip %>:<%= APP_PORT %><%= APP_PATH %>/list";
-			public_url = "http://<%= @ip %>:<%= APP_PORT %><%= APP_PATH %>/catalog";
-			// admin
-			$("#qrcode-admin-list-area").qrcode({
+			$("#qrcode-" + id + "").qrcode({
 			    "size": 100,
 			    "color": "#3a3",
-			    "text": admin_url
+			    "text": path + url
 			});
-			$("#url-area").html(admin_url);
-			// Public
-			$("#qrcode-public-catalog-area").qrcode({
-			    "size": 100,
-			    "color": "#3a3",
-			    "text": public_url
-			});
-			$("#url-public-catalog-area").html(public_url);
+			$("#url-" + id + "").html(url);
 		} else {
-			$("#qrcode-admin-list-area").html("<%= _h 'help-no-lan' %>");
-			$("#qrcode-public-catalog-area").html("<%= _h 'help-no-lan' %>");
+			$("#qrcode-" + id + "").html("<%= _h 'help-no-lan' %>");
 		}
+	}
+
+	// admin qrcode
+	generate_qr("admin-list", "list");
+	// Public qrcode
+	generate_qr("public-catalog", "catalog");
 	});
 </script>
 
