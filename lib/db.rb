@@ -8,6 +8,7 @@ class Db
     @db = SQLite3::Database.new DB_FILENAME
     @db.results_as_hash = true
     create_schema unless schema?
+    synchronize_image!
     @item = empty_row
   end
 
@@ -45,6 +46,39 @@ class Db
       false
     end
   end
+
+  # Synchronize image with DB
+  def synchronize_image!
+    imgs = {}
+
+    # 1. Unlink from DB all unfound images
+    puts "  Synchronizing images with DB..."
+    r = select_all_items
+    r.each { |i|
+      unless i['image_link'].empty?
+        # Hash with all used images
+        imgs[i['image_link']] = i['code']
+        unless  File::exists? "#{APP_ROOT}/public/pictures/#{i['image_link']}"
+          puts "unlinking #{i['image_link']} from item ##{i['code']}"
+          update_item_image_link i['code'], ''
+        end
+      end
+    }
+
+    # 2. Delete all unreferenced image from directory
+    Dir.entries("#{APP_ROOT}/public/pictures/")
+      .reject { |f| f == '.' || f == '..'  }
+      .reject { |f| f[0..4]  == 'thumb'}
+      .each { |f| 
+        unless imgs.has_key? f
+          File::unlink "#{APP_ROOT}/public/pictures/#{f}" 
+          File::unlink "#{APP_ROOT}/public/pictures/thumb-#{f}" 
+        end
+    }
+
+    # 3. Generate missing thumbnails.
+  end
+
 
     # Get the highest id from a table
     # Can't work with a varchar column.
