@@ -35,15 +35,6 @@ $(document).ready( function() {
 	 });
 
 	//
-    // View picture in modal popup
-    //
-	$(".modalPicture").click(function(){
-		var src = $(this).attr("src").replace(/thumb-/g, '');
-		$("#myModalLabel").html($(this).attr("alt"));
-		$("#bigPicture").attr("src", src);
-	});
-
-	//
 	// Bind submit button for new/modify view
 	//
 	$('#btnSubmit').click(function(){
@@ -65,70 +56,92 @@ $(document).ready( function() {
 	    var	label = code + ext;
 	    var	labelthumb = "thumb-" + code + ".png";
 
-		var img = document.createElement("img");
 		var reader = new FileReader();  
 
 		reader.onload = function(e) 
 		{
-	        img.src = e.target.result;
+			var image = new Image();
+			image.src = e.target.result;
 
-	        var canvas = document.createElement("canvas");
-	        var ctx = canvas.getContext("2d");
-	        ctx.drawImage(img, 0, 0);
+			image.onload = function() {
+		        // access image size here 
+		        console.log(this.width);
+	        	// Resizing
+	        	var canvas = document.createElement("canvas");
+	        	var ctx = canvas.getContext("2d");
+	        	ctx.drawImage(image, 0, 0);
+	        	
+		        var maxW = 100;
+		        var maxH = 100;
+		        var width = image.width;
+		        var height = image.height;
 
-	        var maxW = 100;
-	        var maxH = 100;
-	        var width = img.width;
-	        var height = img.height;
+		        if (width > height) {
+		          if (width > maxW) {
+		            height *= maxW / width;
+		            width = maxW;
+		          }
+		        } else {
+		          if (height > maxH) {
+		            width *= maxH / height;
+		            height = maxH;
+		          }
+		        }
+		        canvas.width = width;
+		        canvas.height = height;
+		        var ctx = canvas.getContext("2d");
+		        ctx.drawImage(image, 0, 0, width, height);
 
-	        if (width > height) {
-	          if (width > maxW) {
-	            height *= maxW / width;
-	            width = maxW;
-	          }
-	        } else {
-	          if (height > maxH) {
-	            width *= maxH / height;
-	            height = maxH;
-	          }
-	        }
-	        canvas.width = width;
-	        canvas.height = height;
-	        var ctx = canvas.getContext("2d");
-	        ctx.drawImage(img, 0, 0, width, height);
+		        var dataurl = canvas.toDataURL("image/png");
+		        $('#img-'+code).attr("src", dataurl);     
 
-	        var dataurl = canvas.toDataURL("image/png");
-	        $('#img-'+code).attr("src", dataurl);     
+		        // Uploading picture
+				var data = new FormData();
+				data.append('code', code);
+				data.append('label', label);
+				data.append('labelthumb', labelthumb);
+				data.append('thumb', dataurl);
+				data.append('picture', file);
 
-	        // Uploading picture
-			var data = new FormData();
-			data.append('code', code);
-			data.append('label', label);
-			data.append('labelthumb', labelthumb);
-			data.append('thumb', dataurl);
-			data.append('picture', file);
-
-			// Posting data for thumbnail
-			$.ajax({
-			    url: APP_PATH + '/item/picture', 
-			    type: 'POST',
-			    data: data,
-			    cache: false,
-				contentType: false, //'multipart/form-data; charset=utf-8',
-			    processData: false,
-			    success : function(response){
-			    	// Refresh the thumbnail on list
-			    	d = new Date();
-			    	$('#img-'+code).attr("src", APP_PATH + '/pictures/thumb-' + label + "?" + d.getTime());
-			     },
-			    error : function(response){
-			    	console.log(response);
-			     }
-			});
-
-	    }
-	    // Load files into file reader
+				// Posting data for thumbnail
+				$.ajax({
+				    url: APP_PATH + '/item/picture', 
+				    type: 'POST',
+				    data: data,
+				    cache: false,
+					contentType: false, //'multipart/form-data; charset=utf-8',
+				    processData: false,
+				    success : function(response){
+				    	// Refresh the thumbnail on list
+				    	ajax_get_thumbnail( '#img-' + code, labelthumb );
+				     },
+				    error : function(response){
+				    	console.log(response);
+				     }
+				});
+			};
+		}
+		// Load files into file reader
 	    reader.readAsDataURL(file);
 	});
 
+	//
+    // View picture in modal popup
+    //
+	$( ".modalPicture" ).click(function(){
+		var src = $(this).attr("src").replace(/thumb-/g, '');
+		//$(this).html($(this).attr("alt"));
+		ajax_get_thumbnail('bigPicture', src);
+	});
+
+
+	//
+	// Reload thumbnail in ajax mode.
+	//
+	function ajax_get_thumbnail(id, name) {
+		var d = new Date();
+		console.log(APP_PATH + '/pictures/' + name);
+		//$("#" + id).load( APP_PATH + '/pictures/' + name + "?" + d.getTime());
+		$("#" + id).attr("src", APP_PATH + '/pictures/' + name + "?" + d.getTime());
+	}
 });
