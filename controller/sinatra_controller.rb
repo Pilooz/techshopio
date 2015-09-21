@@ -63,12 +63,12 @@ class SinatraApp < Sinatra::Base
         # Item doesn't exist in inventory, add it.
         redirect to APP_PATH + "/new?code=#{@code}"
       else
-        # Item exist, if it was out, then check-in
+        # Item exist, if it wasn't out, then checkout
         if !DB.checkout? @code
           redirect to APP_PATH + "/out?code=#{@code}"
         else
-          # If it is allready in, propose to modify it or reduce list on it
-          redirect to APP_PATH + "/in?code=#{@code}"
+          # If it is allready out, propose a confirm view to checkin
+          redirect to APP_PATH + "/checkin?code=#{@code}"
         end
       end
     end
