@@ -7,6 +7,7 @@ class Db
   def initialize
     @db = SQLite3::Database.new DB_FILENAME
     @db.results_as_hash = true
+    # TODO : Puts these two script in a Rake Task ?
     create_schema unless schema?
     synchronize_image!
     @item = empty_row
@@ -71,12 +72,11 @@ class Db
       .reject { |f| f[0..4]  == 'thumb'}
       .each { |f| 
         unless imgs.has_key? f
-          File::unlink "#{APP_ROOT}/public/pictures/#{f}" 
-          File::unlink "#{APP_ROOT}/public/pictures/thumb-#{f}" 
+          File::unlink "#{APP_ROOT}/public/pictures/#{f}" if File::exists? "#{APP_ROOT}/public/pictures/#{f}"
+          File::unlink "#{APP_ROOT}/public/pictures/thumb-#{f}" if File::exists? "#{APP_ROOT}/public/pictures/thumb-#{f}"
         end
     }
 
-    # 3. Generate missing thumbnails.
   end
 
 
