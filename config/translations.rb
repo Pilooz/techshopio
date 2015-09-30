@@ -44,6 +44,7 @@ TRANSLATE = {
   'No' => {fr: 'Non'},
   'Numeric' => {fr: 'valeurs numériques'},
   'Out' => { fr: 'Sorties'},
+  'Please confirm you want to check this Item in...' => {fr: 'Confirmez la ré-intégration de ce matériel dans le TechShop...'},
   'Picture' => {fr: 'Image'},
   'Populate DB' => { fr: 'Ajouts massifs'},
   'Populate TechShop massively' => {fr: 'Ajout massifs dans la TechShop'},

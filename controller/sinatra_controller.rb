@@ -130,7 +130,7 @@ class SinatraApp < Sinatra::Base
   end
 
   get APP_PATH + '/checkin' do
-    @main_title = _t 'Check-in stuff in Techshop'
+    @main_title = _t 'Check-in stuff in TechShop'
     @nav_checkin = 'active'
     # Getting all affected tags for this item
     @assigned_tags = DB.select_tags_for_item @code
