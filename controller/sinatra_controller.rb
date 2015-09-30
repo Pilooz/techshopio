@@ -52,6 +52,7 @@ class SinatraApp < Sinatra::Base
     @nav_populate = ''
     @nav_tags = ''
     @nav_checkin = ''
+    @nav_settings = ''
     @code = params['code']
     @item = DB.read @code
     @publiclist = false
@@ -169,6 +170,12 @@ class SinatraApp < Sinatra::Base
     @main_title = _t 'Populate TechShop massively'
     @nav_populate = 'active'
     erb :populate
+  end
+
+  get APP_PATH + '/settings' do
+    @main_title = _t 'Settings'
+    @nav_settings = 'active'
+    erb :settings
   end
 
   # Receive csv data

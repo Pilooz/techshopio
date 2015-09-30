@@ -61,6 +61,7 @@ TRANSLATE = {
   'Send the file' => {fr: "Envoie du fichier"},
   'Search in list' => {fr: 'Rechercher dans la liste'},
   'Search by code' => {fr: 'Rechercher avec le code barres'},
+  'Settings' => {fr: 'Paramètres'},
   'Size' => {fr: 'Taille'},
   'Tags' => {fr: 'Tags'},
   'Tags (comma separated)' => {fr: 'Mots clés (séparés par des vigules)'},
