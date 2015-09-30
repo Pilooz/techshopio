@@ -51,6 +51,7 @@ class SinatraApp < Sinatra::Base
     @nav_barcode = ''
     @nav_populate = ''
     @nav_tags = ''
+    @nav_checkin = ''
     @code = params['code']
     @item = DB.read @code
     @publiclist = false
@@ -126,6 +127,14 @@ class SinatraApp < Sinatra::Base
     # Getting all affected tags for this item
     @assigned_tags = DB.select_tags_for_item @code
     erb :new_modify
+  end
+
+  get APP_PATH + '/checkin' do
+    @main_title = _t 'Check-in stuff in Techshop'
+    @nav_checkin = 'active'
+    # Getting all affected tags for this item
+    @assigned_tags = DB.select_tags_for_item @code
+    erb :checkin
   end
 
   get APP_PATH + '/delete' do

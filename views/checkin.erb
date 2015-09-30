@@ -1,0 +1,47 @@
+<div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-1">
+	<div class="panel panel-warning">
+		<div class="panel-heading">
+	    	<h3 class="panel-title"><%= @item[0]['name'] %>, <span class="label label-default pull-right"><%= @code %></span></h3>
+	  	</div>
+		<div class="panel-body">
+				<p>
+					<%= _t 'Please confirm you want to check this Item in...' %>
+				</p>
+				<div class="input-group">
+				  <span class="input-group-addon input-group-lg" id="basic-addon3">
+				  <% unless @item[0]['image_link'].empty? %>
+				  	<img src="<%= @item[0]['image_link'] %>" class="img img-responsive img-rounded" alt=""/>
+				  <% else %>
+				  <span class="glyphicon glyphicon-picture"></span>
+				  <% end %>
+				  </span>
+				</div>
+
+				<div class="input-group">
+				  <span class="input-group-addon input-group-lg" id="basic-addon1"><span class="glyphicon glyphicon-bookmark"></span></span>
+				  <input type="text" class="form-control" value="<%= @item[0]['name'] %>" disabled>
+				</div>
+
+				<div class="input-group">
+				  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-list-alt"></span></span>
+				  <input type="text" class="form-control" value="<%= @item[0]['description'] %>"disabled>
+				</div>
+
+				<div class="input-group input-group-lg">
+				  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-tags"></span></span>
+				  <div class="form-control" id="tags-list" name="tags-list">
+					  <% @assigned_tags.each { | tag | %>
+						<div class="tag btn <%= tag['color'] %>" id="tag<%= tag['id'] %>">
+						  <span class="tag-title"><%= tag['tag'] %></span> 
+						</div>
+					  <% } %>
+				  </div>
+				</div>
+			<div class="pull-right">
+				<a href="<%= APP_PATH %>/list" class="btn btn-default" title="<%= _t 'Cancel' %>"><%= _t 'Cancel' %></a>
+ 	        	<a href="<%=APP_PATH + '/modify?code=' + @item[0]['code'] %>" class="btn btn-default" id="btnModify" title="<%= _t 'Modify' %>"><span class="glyphicon glyphicon-pencil"></span></a>
+				<a  href="<%=APP_PATH + '/item/checkin?code=' + @item[0]['code'] %>" class="btn btn-success" id="checkoutBtn"  title="<%= _t 'Check in' %>"><%= _t 'Check in' %>&nbsp;<span class="glyphicon glyphicon-export"></span></a>
+			</div>
+		 </div>
+	</div>
+</div>
