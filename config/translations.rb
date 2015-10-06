@@ -2,6 +2,7 @@
 # rubocop:disable Metrics/LineLength
 TRANSLATE = {
   'Actions' => {fr: 'Actions'},
+  'Application Behaviour' => {fr: "Comportement de l'application"},
   'Add' => {fr: 'Ajouter'},
   'Adding stuff in TechShop' => { fr: 'Ajouts de matériel à la Techshop'},
   'Alphanumeric' => {fr: 'valeurs alpha-numériques'},
@@ -26,6 +27,7 @@ TRANSLATE = {
   'Dealing with tags stuff' => {fr: 'Gestion des tags'},
   'Delete' => {fr: 'Delete'},
   'Description' => {fr: 'Description'},
+  'Direct checkin mode ?' => {fr: 'Ré-intégration directe des matériels ?'},
   'elements in the TechShop' => {fr: 'éléments dans la TechShop'},
   'From' => {fr: 'De'},
   'Generate !' => {fr: 'Générer !'},
@@ -77,6 +79,8 @@ TRANSLATE = {
 
 # Translation for online Help and messages
 HELP =  {
+  'help-app-behaviour-checkin' => { en: "Click 'yes' to avoid confirm box when checking in items by barcode scanning or button <span class='glyphicon glyphicon-import'></span>. Click 'no' if you need the confirm message on this action.",
+                                    fr: "Cliquez sur 'oui' pour ré-intégrer directement le matériel sans confirmation lors d'un scan de code ou d'un appuie sur le bouton <span class='glyphicon glyphicon-import'></span>. Sélectionnez 'non' si vous souhaitez un écran de confirmation sur cette action."},
   'help-barcode-chkval' => { en: 'Please check values. You should put numeric values in order to generate several barcodes.',
                              fr: "Vérifiez vos saisies. Entrez les nombres \\ndans l'ordre croissant pour générer une suite de codes barres."},
   'help-new-barcode' => { en: 'The scanned barcode that you can modify.',

@@ -1,1 +1,18 @@
-settings
+<div class="col-md-10 col-md-offset-1">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+	    	<h3 class="panel-title"><%= _t 'Application Behaviour' %></h3>
+	  	</div>
+		<div class="panel-body">
+		    <ul class="list-group col-md-5">
+	 		    <li class="list-group-item">
+			      	<label for="checkin_type"><%= _t 'Direct checkin mode ?' %></label><br/>
+			      	<input type="radio" name="checkin_type" id="checkin_type" value="direct" checked>&nbsp;<%= _t 'Yes' %><br/>
+			      	<input type="radio" name="checkin_type" id="checkin_type" value="confirm">&nbsp;<%= _t 'No' %>
+			    </li>
+			</ul>
+			<p class="col-md-5 pull-right"><%= _h 'help-app-behaviour-checkin' %></p>
+
+		 </div>
+	</div>
+</div>
