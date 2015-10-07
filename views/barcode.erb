@@ -13,9 +13,9 @@
 }
 </style>
 
-<script src="<%= APP_PATH %>/app/vendor/jquery-barcode/jquery-barcode.min.js?v=<%=APP_VERSION%>"></script>
 <script type="text/javascript">
 $(document).ready( function() {
+  var error_message = "";
 
   function generateBarcode(){
   	var radical = $("#barcodeValueRadical").val();
@@ -44,20 +44,37 @@ $(document).ready( function() {
       value = {code:value, rect: true};
     }
 
-    // Verify if values are numbers
- 	if (checkOrder(value, value2)) {
+	$("#canvasTarget").hide();
+	$("#barcodeTarget").html("").show();
+    // Verify if values are numbers, verify settings
+ 	if (checkOrder(value, value2) 
+ 		&& checkTypeValidity(radical, btype)
+ 	   ) {
 
-		$("#canvasTarget").hide();
-		$("#barcodeTarget").html("").show();
 		$("#barcodeResults .modal-title").html("<%= _t 'Barcodes' %> <%= _t 'From' %> "  + value +  " <%= _t 'To' %> " + value2);
 		// Creates divs
  		for ( var v = value; v <= value2; v++ ) {
  			$("#barcodeTarget").append("<div id='code-"+ v +"' class='gen'>"+ v +"</div>");
  			$("#code-" + v ).barcode( "" + radical + v, btype, settings);
+ 			$('#printButton').show();
 		}
  	} else {
- 		
+ 		// Displays error
+ 		$("#barcodeResults .modal-title").html("<%= _t 'Error !' %>");
+ 		console.log(error_message);
+ 		$("#barcodeTarget").html(error_message);
+ 		$('#printButton').hide();
  	}
+  }
+
+  function checkTypeValidity(radical, codetype) {
+  	var regexp = /[A-Z]/gi;
+	var matches_array = radical.match(regexp);
+	if (matches_array != null && matches_array.length > 0 && codetype == "code11"){
+		error_message = "<%= _t 'Code 11 does not support alphabetical characters !' %>";
+		return false;
+	}
+  	return true;
   }
   
   function checkOrder(v1, v2) {
@@ -66,7 +83,7 @@ $(document).ready( function() {
   	if (v2 >= v1) return true;
   	else {
   		// TODO : display message on a better way
-  		alert("<%= _t 'Please check values. You should put numeric values in order to generate several barcodes.' %>");
+  		error_message = "<%= _t 'Please check values. You should put numeric values in order to generate several barcodes.' %>";
   		return false;
   	}
   } 
