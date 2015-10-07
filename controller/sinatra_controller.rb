@@ -69,8 +69,9 @@ class SinatraApp < Sinatra::Base
         if !DB.checkout? @code
           redirect to APP_PATH + "/out?code=#{@code}"
         else
-          # If it is allready out, propose a confirm view to checkin
-          redirect to APP_PATH + "/checkin?code=#{@code}"
+          # If it is allready out, automatic checkin
+          # redirect to APP_PATH + "/checkin?code=#{@code}"
+          redirect to APP_PATH + "/item/checkin?code=#{@code}"
         end
       end
     end
