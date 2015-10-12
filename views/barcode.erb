@@ -61,16 +61,23 @@ $(document).ready( function() {
  	} else {
  		// Displays error
  		$("#barcodeResults .modal-title").html("<%= _t 'Error !' %>");
- 		console.log(error_message);
  		$("#barcodeTarget").html(error_message);
  		$('#printButton').hide();
  	}
   }
 
   function checkTypeValidity(radical, codetype) {
-  	var regexp = /[A-Z]/gi;
-	var matches_array = radical.match(regexp);
-	if (matches_array != null && matches_array.length > 0 && codetype == "code11"){
+  	var special = /[\#\@\&\"\'\(\§\!\)\°\_\*\€\`\£\=\±\\\:\;\,\?\•\¿\≥\‰\¥]/g;  
+  	var alphabetical = /[A-Z]/gi;
+	var alpha_matches = radical.match(alphabetical);
+	var special_matches = (radical.match(special));
+	// Check for any code type : no special chars
+	if (special_matches != null && special_matches.length > 0) {
+		error_message = "<%= _t 'Barcodes do not support any special character, but $ - + ! / .' %>";
+		return false;
+	}
+	// Check for code11 validity
+	if (alpha_matches != null && alpha_matches.length > 0 && codetype == "code11"){
 		error_message = "<%= _t 'Code 11 does not support alphabetical characters !' %>";
 		return false;
 	}
