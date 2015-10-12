@@ -14,6 +14,7 @@ TRANSLATE = {
   'Bar height' => {fr: 'Hauteur'},
   'Bar width' => {fr: 'Largeur'},
   'Barcodes' => {fr: 'Codes barres'},
+  'Barcodes do not support any special character, but $ - + ! / . %' => {fr: 'Les codes barres ne supportent pas les caratères spéciaux, sauf $ - + ! / . %'},
   'Cancel' => {fr: 'Annuler'},
   'Cancel checkout' => {fr: "Annuler la sortie du matériel"},
   'Checkout' => {fr: "Sortir de l'inventaire"},

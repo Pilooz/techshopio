@@ -73,7 +73,7 @@ $(document).ready( function() {
 	var special_matches = (radical.match(special));
 	// Check for any code type : no special chars
 	if (special_matches != null && special_matches.length > 0) {
-		error_message = "<%= _t 'Barcodes do not support any special character, but $ - + ! / .' %>";
+		error_message = "<%= _t 'Barcodes do not support any special character, but $ - + ! / . %' %>";
 		return false;
 	}
 	// Check for code11 validity
