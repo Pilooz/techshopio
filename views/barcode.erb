@@ -61,11 +61,13 @@ $(document).ready( function() {
  	} else {
  		// Displays error
  		$("#barcodeResults .modal-title").html("<%= _t 'Error !' %>");
+ 		//$("#barcodeTarget").toggleClass("panel panel-danger");
  		$("#barcodeTarget").html(error_message);
  		$('#printButton').hide();
  	}
   }
 
+  // Check validity of cstring to send to barcode generator
   function checkTypeValidity(radical, codetype) {
   	var special = /[\#\@\&\"\'\(\§\!\)\°\_\*\€\`\£\=\±\\\:\;\,\?\•\¿\≥\‰\¥]/g;  
   	var alphabetical = /[A-Z]/gi;
@@ -84,12 +86,12 @@ $(document).ready( function() {
   	return true;
   }
   
+  // Check order of values to send to barcode generator.
   function checkOrder(v1, v2) {
   	v1 = v1 =="" ? 0 : v1;
   	v2 = v2 =="" ? 0 : v2;
   	if (v2 >= v1) return true;
   	else {
-  		// TODO : display message on a better way
   		error_message = "<%= _t 'Please check values. You should put numeric values in order to generate several barcodes.' %>";
   		return false;
   	}
