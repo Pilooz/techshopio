@@ -35,9 +35,17 @@ Elle est compatible tablette et smartphone.
 
 ### installation
 
-- Installer ruby
-- `git clone git@github.com:pilooz/stechshopio.git`
+- Installer ruby ( https://www.ruby-lang.org/fr/documentation/installation/ )
+- `git clone git@github.com:pilooz/stechshopio.git` ou télécharger le ZIP `https://github.com/Pilooz/TechShopIO/archive/master.zip`
 - `bundle install`
 - copier les config/\*.sample en config/\*.rb
-- `bundle exec rackup -o 0.0.0.0`
+
+### Démarrage de l'application
+- Ouvrir une console
+- ./scripts/run.sh (Linux et MacOS)
+- ./scripts/run.bat (Windows)
+
+### Arrêter l'application
+- `Ctrl-C`
+
 
