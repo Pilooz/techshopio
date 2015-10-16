@@ -25,20 +25,20 @@ class SinatraApp < Sinatra::Base
   helpers do
     # Text Translation function
     def _t(s)
-      if TRANSLATE[s].nil?
-        s = "@@-- #{s} --@@"
-        return s
-      end
+      # if TRANSLATE[s].nil?
+      #   s = "@@-- #{s} --@@"
+      #   return s
+      # end
       s = TRANSLATE[s][APP_LANG] unless TRANSLATE[s].nil?
       s
     end
 
     # Help Translation function
     def _h(s)
-      if HELP[s].nil?
-        s = "@@-- #{s} --@@"
-        return s
-      end
+      # if HELP[s].nil?
+      #   s = "@@-- #{s} --@@"
+      #   return s
+      # end
       s = HELP[s][APP_LANG] unless HELP[s].nil?
       s
     end
