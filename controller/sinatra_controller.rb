@@ -228,6 +228,12 @@ class SinatraApp < Sinatra::Base
   # CRUD and Ajax Room service !
   #
 
+  get APP_PATH + '/item/picture/path' do
+    if params['code']
+      @item[0]['image_link']
+    end
+  end
+
   # Posting thumbnail in Base64 mode.
   post APP_PATH + '/item/picture' do  
     if params['code'] && params['label'] && params['labelthumb'] && params['thumb'] && params['picture']

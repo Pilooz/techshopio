@@ -109,7 +109,7 @@ $(document).ready( function() {
 				    type: 'POST',
 				    data: data,
 				    cache: false,
-					contentType: false, //'multipart/form-data; charset=utf-8',
+					contentType: false, 
 				    processData: false,
 				    success : function(response){
 				    	// Refresh the thumbnail on list
@@ -129,9 +129,19 @@ $(document).ready( function() {
     // View picture in modal popup
     //
 	$( ".modalPicture" ).click(function(){
-		var src = $(this).attr("src").replace(/thumb-/g, '');
-		//$(this).html($(this).attr("alt"));
-		ajax_get_thumbnail('bigPicture', src);
+		// var src = $(this).attr("src").replace(/thumb-/g, '');
+		var itemId = $(this).attr("id").replace(/img-/g, '');
+		$.ajax({
+		    url: APP_PATH + '/item/picture/path?code='+itemId, 
+		    type: 'GET',
+		    success : function(response){
+		    	// Refresh the thumbnail on list
+		    	ajax_get_thumbnail( 'bigPicture', response );
+		     },
+		    error : function(response){
+		    	console.log(response);
+		     }
+		});
 	});
 
 
@@ -140,8 +150,6 @@ $(document).ready( function() {
 	//
 	function ajax_get_thumbnail(id, name) {
 		var d = new Date();
-		console.log(APP_PATH + '/pictures/' + name);
-		//$("#" + id).load( APP_PATH + '/pictures/' + name + "?" + d.getTime());
 		$("#" + id).attr("src", APP_PATH + '/pictures/' + name + "?" + d.getTime());
 	}
 });
