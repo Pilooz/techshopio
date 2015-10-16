@@ -42,6 +42,7 @@ TRANSLATE = {
   'Micellenous' => {fr: 'Paramètres avancés'},
   'Mobile access <small>(admin features)</small>' => {fr: 'Accès mobile <small>(administration de la Techshop)</small>'},
   'Modify' => {fr: 'Modifier'},
+  'Modify item' => {fr: "modifier l'item"},
   'Modifying stuff in TechShop' => {fr: 'Modifier un matériel'},
   'Module size' => {fr: 'Taille de la matrice'},
   'Name' => {fr: 'Libellé'},
