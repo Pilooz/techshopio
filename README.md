@@ -67,8 +67,8 @@ Celui-ci devient alors un client de TechShopIO et vous permet de géré votre in
 - `Ctrl-C`
 
 ### TODO
-	- export de la base de données avec un google docs
-	- choix de la base de donnée au démarrage de l'application pour gérer plusieurs sets de matériels
+- export de la base de données avec un google docs
+- choix de la base de donnée au démarrage de l'application pour gérer plusieurs sets de matériels
 
 ### Contribuer
 
