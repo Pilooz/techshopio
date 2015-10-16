@@ -5,18 +5,26 @@ Le gestionnaire de TechShop facile, pour vos évènements Mix et workshops.
 Inspiré des besoins de Muséomix ce gestionnaire de techshop vous facilitera la vie lors de vos évènements Mix et workshops, dans lesquelles vous devez fournir rapidement toute sorte de matériels à toutes sortes d'équipes.
 TechShopIO vous permet de tenir simplement votre stock à jour, et facilite l'opération de ré-intégration et vérification de votre matériel à a fin de l'évènement.
 
-TechShopIO s'utilise localement sur votre poste de travail, sans avoir forcément besoin du réseau et encore moins d'une connexion internet.
-L'application est capable de lire plusieurs types de codes barres via un lecteur laser.
-Elle est compatible tablette et smartphone.
+Grâce à son atelier "codes barres" vous pouvez aussi de générer vos propres codes barres afin de faciliter l'opération de référencement des matériels dans l'inventaire, même lorsqu'il y a pluseurs fournisseurs de matériels différents.
+
+TechShopIO s'utilise localement sur votre poste de travail, sans avoir forcément besoin du réseau et encore moins d'une connexion internet. L'application détermine si votre ordinateur est connecté au réseau et vous propose dans ce cas, un accès tablette ou smartphone.
+
+L'application est aussi capable de lire plusieurs types de codes barres via un lecteur laser.
 
 ### Fonctionnalités
-- Tout se trame sur la liste 
+- Tout se trame sur la liste http://localhost:9292/techshopio/list
 	Un liste simple, lisible, entière, et non paginée de votre inventaire sous les yeux !
+
+- Une liste publique sur http://localhost:9292/techshopio/catalog
+	TechshopIO génère un catalogue public auquel vous pouvez donner accès en indiquant l'url ou en diffusant le QR code correspondant.
 
 - Entrée massive de matériel
 	Une interface de chargement de fichiers aux format CSV vous confère une grande efficacité quant au chargement de votre inventaire dans TechShopIO.
 
 - Entrées et sorties d'inventaire rapide, par lecture de codes barres.
+	L'opération de sortie, effectuée d'un simple clic sur la liste, se fait par ajout de mots-clé liés au matériel.
+	Sur une simple saisie du code, soit au clavier soit à l'aide d'une douchette laser, la ré-intégration dans l'inventaire est automatique si le matériel avait été sorti au préalable.
+
 - Association de mots clé multiple
 	Ce petit back-office, vous permet de définir les noms des équipes, des emprunteurs, ou tout autre mot clé pour caratériser les matériels de votre TechShop. Ils sont associés aux matériels lors de l'opération de sortie d'inventaire.
 
@@ -47,5 +55,12 @@ Elle est compatible tablette et smartphone.
 
 ### Arrêter l'application
 - `Ctrl-C`
+
+### TODO
+	- export de la base de données avec un google docs
+	- choix de la base de donnée au démarrage de l'application pour gérer plusieurs sets de matériels
+
+### Contribuer
+
 
 
