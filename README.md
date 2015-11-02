@@ -5,7 +5,7 @@ Le gestionnaire de TechShop facile, pour vos évènements Mix et workshops.
 Inspiré des besoins de Muséomix ce gestionnaire de techshop vous facilitera la vie lors de vos évènements Mix et workshops, dans lesquelles vous devez fournir rapidement toute sorte de matériels à toutes sortes d'équipes.
 TechShopIO vous permet de tenir simplement votre stock à jour, et facilite l'opération de ré-intégration et vérification de votre matériel à a fin de l'évènement.
 
-Grâce à son atelier "codes barres" vous pouvez aussi de générer vos propres codes barres afin de faciliter l'opération de référencement des matériels dans l'inventaire, même lorsqu'il y a pluseurs fournisseurs de matériels différents.
+Grâce à son atelier "codes barres" vous pouvez aussi de générer vos propres codes barres afin de faciliter l'opération de référencement des matériels dans l'inventaire, même lorsqu'il y a plusieurs fournisseurs de matériels ou pertenaires différents.
 
 TechShopIO s'utilise localement sur votre poste de travail, sans avoir forcément besoin du réseau et encore moins d'une connexion internet. L'application détermine si votre ordinateur est connecté au réseau et vous propose dans ce cas, un accès tablette ou smartphone.
 
