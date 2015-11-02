@@ -35,6 +35,13 @@ $(document).ready( function() {
 	 });
 
 	//
+	// Bind submit button from list actions -> In / Out / New item
+	//
+	$('#btnGo').click(function(){
+		$('#frmGo').submit();
+	});
+
+	//
 	// Bind submit button for new/modify view
 	//
 	$('#btnSubmit').click(function(){
