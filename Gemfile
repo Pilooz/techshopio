@@ -9,8 +9,6 @@ gem 'rack'
 gem 'rack-rewrite'
 gem 'rake'
 gem 'rest-client'
-gem 'savon'
-gem 'sequel'
 gem 'sinatra'
 gem 'data_uri'
 
