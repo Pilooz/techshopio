@@ -12,7 +12,7 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
-public/pictures/
+public/pictures/*.*
 
 # YARD artifacts
 .yardoc
@@ -21,6 +21,5 @@ doc/
 
 
 # Config
-config/init.rb
 config/options.rb
 config/*.yml
