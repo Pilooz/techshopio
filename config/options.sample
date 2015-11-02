@@ -4,10 +4,8 @@ ENV['RACK_ENV'] = 'development'
 APP_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 APP_PORT = 9292
 
-# Configurer ici le virtual path de l'application/
-# /!\ Il est obligatoire de mettre l'application sous un virtual path du fait de notre architecture HAProxy.
-# On définit ici un virtual path sans le slash final.
-APP_PATH = '/startbox'
+# Configurer ici le virtual path de l'application
+APP_PATH = '/techshopio'
 
 # Version de l'application
 APP_VERSION = '1.0.0'
