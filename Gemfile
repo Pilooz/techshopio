@@ -4,10 +4,7 @@ source 'https://rubygems.org'
 
 gem 'json'
 gem 'puma'
-# gem 'mail'
-#gem 'mysql2'
 gem 'sqlite3'
-gem 'nokogiri'
 gem 'rack'
 gem 'rack-rewrite'
 gem 'rake'
@@ -16,7 +13,6 @@ gem 'savon'
 gem 'sequel'
 gem 'sinatra'
 gem 'data_uri'
-# gem 'mini_magick'
 
 group :development do
   gem 'sinatra-contrib'
