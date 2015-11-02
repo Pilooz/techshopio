@@ -1,5 +1,6 @@
 *.gem
 *.rbc
+*.db
 .bundle
 .config
 coverage
@@ -11,7 +12,6 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
-db/files/
 public/pictures/
 
 # YARD artifacts
