@@ -16,6 +16,14 @@ L'application est aussi capable de lire plusieurs types de codes barres via un l
 #### Tout se trame sur la liste http://localhost:9292/techshopio/list
 
 Un liste simple, lisible, entière, et non paginée de votre inventaire sous les yeux !
+Un formulaire en auto-focus permet de gérer les saisies de codes-barre soit à la main soit par l'intermédiaire d'un lecteur laser.
+La saisie d'un code dans cette zone engendre les actions suivantes de manière automatique :
+
+- si le code est référencé dans la TechShop 
+	- si le matériel désigné était sorti : ré-intégration automatique dans l'inventaire
+	- sinon affichage du formulaire de sortie
+	
+- si le code n'est pas référencé dans la TechShop, affichage du formulaire de saisie d'un nouveau matériel.
 
 #### Une liste publique sur http://localhost:9292/techshopio/catalog
 
