@@ -62,9 +62,10 @@ Celui-ci devient alors un client de TechShopIO et vous permet de géré votre in
 ### installation
 
 - Installer ruby ( https://www.ruby-lang.org/fr/documentation/installation/ )
+- Ouvrir une console
 - `git clone git@github.com:pilooz/techshopio.git` ou télécharger le ZIP `https://github.com/pilooz/techshopio/archive/master.zip`
 - `bundle install`
-- copier les config/\*.sample en config/\*.rb
+- `bundle exec rake install`
 
 ### Démarrage de l'application
 - Ouvrir une console
