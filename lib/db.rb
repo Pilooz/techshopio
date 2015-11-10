@@ -97,12 +97,12 @@ class Db
   end
 
   # select data
-  def select_all_items
+  def select_all_items(extract_tag=true)
     res = @db.execute "select * from items order by name"
     res.each { |row|
       taglist = select_tags_for_item(row[0]).flatten
       row['taglist'] = taglist
-    }
+    } if extract_tag
     res
   end
 

@@ -2,6 +2,7 @@
 require 'sinatra/reloader' if ENV['RACK_ENV'] == 'development'
 require 'socket'
 require 'data_uri'
+require 'csv'
 
 # Application Sinatra servant de base
 class SinatraApp < Sinatra::Base
@@ -181,10 +182,20 @@ class SinatraApp < Sinatra::Base
 
   # Receive csv data
   post APP_PATH + '/populate' do
-    # TODO : See how to get barcode, if code are in csv file, perhaps will we have to produce these codes ?
     DB.add_serveral_items  JSON.parse params['jsondata'] unless params['jsondata'].nil?
     # Redirect to the Techshop's list
     redirect to APP_PATH + "/list"
+  end
+
+  # Extract data at csv format
+  get APP_PATH + '/list/csv' do 
+    list = DB.select_all_items false
+    column_names = list.first.keys
+    listcsv = CSV.generate { |csv|
+      csv << column_names
+      list.each { |x| csv << x.values }
+    }  
+    listcsv
   end
 
    # Create or modify item
