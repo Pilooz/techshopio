@@ -50,20 +50,23 @@ $(document).ready( function() {
  	if (checkOrder(value, value2) 
  		&& checkTypeValidity(radical, btype)
  	   ) {
-
-		$("#barcodeResults .modal-title").html("<%= _t 'Barcodes' %> <%= _t 'From' %> "  + value +  " <%= _t 'To' %> " + value2);
-		// Creates divs
- 		for ( var v = value; v <= value2; v++ ) {
- 			$("#barcodeTarget").append("<div id='code-"+ v +"' class='gen'>"+ v +"</div>");
- 			$("#code-" + v ).barcode( "" + radical + v, btype, settings);
- 			$('#printButton').show();
-		}
+			// $("#errorTitle").html("<%= _t 'Barcodes' %> <%= _t 'From' %> "  + value +  " <%= _t 'To' %> " + value2);
+			$('#printButton').show();
+			$("#barcodeWorkingZone").show();
+			$(".barcodeParamZone").hide();
+			$("h1, h2, h3, h4, nav, ul, li").hide();
+			// Creates divs
+	 		for ( var v = value; v <= value2; v++ ) {
+	 			$("#barcodeTarget").append("<div id='code-"+ v +"' class='gen'>"+ v +"</div>");
+	 			$("#code-" + v ).barcode( "" + radical + v, btype, settings);
+			}
  	} else {
+ 		console.log("Error ! "+error_message);
  		// Displays error
- 		$("#barcodeResults .modal-title").html("<%= _t 'Error !' %>");
+ 		$("#barcodeWorkingZone").show();
+ 		$("#errorTitle").html("<%= _t 'Error !' %>");
+ 		$("#errorMsg").html(error_message);
  		//$("#barcodeTarget").toggleClass("panel panel-danger");
- 		$("#barcodeTarget").html(error_message);
- 		$('#printButton').hide();
  	}
   }
 
@@ -92,7 +95,7 @@ $(document).ready( function() {
   	v2 = v2 =="" ? 0 : v2;
   	if (v2 >= v1) return true;
   	else {
-  		error_message = "<%= _t 'Please check values. You should put numeric values in order to generate several barcodes.' %>";
+  		error_message = "<%= _h 'Please check values. You should put numeric values in order to generate several barcodes.' %>";
   		return false;
   	}
   } 
@@ -118,6 +121,16 @@ $(document).ready( function() {
     ctx.strokeRect (0, 0, canvas.width, canvas.height);
   }
   
+  function init() {
+    $("#errorTitle").html("");
+    $("#errorMsg").html("");
+	$('#printButton').hide();
+	$("#barcodeWorkingZone").hide();
+	$(".barcodeParamZone").show();
+	// These tags are not printed
+	$("h1, h2, h3, h4, nav, ul, li").show();
+  }
+
   $(function(){
     $('input[name=btype]').click(function(){
       if ($(this).attr('id') == 'datamatrix') showConfig2D(); else showConfig1D();
@@ -131,11 +144,17 @@ $(document).ready( function() {
       print();
     });
 
+    $('#backButton').click(function(){
+      init();
+    });
+
   });
+
+  init();
 });
 </script>
 
-<div clas="row">
+<div class="row barcodeParamZone">
 	<div class="col-md-12 col-md-offset-1">
 	    <div class="col-md-4">
 	      <h2><span class="label label-success"><%= _t 'Type' %></span></h2>
@@ -204,7 +223,7 @@ $(document).ready( function() {
 	</div>
 </div>
 
-<div clas="row">
+<div class="row barcodeParamZone">
 	<div class="col-md-12 col-md-offset-1">
 		<div class="row">
 		  <div class="col-md-6">
@@ -229,36 +248,22 @@ $(document).ready( function() {
 		          <button class="btn btn-primary" type="button" id="generateButton" data-toggle="modal" data-target="#barcodeResults" title="<%= _t 'Generate !' %>"><%= _t 'Generate !' %></button>
 		        </span>
 		      </div>
-
 		      </form>
 		  </div>
 		</div>
 	</div>
 </div>
 
-<!-- Barcode are in a modal window, easier to print. -->
-<div class="modal fade" id="barcodeResults" tabindex="-1" >
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="<%= _t 'Close' %>"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"></h4>
-      </div>
-      <div class="modal-body">
-      	<div class="container-fluid">
-			<div clas="row">
-				<div class="col-md-9 col-md-offset-1">
-					<div id="barcodeTarget" class="barcodeTarget"></div>
-					<canvas id="canvasTarget" width="150" height="150"></canvas>
-				</div>
-			</div>
-		</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" title="<%= _t 'Close' %>"><%= _t 'Close' %></button>
-        <button type="button" id="printButton" class="btn btn-primary" title="<%= _t 'Print' %>"><%= _t 'Print' %></button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
+<div clas="row" id="barcodeWorkingZone">
+	<div class="col-md-12 col-md-offset-1">
+		<h2><span id="errorTitle" class="label label-danger"></span></h2>
+		<span id="errorMsg"></span>
+		<div class="col-md-9 col-md-offset-1">
+			<div id="barcodeTarget" class="barcodeTarget"></div>
+			<canvas id="canvasTarget" width="150" height="150"></canvas>
+		</div>
+		<button type="button" id="backButton" class="btn btn-primary" title="<%= _t 'Back' %>"><%= _t 'Back' %></button>&nbsp;&nbsp;
+		<button type="button" id="printButton" class="btn btn-primary" title="<%= _t 'Print' %>"><%= _t 'Print' %></button>
+	</div>
+</div>
