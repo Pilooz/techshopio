@@ -15,3 +15,7 @@ APP_LANG = :fr
 
 # Nom de la base SQLite.
 DB_FILENAME = APP_ROOT + '/db/files/test.db'
+
+# Credential for modifying things
+ADMIN_LOGIN = "admin"
+ADMIN_PWD = "secret"

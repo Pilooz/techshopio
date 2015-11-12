@@ -43,6 +43,19 @@ class SinatraApp < Sinatra::Base
       s = HELP[s][APP_LANG] unless HELP[s].nil?
       s
     end
+
+    def protected!
+      return if authorized?
+      headers['WWW-Authenticate'] = 'Basic realm="Restricted Area"'
+      # TODO : display a beautiful error plz...
+      halt 401, "Not authorized\n"
+    end
+
+    def authorized?
+      @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+      @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == [ADMIN_LOGIN, ADMIN_PWD]
+    end
+   
   end
 
   before do
@@ -57,6 +70,9 @@ class SinatraApp < Sinatra::Base
     @code = params['code']
     @item = DB.read @code
     @publiclist = false
+    # Add login /pwd authentification for none public pages (all but ../catalog :) )
+# TODO  : write a  test more ruby compliant !!!
+    protected! unless env['REQUEST_URI'] == APP_PATH || env['REQUEST_URI'] == APP_PATH + '/' || env['REQUEST_URI'] == APP_PATH + '/catalog'
   end
 
   get APP_PATH + '/?' do
@@ -138,6 +154,11 @@ class SinatraApp < Sinatra::Base
     # Getting all affected tags for this item
     @assigned_tags = DB.select_tags_for_item @code
     erb :checkin
+  end
+
+  get APP_PATH + '/logout' do
+    @auth = nil
+    redirect to APP_PATH + "/"
   end
 
   get APP_PATH + '/delete' do
