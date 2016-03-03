@@ -4,6 +4,8 @@ require 'sqlite3'
 # Database stuff
 class Db
   attr_accessor :db
+  OUT = 1
+  IN = 0
   def initialize
     @db = SQLite3::Database.new DB_FILENAME
     @db.results_as_hash = true
@@ -35,6 +37,13 @@ class Db
     @db.execute 'create table tags_items (
         item_code varchar(50),
         tag_id integer
+        );'
+    puts "  Creating table items_log..."
+    @db.execute 'create table items_log (
+        item_code varchar(50),
+        tag_id integer,
+        move integer,
+        out_date timestamp
         );'
   end
 
@@ -232,6 +241,7 @@ class Db
   #
   def link_tag(code, id)
     @db.execute "insert into tags_items values (?, ?)", [code, id]
+    log_item code, id, OUT
   end
 
   def unlink_tag(id)
@@ -240,12 +250,26 @@ class Db
 
   def unlink_tag_from_item(code, id)
     @db.execute "delete from tags_items where item_code = ? and tag_id = ?", [code, id]
+    log_item code, id, IN
   end
 
   def unlink_item(code)
+    tags = select_tags_for_item code
+    puts tags.inspect
     @db.execute "delete from tags_items where item_code = ?", code
+    tags.each { |t|
+      log_item code, t['id'], IN
+    }
   end
 
+  # Logging item move (in/out) => move
+  def log_item(code, tag_id, move)
+    puts "code : " + code.to_s
+    puts "tag_id : " + tag_id.to_s
+    puts "move : " + move.to_s
+    puts
+    @db.execute "insert into items_log values (?, ?, ?, ?)", [code, tag_id, move, Time.now.to_s]
+  end
 
 end
 
