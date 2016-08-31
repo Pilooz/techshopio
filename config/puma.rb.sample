@@ -1,0 +1,12 @@
+threads 1,8
+workers 3
+preload_app!
+daemonize
+bind 'tcp://0.0.0.0:9292'
+environment 'development'
+directory '/var/www/apps/techshopio/'
+pidfile '/var/run/techshopio/puma.pid'
+state_path '/var/run/techshopio/puma.state'
+activate_control_app 'tcp://0.0.0.0:9292', { auth_token: 'aazzaazzaa' }
+stdout_redirect '/var/log/techshopio/puma.log', '/var/log/techshopio/puma_error.log', true
+tag 'puma-techshopio'

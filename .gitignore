@@ -22,4 +22,5 @@ doc/
 
 # Config
 config/options.rb
+config/puma.rb
 config/*.yml
