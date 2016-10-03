@@ -18,6 +18,7 @@ TRANSLATE = {
   'Barcodes do not support any special character, but $ - + ! / . %' => {fr: 'Les codes barres ne supportent pas les caratères spéciaux, sauf $ - + ! / . %'},
   'Cancel' => {fr: 'Annuler'},
   'Cancel checkout' => {fr: "Annuler la sortie du matériel"},
+  'Category' => {fr: 'Catégorie'},
   'Checkout' => {fr: "Sortir de l'inventaire"},
   'Check in' => {fr: "Ré-intégrer dans l'inventaire"},
   'Check-in stuff in TechShop' => { fr: 'Ré-intégration de matériel' },

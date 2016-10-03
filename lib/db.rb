@@ -28,11 +28,13 @@ class Db
         checkout varchar(1) default 'N'
       );"
     puts "  Creating table tags..."
-    @db.execute 'create table tags (
+    @db.execute "
+      create table tags (
         id integer,
         tag varchar(255),
-        color varchar(50)
-        );'
+        color varchar(50),
+        category varchar(1) default 'N'
+        );"
     puts "  Creating table tags_items..."
     @db.execute 'create table tags_items (
         item_code varchar(50),
@@ -185,10 +187,10 @@ class Db
   # Tags routines
   #
   def select_all_tags
-    @db.execute "select t.id, t.tag, t.color, count(ti.item_code) count_items
+    @db.execute "select t.id, t.tag, t.color, t.category, count(ti.item_code) count_items
                  from tags t left join tags_items ti
                  on t.id = ti.tag_id
-                 group by t.id, t.tag, t.color
+                 group by t.id, t.tag, t.color, t.category
                  order by t.tag"
   end
 
@@ -222,11 +224,12 @@ class Db
 
 
   # add tag
-  def add_tag(tag, color)
+  def add_tag(tag, color, category)
     unless tag.empty?
       newid = lastid('tags', col='id')
       newid = newid + 1
-      @db.execute "insert into tags values ( ?, ?, ?)", [newid, tag, color]
+      category = category.nil? ? 'N' : 'O'
+      @db.execute "insert into tags values ( ?, ?, ?, ?)", [newid, tag, color, category]
     end
   end
 
