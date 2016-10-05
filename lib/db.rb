@@ -28,13 +28,11 @@ class Db
         checkout varchar(1) default 'N'
       );"
     puts "  Creating table tags..."
-    @db.execute "
-      create table tags (
+    @db.execute 'create table tags (
         id integer,
         tag varchar(255),
-        color varchar(50),
-        sorting_tag varchar(1) default 'N'
-        );"
+        color varchar(50)
+        );'
     puts "  Creating table tags_items..."
     @db.execute 'create table tags_items (
         item_code varchar(50),
@@ -118,7 +116,8 @@ class Db
   end
 
   def read(code)
-    r = @db.execute 'select * from items where code = ?', code
+    code = code.upcase unless code.nil?
+    r = @db.execute 'select * from items where upper(code) = ?', code
     if r[0].nil?
       return empty_row
     end
@@ -187,10 +186,10 @@ class Db
   # Tags routines
   #
   def select_all_tags
-    @db.execute "select t.id, t.tag, t.color, t.sorting_tag, count(ti.item_code) count_items
+    @db.execute "select t.id, t.tag, t.color, count(ti.item_code) count_items
                  from tags t left join tags_items ti
                  on t.id = ti.tag_id
-                 group by t.id, t.tag, t.color, t.sorting_tag
+                 group by t.id, t.tag, t.color
                  order by t.tag"
   end
 
@@ -206,7 +205,6 @@ class Db
     t1 = @db.execute "select t.id, t.tag, t.color
                  from tags t, tags_items ti
                  where t.id = ti.tag_id
-                   and t.sorting_tag = 'N'
                    and item_code = ?", code
     t2 = @db.execute "select t.id, t.tag, t.color
                  from tags t 
@@ -225,12 +223,11 @@ class Db
 
 
   # add tag
-  def add_tag(tag, color, sorting_tag)
+  def add_tag(tag, color)
     unless tag.empty?
       newid = lastid('tags', col='id')
       newid = newid + 1
-      sorting_tag = sorting_tag.nil? ? 'N' : 'O'
-      @db.execute "insert into tags values ( ?, ?, ?, ?)", [newid, tag, color, sorting_tag]
+      @db.execute "insert into tags values ( ?, ?, ?)", [newid, tag, color]
     end
   end
 

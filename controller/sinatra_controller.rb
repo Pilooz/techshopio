@@ -292,7 +292,7 @@ class SinatraApp < Sinatra::Base
 
   # Receive tags data
   post APP_PATH + '/tag/add' do
-    DB.add_tag params['tag'], params['color'], params['sorting_tag']
+    DB.add_tag params['tag'], params['color']
     # Redirect to the tags' list
     redirect to APP_PATH + "/tags"
   end

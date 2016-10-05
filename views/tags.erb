@@ -17,7 +17,7 @@ $(document).ready( function() {
 	$('.colorpicker').click(function()
 	{
 		$("#color").val($(this).attr("class").split(' ')[1]);
-		$(".colorpicker").removeClass("selected");
+		$(this).removeClass("selected");
 		$(this).addClass("selected");
 	});
 
@@ -68,33 +68,21 @@ $(document).ready( function() {
 	  	</div>
 		<div class="panel-body">
 		<form method="post" action="<%=APP_PATH + '/tag/add?' %>">
-			<div class="row">
-				<p class="col-md-offset-1">
-				<input type="text" name="tag" id="tag">
-				<input type="hidden" id="color" name="color" value="">
+			<input type="text" name="tag" id="tag">
+			<input type="hidden" id="color" name="color" value="">
 
-				<button type="button" class="btn btn-default colorpicker">&nbsp;</button>
-				<button type="button" class="btn btn-yellow colorpicker">&nbsp;</button>
-				<button type="button" class="btn btn-warning colorpicker">&nbsp;</button>
-				<button type="button" class="btn btn-danger colorpicker">&nbsp;</button>
-				<button type="button" class="btn btn-violet colorpicker">&nbsp;</button>
-				<button type="button" class="btn btn-info colorpicker">&nbsp;</button>
-				<button type="button" class="btn btn-primary colorpicker">&nbsp;</button>
-				<button type="button" class="btn btn-success colorpicker">&nbsp;</button>
-				<button type="button" class="btn btn-brown colorpicker">&nbsp;</button>
-				<button type="button" class="btn btn-black colorpicker">&nbsp;</button>
-				</p>
-			</div>
-			<div class="row">
-				<p class="col-md-offset-1">
-				<input type="checkbox" name="sorting_tag" id="sorting_tag" value="O" />&nbsp;<span class="text-info"><%= _t "Sorting tag" %></span>
-				</p>
-			</div>
-			<div class="row">
-				<p class="col-md-offset-1">
-				<button class="btn btn-info" type="submit"><%= _t 'Add' %></button>
-				</p>
-			</div>		
+			<button type="button" class="btn btn-default colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-yellow colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-warning colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-danger colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-violet colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-info colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-primary colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-success colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-brown colorpicker">&nbsp;</button>
+			<button type="button" class="btn btn-black colorpicker">&nbsp;</button>
+
+			<button class="btn btn-info" type="submit"><%= _t 'Add' %></button> 			
 		</form>
 		 </div>
 	</div>
