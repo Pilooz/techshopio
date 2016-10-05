@@ -18,8 +18,8 @@ class SinatraApp < Sinatra::Base
   end
 
   configure :development do
-    register Sinatra::Reloader
-    also_reload "#{APP_ROOT}/lib/db.rb"
+    # register Sinatra::Reloader
+    # also_reload "#{APP_ROOT}/lib/db.rb"
     # dont_reload '/path/to/other/file'
   end
 
@@ -292,8 +292,7 @@ class SinatraApp < Sinatra::Base
 
   # Receive tags data
   post APP_PATH + '/tag/add' do
-    puts "====================> " + params['category'].inspect
-    DB.add_tag params['tag'], params['color'], params['category']
+    DB.add_tag params['tag'], params['color'], params['sorting_tag']
     # Redirect to the tags' list
     redirect to APP_PATH + "/tags"
   end

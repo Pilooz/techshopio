@@ -48,12 +48,12 @@ $(document).ready( function() {
 		<ul class="list-group">
 		  <% @tags.each { | tag | %>
 			<li class="list-group-item">
-				<% if tag['category']  == 'O' %>
-					<%= _t "Category"  %>
-				<% end %>	
 				<button class="tag btn <%= tag['color'] %>" id="tag<%= tag['id'] %>" type="button" title="<%= _t 'tag' + ' ' + tag['tag']  %>"><%= tag['tag'] %></button>
         		<a href="<%=APP_PATH %>/tag/delete?id=<%= tag['id'] %>"><span class="glyphicon glyphicon-trash"></span></a>
 				<span class="badge"><%= tag['count_items'] %></span>
+				<% if tag['sorting_tag']  == 'O' %>
+					<span class="badge"><%= _t "Sorting tag"  %></span>
+				<% end %>	
 			</li> 
 		  <% } %>
 		</ul>
@@ -87,7 +87,7 @@ $(document).ready( function() {
 			</div>
 			<div class="row">
 				<p class="col-md-offset-1">
-				<input type="checkbox" name="category" id="category" value="O" />&nbsp;<span class="text-info"><%= _t "Category" %></span>
+				<input type="checkbox" name="sorting_tag" id="sorting_tag" value="O" />&nbsp;<span class="text-info"><%= _t "Sorting tag" %></span>
 				</p>
 			</div>
 			<div class="row">
