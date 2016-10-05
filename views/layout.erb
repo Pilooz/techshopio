@@ -64,6 +64,7 @@
             <li class="<%=@nav_barcode %>"><a href="<%= APP_PATH %>/barcode"><%= _t('Barcodes') %></a></li>
             <li class="<%=@nav_populate %>"><a href="<%= APP_PATH %>/populate"><%= _t('Populate DB') %></a></li>
             <li class="<%=@nav_tags %>"><a href="<%= APP_PATH %>/tags"><%= _t('Tags') %></a></li>
+            <li class="<%=@nav_stats %>"><a href="<%= APP_PATH %>/stats"><%= _t('Stats') %></a></li>
 <!--  No need for this release           
 <li class="<%=@nav_settings %>"><a href="<%= APP_PATH %>/settings"><%= _t('Settings') %></a></li>
  --> 
@@ -85,7 +86,7 @@
           <h1 class="page-header"><%=@main_title%></h1>
         </div>
         <div class="row">
-<% if @nav_barcode.empty? && @nav_new.empty? && @nav_populate.empty?  && @nav_tags.empty? && @nav_checkin.empty? && @nav_settings.empty? && !@publiclist %>
+<% if @nav_barcode.empty? && @nav_new.empty? && @nav_populate.empty?  && @nav_tags.empty? && @nav_checkin.empty? && @nav_stats.empty? && @nav_settings.empty? && !@publiclist %>
           <div class="col-md-4 col-md-offset-1">
             <form method="get" id="frmGo" action="<%= APP_PATH %>/">
               <div class="input-group input-group-lg">

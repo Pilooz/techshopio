@@ -3,6 +3,7 @@ require 'sinatra/reloader' if ENV['RACK_ENV'] == 'development'
 require 'socket'
 require 'data_uri'
 require 'csv'
+require 'tilt/erb'
 
 # Application Sinatra servant de base
 class SinatraApp < Sinatra::Base
@@ -66,6 +67,7 @@ class SinatraApp < Sinatra::Base
     @nav_populate = ''
     @nav_tags = ''
     @nav_checkin = ''
+    @nav_stats = ''
     @nav_settings = ''
     @code = params['code']
     @item = DB.read @code
@@ -193,6 +195,14 @@ class SinatraApp < Sinatra::Base
     @main_title = _t 'Populate TechShop massively'
     @nav_populate = 'active'
     erb :populate
+  end
+
+  # Route for checkout stats
+  get APP_PATH + '/stats' do
+    # Propose list of TechShop on index page
+    @nav_stats = 'active'
+    @main_title = _t 'Check-out statistics'
+    erb :stats
   end
 
   get APP_PATH + '/settings' do
