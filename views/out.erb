@@ -38,6 +38,7 @@
 	    	<h3 class="panel-title">#<%= @code %></h3>
 	  	</div>
 		<div class="panel-body">
+			<% if USE_IMAGE == "Y" %>
 				<div class="input-group">
 				  <span class="input-group-addon input-group-lg" id="basic-addon3">
 				  <% unless @item[0]['image_link'].empty? %>
@@ -47,7 +48,7 @@
 				  <% end %>
 				  </span>
 				</div>
-
+			<% end %>
 				<div class="input-group">
 				  <span class="input-group-addon input-group-lg" id="basic-addon1"><span class="glyphicon glyphicon-bookmark"></span></span>
 				  <input type="text" class="form-control" value="<%= @item[0]['name'] %>">

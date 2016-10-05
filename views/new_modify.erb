@@ -7,20 +7,21 @@
 		    <form method="post" id="newModifyFrm" action="<%=APP_PATH + '/item/new_modify' %>">
 		    	<div class="col-md-4">
 		    		<input type="hidden" name="action" value="<%= @action %>">
-					<% unless @item[0]['image_link'].empty? %>
-						<img src="<%= APP_PATH %>/pictures/<%= @item[0]['image_link'] %>" width="" alt="<%= @item[0]['name'] %>" class="img-responsive img-rounded">
-						<input type="hidden" name="image_link" value="<%= @item[0]['image_link'] %>">
-					<% else %>
-						<img id="img-<%= @item[0]['code'] %>" class="img-responsive img-rounded center-block"/>
+		    		<% if USE_IMAGE == "Y" %>
+						<% unless @item[0]['image_link'].empty? %>
+							<img src="<%= APP_PATH %>/pictures/<%= @item[0]['image_link'] %>" width="" alt="<%= @item[0]['name'] %>" class="img-responsive img-rounded">
+							<input type="hidden" name="image_link" value="<%= @item[0]['image_link'] %>">
+						<% else %>
+							<img id="img-<%= @item[0]['code'] %>" class="img-responsive img-rounded center-block"/>
+						<% end %>
+						<br />
+						<span class="btn btn-default btn-file pull-right" title="<%= _t 'take a picture of this item' %>">
+							<span class="glyphicon glyphicon-camera"></span>
+							 	<input type="file" class="btn btn-default" id="picture-<%= @item[0]['code'] %>" name="picture" accept="image/jpeg,image/jpg,image/gif,image/png" />
+						</span>
+
+						<div class="clearfix"><hr/></div>
 					<% end %>
-					<br />
-					<span class="btn btn-default btn-file pull-right" title="<%= _t 'take a picture of this item' %>">
-						<span class="glyphicon glyphicon-camera"></span>
-						 	<input type="file" class="btn btn-default" id="picture-<%= @item[0]['code'] %>" name="picture" accept="image/jpeg,image/jpg,image/gif,image/png" />
-					</span>
-
-					<div class="clearfix"><hr/></div>
-
 					<% if @action == 'modify' %>
 						<div class="row">
 							<div class="col-md-12">
