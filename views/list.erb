@@ -72,7 +72,9 @@
     				<!--remove capture="camera" to have to choice of selecting a saved image or take a new one on both Ios and Android-->
 
  	        		<a href="<%=APP_PATH + '/modify?code=' + item['code'] %>" class="btn btn-default" id="btnModify" title="<%= _t 'Modify' %>"><span class="glyphicon glyphicon-pencil"></span></a>
-	        		<a href="<%=APP_PATH + '/delete?code=' + item['code'] %>" class="btn btn-danger" id="btnDelete" title="<%= _t 'Delete' %>"><span class="btn-danger glyphicon glyphicon-trash"></span></a>
+ 	        		<% if item['checkout'] == 'N' %>
+	        			<a href="<%=APP_PATH + '/delete?code=' + item['code'] %>" class="btn btn-danger" id="btnDelete" title="<%= _t 'Delete' %>"><span class="btn-danger glyphicon glyphicon-trash"></span></a>
+	        		<% end %>
 	        	</td>
 	        	<% end %>
 	        </tr>
