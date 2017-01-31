@@ -43,7 +43,7 @@ class Db
         item_code varchar(50),
         tag_id integer,
         move integer,
-        out_date timestamp
+        move_date timestamp
         );'
   end
 
