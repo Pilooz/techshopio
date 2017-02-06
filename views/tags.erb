@@ -28,6 +28,25 @@ $(document).ready( function() {
 		$.ajax({
 		  url: "<%= APP_PATH %>/tag/info/?id=" + this.id.replace('tag', '')
 		})
+		  .success(function(response) {
+		  	$('#items_table').html("");
+		  	$('#tag-detail').html("");
+			response = $.parseJSON(response);
+			$('#tag-detail').html("<span class='label "+response[0].color+"'>" + response[0].tag + "</span>"); 
+			$.each(response, function(i, item) {
+				$('<tr>').html("<td>" + response[i].code + "</td><td>" + response[i].name + "</td><td>" + response[i].description + "</td>").appendTo('#items_table');
+			});
+			// $(function() {
+			//     $.each(response, function(i, item) {
+			//         var $tr = $('<tr>').append(
+			//             $('<td>').text(item.code),
+			//             $('<td>').text(item.name),
+			//             $('<td>').text(item.description)
+			//         ).appendTo('#items_table');
+			//         console.log($tr.wrap('<p>').html());
+			//     });
+			// });		
+		})
 		  .done(function( msg ) {
 		  	// TODO : Flash message to say 'Ok!'
 		    console.log( msg );
@@ -91,10 +110,10 @@ $(document).ready( function() {
 <div class="col-md-10 col-md-offset-1">
 	<div class="panel panel-default" id="tag-detail-panel">
 		<div class="panel-heading">
-	    	<h3 class="panel-title"><%= _t 'Details for this tag' %></h3>
+	    	<h3 class="panel-title"><%= _t 'Details for tag' %>&nbsp;<span id="tag-detail"></span></h3>
 	  	</div>
 		<div class="panel-body">
-		  Here is some stats and actions on this tag !
+		  <table id="items_table" class="table stripped"></table>
 		 </div>
 	</div>
 </div>

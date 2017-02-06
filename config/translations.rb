@@ -31,6 +31,7 @@ TRANSLATE = {
   'Dealing with tags stuff' => {fr: 'Gestion des tags'},
   'Delete' => {fr: 'Delete'},
   'Description' => {fr: 'Description'},
+  'Details for tag' => {fr: 'Détail pour le tag'},
   'Direct checkin mode ?' => {fr: 'Ré-intégration directe des matériels ?'},
   'elements in the TechShop' => {fr: 'éléments dans la TechShop'},
   'Error !' => {fr: 'Erreur !'},
