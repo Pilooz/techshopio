@@ -11,6 +11,10 @@
 	float:left;
 	margin-bottom: 10px;
 }
+
+#barcodeTarget .title {
+	font-size: 9px;
+}
 </style>
 
 <script type="text/javascript">
@@ -18,6 +22,7 @@ $(document).ready( function() {
   var error_message = "";
 
   function generateBarcode(){
+  	var barcodetitle = $("#barcodeValueTitle").val();
   	var radical = $("#barcodeValueRadical").val();
     var value = $("#barcodeValueFrom").val();
     var value2 = $("#barcodeValueTo").val() == "" ? value : $("#barcodeValueTo").val();
@@ -58,6 +63,7 @@ $(document).ready( function() {
 			// Creates divs
 	 		for ( var v = value; v <= value2; v++ ) {
 	 			$("#barcodeTarget").append("<div id='code-"+ v +"' class='gen'>"+ v +"</div>");
+	 			//$("#barcodeTarget").append("<div class='title'>"+ barcodetitle +"</div>");
 	 			$("#code-" + v ).barcode( "" + radical + v, btype, settings);
 			}
  	} else {
@@ -229,6 +235,13 @@ $(document).ready( function() {
 		  <div class="col-md-6">
 		    <form method="get">
 
+<!-- 		      <div class="input-group input-group-ld">
+		        <span class="input-group-addon" id="codefradical">
+		        	<%= _t 'Barcode title' %> : 
+		        </span>
+		        <input type="text" class="form-control" id="barcodeValueTitle" name="barcodeValueTitle" placeholder="<%=_t "Title used on every barcode" %>" aria-describedby="barcodeValueTitle" value="<%= @title %>">
+		      </div>
+ -->
 		      <div class="input-group input-group-ld">
 		        <span class="input-group-addon" id="codefradical">
 		        	<%= _t 'Radical' %> : 
