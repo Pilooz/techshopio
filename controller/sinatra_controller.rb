@@ -319,22 +319,6 @@ class SinatraApp < Sinatra::Base
     redirect to APP_PATH + "/tags"
   end
 
-  # Linking Tag to item
-  get APP_PATH + '/tags/add/' do
-    if params['code'] && params['id']
-      DB.link_tag params['code'], params['id']
-    end
-    {'result' => 'Ok'}.to_json
-  end
-
-  # Unlinking Tag from item
-  get APP_PATH + '/tags/remove/' do
-    if params['code'] && params['id']
-      DB.unlink_tag_from_item params['code'], params['id']
-    end
-    {'result' => 'Ok'}.to_json
-  end
-
   # sending Tag infos
   get APP_PATH + '/tag/info/' do
     res = nil
@@ -362,5 +346,27 @@ class SinatraApp < Sinatra::Base
       listcsv
     end
   end
+
+  get APP_PATH + '/tags/list' do
+    res = DB.select_all_tags
+    res.to_json
+  end
+
+  # Linking Tag to item
+  get APP_PATH + '/tags/add/' do
+    if params['code'] && params['id']
+      DB.link_tag params['code'], params['id']
+    end
+    {'result' => 'Ok'}.to_json
+  end
+
+  # Unlinking Tag from item
+  get APP_PATH + '/tags/remove/' do
+    if params['code'] && params['id']
+      DB.unlink_tag_from_item params['code'], params['id']
+    end
+    {'result' => 'Ok'}.to_json
+  end
+
 
 end

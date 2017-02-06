@@ -151,6 +151,38 @@ $(document).ready( function() {
 		});
 	});
 
+	//
+    // Massive checkout popup
+    //
+	$( "#massiveOutput" ).click(function(){
+		$(this).addClass("active");
+		$("#singleOutput").removeClass("active");
+	    $('#tagList').html("");
+		$.ajax({
+		    url: APP_PATH + '/tags/list', 
+		    type: 'GET',
+		    success : function(response){
+				response = $.parseJSON(response);
+				// Table of items
+				$.each(response, function(i, item) {
+					$('<li class="list-group-item">').html("<a href='" + response[i].code + "' class='btn btn-xs "+
+						response[i].color+"' data-dismiss='modal'>" + 
+						response[i].tag + 
+						"</a>" +
+						"<span class='badge'>"+ response[i].count_items +"</span>").appendTo('#tagList');
+			});	
+
+		     },
+		    error : function(response){
+		    	console.log(response);
+		     }
+		});
+	});
+
+	$("#singleOutput").click(function(){
+		$(this).addClass("active");	
+		$("#massiveOutput").removeClass("active");
+	});
 
 	//
 	// Reload thumbnail in ajax mode.

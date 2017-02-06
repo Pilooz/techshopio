@@ -1,10 +1,18 @@
 <div class="col-md-10 col-md-offset-1">
 	<div class="table-responsive">
+
+	<ul class="nav nav-pills pull-right">
+	  <li class="disabled"><a href="#"><%= _t 'Check-out type' %></a></li>
+	  <li id="singleOutput" class="active"><a href="#" title="<%= _t 'Checking out items one by one' %>"><%= _t 'single' %></a></li>
+	  <li id="massiveOutput" data-toggle="modal" data-target="#modalTagList"><a href="#" title="<%= _t 'Checking out items massively' %>"><%= _t 'multiple' %></a></li>
+	</ul>
+
 	<% if @items %>
 		<p class="text-muted"><%=@items.count %> <%= _t 'elements in the TechShop' %></p>
 	<% else %>
 		<p class="text-warning"><%= _h 'help-empty-techshop' %></p>
 	<% end %>
+
 	    <table class="table table-bordered table-striped" id="techShopList">
 	      <thead>
 	        <tr>
@@ -109,3 +117,25 @@
     </div>
   </div>
 </div>
+
+<!-- Modal for Massive checkout -->
+<div class="modal fade" id="modalTagList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="<%= _t 'Close' %>"><span aria-hidden="true" title="<%= _t 'Close' %>">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><%= _t 'Choose the tag for massive checkout' %></h4>
+      </div>
+      <div class="modal-body">
+        <div class="center-block">
+        	<ul id="tagList" class="list-group"></ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= _t 'Close' %></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
