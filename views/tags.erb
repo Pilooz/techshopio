@@ -12,6 +12,7 @@
 <script>
 $(document).ready( function() {
 	var detailPnl = $("#tag-detail-panel");
+	var tagID = 0;
 
 	// Handeling color buttons
 	$('.colorpicker').click(function()
@@ -25,32 +26,24 @@ $(document).ready( function() {
 	$('.tag').click(function()
 	{
 		// Gathering informations
+		tagID = this.id.replace('tag', '');
 		$.ajax({
-		  url: "<%= APP_PATH %>/tag/info/?id=" + this.id.replace('tag', '')
+		  url: "<%= APP_PATH %>/tag/info/?id=" + tagID
 		})
 		  .success(function(response) {
+		  	// Displaying all checked item with this tag
 		  	$('#items_table').html("");
 		  	$('#tag-detail').html("");
 			response = $.parseJSON(response);
+			// Title
 			$('#tag-detail').html("<span class='label "+response[0].color+"'>" + response[0].tag + "</span>"); 
+			// Table of items
 			$.each(response, function(i, item) {
 				$('<tr>').html("<td>" + response[i].code + "</td><td>" + response[i].name + "</td><td>" + response[i].description + "</td>").appendTo('#items_table');
-			});
-			// $(function() {
-			//     $.each(response, function(i, item) {
-			//         var $tr = $('<tr>').append(
-			//             $('<td>').text(item.code),
-			//             $('<td>').text(item.name),
-			//             $('<td>').text(item.description)
-			//         ).appendTo('#items_table');
-			//         console.log($tr.wrap('<p>').html());
-			//     });
-			// });		
-		})
-		  .done(function( msg ) {
-		  	// TODO : Flash message to say 'Ok!'
-		    console.log( msg );
-		  });	 	
+			});	
+			// Export Link
+			$('#exportToCSV').attr("href", "<%= APP_PATH %>/tag/csv/?id=" + tagID);
+		}) 	
 	 	detailPnl.show();
 	});
 
@@ -110,7 +103,9 @@ $(document).ready( function() {
 <div class="col-md-10 col-md-offset-1">
 	<div class="panel panel-default" id="tag-detail-panel">
 		<div class="panel-heading">
-	    	<h3 class="panel-title"><%= _t 'Details for tag' %>&nbsp;<span id="tag-detail"></span></h3>
+	    	<h3 class="panel-title"><%= _t 'Details for tag' %>&nbsp;<span id="tag-detail"></span>
+	    	<a class="btn btn-default btn-xs pull-right" id="exportToCSV" title="<%= _t 'Export to CSV file' %>"><%= _t 'csv' %></a>
+	    	</h3>
 	  	</div>
 		<div class="panel-body">
 		  <table id="items_table" class="table stripped"></table>

@@ -16,6 +16,7 @@ class SinatraApp < Sinatra::Base
     set :protection, true
     set :lock, true
     set :bind, '0.0.0.0' # allowing acces to the lan
+    mime_type :csv, 'text/csv'
   end
 
   configure :development do
@@ -220,9 +221,14 @@ class SinatraApp < Sinatra::Base
 
   # Extract data at csv format
   get APP_PATH + '/list/csv' do 
+    cols = ["code","name","description","image_link","checkout"]
+    content_type :csv
     list = DB.select_all_items false
+      list.each { |r|
+        r.reject! { |k, _| !cols.include? k }
+      }
     column_names = list.first.keys
-    listcsv = CSV.generate { |csv|
+    listcsv = CSV.generate({:col_sep => ";"}) { |csv|
       csv << column_names
       list.each { |x| csv << x.values }
     }  
@@ -336,6 +342,25 @@ class SinatraApp < Sinatra::Base
       res = DB.select_items_for_tag params['id']
     end
     res.to_json
+  end
+
+  # Extract data for a specific tag in csv format
+  get APP_PATH + '/tag/csv/' do 
+    content_type :csv
+    cols = ["tag","color","code","name","description","image_link","checkout"]
+    if params['id']
+      list = DB.select_items_for_tag params['id']
+      list.each { |r|
+        r.reject! { |k, _| !cols.include? k }
+      }
+      column_names = list.first.keys
+      puts column_names.inspect
+      listcsv = CSV.generate({:col_sep => ";"}) { |csv|
+        csv << column_names
+        list.each { |x| csv << x.values }
+      }  
+      listcsv
+    end
   end
 
 end
