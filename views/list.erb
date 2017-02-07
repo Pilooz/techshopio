@@ -128,7 +128,11 @@
       </div>
       <div class="modal-body">
         <div class="center-block">
-        	<ul id="tagList" class="list-group"></ul>
+        	<ul id="tagList" class="list-group">
+        	 <% @tags.each { | t | %>
+        	 	<li class="list-group-item"><a href="<%= APP_PATH %>/list?massive=<%= t['id'] %>" class="btn btn-xs <%= t['color'] %>"><%= t['tag'] %></a><span class='badge'><%= t['count_items'] %></span>
+        	 <% } %>	
+        	</ul>
         </div>
       </div>
       <div class="modal-footer">

@@ -108,6 +108,7 @@ class SinatraApp < Sinatra::Base
   get APP_PATH + '/list' do
     # Propose list of TechShop on index page
     @items = DB.select_all_items
+    @tags = DB.select_all_tags
     @nav_list = 'active'
     @main_title = _t 'List'
     @placeholder =  _t 'type or scan reference'
