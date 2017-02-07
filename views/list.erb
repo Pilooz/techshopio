@@ -1,18 +1,24 @@
 <div class="col-md-10 col-md-offset-1">
 	<div class="table-responsive">
 
-	<ul class="nav nav-pills pull-right">
-	  <li class="disabled"><a href="#"><%= _t 'Check-out type' %></a></li>
-	  <li id="singleOutput" class="active"><a href="#" title="<%= _t 'Checking out items one by one' %>"><%= _t 'single' %></a></li>
-	  <li id="massiveOutput" data-toggle="modal" data-target="#modalTagList"><a href="#" title="<%= _t 'Checking out items massively' %>"><%= _t 'multiple' %></a></li>
+
+	<ul class="nav nav-pills">
+		<li class="disabled"><a href="#"><%= _t 'Check-out type' %></a></li>
+		<li id="singleOutput" class="<%= 'active' if @massive.nil? || @massive.empty? %>"><a href="#" title="<%= _t 'Checking out items one by one' %>"><%= _t 'single' %></a></li>
+		<li id="massiveOutput" data-toggle="modal" data-target="#modalTagList" class="<%= 'active' if !@massive.nil? && !@massive.empty? %>"><a href="#" title="<%= _t 'Checking out items massively' %>"><%= _t 'multiple' %></a></li>
+		<!-- displaying a message when massive checkout mode is activated -->
+		<% @tags.each { | t | %>
+			<% if t['id'].to_i == @massive.to_i %>
+			<li class="disabled"><a href="#">&nbsp;&nbsp;&nbsp;<%= _t 'Warning ! Now all item are checked with this tag' %> : </a></li>
+		 	<li><a href="#" class="btn btn-xs <%= t['color'] %>"><%= t['tag'] %><span class='badge'><%= t['count_items'] %></span></a></li>
+		 	<% end %>
+		<% } %>
+		<% if @items %>
+			<li class="disabled pull-right"><%=@items.count %> <%= _t 'elements in the TechShop' %></li>
+		<% else %>
+			<li class="text-warning"><%= _h 'help-empty-techshop' %></li>
+		<% end %>
 	</ul>
-
-	<% if @items %>
-		<p class="text-muted"><%=@items.count %> <%= _t 'elements in the TechShop' %></p>
-	<% else %>
-		<p class="text-warning"><%= _h 'help-empty-techshop' %></p>
-	<% end %>
-
 	    <table class="table table-bordered table-striped" id="techShopList">
 	      <thead>
 	        <tr>
@@ -72,9 +78,17 @@
 	        	<% unless @publiclist %>
 	        	<td>
 	        		<% if item['checkout'] == 'O' %>
-	        		<a href="<%=APP_PATH + '/item/checkin?code=' + item['code'] %>" class="btn btn-success" id="btnCheckin" title="<%= _t 'Check in' %>"><span class="glyphicon glyphicon-import"></span></a>
+	        			<% if @massive.nil? || @massive.empty? %>
+	     	   				<a href="<%=APP_PATH + '/item/checkin?code=' + item['code'] %>" class="btn btn-success" id="btnCheckin" title="<%= _t 'Check in' %>"><span class="glyphicon glyphicon-import"></span></a>
+	     	   			<% else %>
+	     	   				<a href="<%=APP_PATH + '/item/checkin?code=' + item['code'] %>&massive=<%= @massive %>" class="btn btn-success" id="btnCheckin" title="<%= _t 'Check in' %>"><span class="glyphicon glyphicon-import"></span></a>
+	     	   			<% end %>
 	        		<% else %>
-	        		<a href="<%=APP_PATH + '/out?code=' + item['code'] %>" class="btn btn-default" id="btnCheckout" title="<%= _t 'Checkout' %>"><span class="glyphicon glyphicon-export"></span></a>
+	        			<% if @massive.nil? || @massive.empty? %>
+	        				<a href="<%=APP_PATH + '/out?code=' + item['code'] %>" class="btn btn-default" id="btnCheckout" title="<%= _t 'Checkout' %>"><span class="glyphicon glyphicon-export"></span></a>
+	        			<% else %>
+	        				<a href="<%=APP_PATH + '/out?code=' + item['code'] %>&massive=<%= @massive %>" class="btn btn-default" id="btnCheckout" title="<%= _t 'Checkout' %>"><span class="glyphicon glyphicon-export"></span></a>
+	        			<% end %>
 	        		<% end %>
 
 	        		<% if USE_IMAGE == "Y" %>

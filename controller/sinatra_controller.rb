@@ -73,6 +73,7 @@ class SinatraApp < Sinatra::Base
     @code = params['code']
     @item = DB.read @code
     @publiclist = false
+    @massive = params['massive'] # Contains tag id when massive checkout mode activated
     # Add login /pwd authentification for none public pages (all but ../catalog :) )
 # TODO  : write a  test more ruby compliant !!!
     protected! unless env['REQUEST_URI'] == APP_PATH || env['REQUEST_URI'] == APP_PATH + '/' || env['REQUEST_URI'] == APP_PATH + '/catalog'
@@ -87,7 +88,7 @@ class SinatraApp < Sinatra::Base
       else
         # Item exist, if it wasn't out, then checkout
         if !DB.checkout? @code
-          redirect to APP_PATH + "/out?code=#{@code}"
+            redirect to APP_PATH + "/out?code=#{@code}&massive=#{@massive}"
         else
           # If it is allready out, automatic checkin
           # redirect to APP_PATH + "/checkin?code=#{@code}"
@@ -127,13 +128,21 @@ class SinatraApp < Sinatra::Base
   end
 
   get APP_PATH + '/out' do
-    @main_title = _t 'Check-out stuff from Techshop'
-    @nav_out = 'active'
-    # Getting all affected tags for this item
-    @assigned_tags = DB.select_tags_for_item @code
-    # Getting all accessibles tags
-    @available_tags = DB.select_available_tags_for_item @code # DB.select_all_tags
-    erb :out 
+    # If Single checkout mode, propose "out" screen
+    if @massive.nil? || @massive.empty?
+      @main_title = _t 'Check-out stuff from Techshop'
+      @nav_out = 'active'
+      # Getting all affected tags for this item
+      @assigned_tags = DB.select_tags_for_item @code
+      # Getting all accessibles tags
+      @available_tags = DB.select_available_tags_for_item @code # DB.select_all_tags
+      erb :out 
+    else # If massive checkout, proceed automatically and refresh on list
+      DB.checkout @code
+      DB.link_tag @code, @massive.to_i
+      redirect to APP_PATH + "/list?massive=#{@massive}"      
+    end
+
   end
 
   get APP_PATH + '/new' do
@@ -270,7 +279,10 @@ class SinatraApp < Sinatra::Base
       DB.unlink_item params['code']
       DB.checkin params['code']
     end
-    redirect to APP_PATH + "/list"
+    if !@massive.nil? && !@massive.empty? 
+      redirect to APP_PATH + "/list?massive=#{@massive}" 
+    end
+    redirect to APP_PATH + "/list" 
   end
 
   #

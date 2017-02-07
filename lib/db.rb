@@ -265,10 +265,6 @@ class Db
 
   # Logging item move (in/out) => move
   def log_item(code, tag_id, move)
-    puts "code : " + code.to_s
-    puts "tag_id : " + tag_id.to_s
-    puts "move : " + move.to_s
-    puts
     @db.execute "insert into items_log values (?, ?, ?, ?)", [code, tag_id, move, Time.now.to_s]
   end
 

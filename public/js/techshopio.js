@@ -159,9 +159,13 @@ $(document).ready( function() {
 		$("#singleOutput").removeClass("active");
 	});
 
+	//
+	// Single checkout mode
+	//
 	$("#singleOutput").click(function(){
 		$(this).addClass("active");	
 		$("#massiveOutput").removeClass("active");
+		location.href=APP_PATH + "/list";
 	});
 
 	//
