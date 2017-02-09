@@ -216,7 +216,7 @@ class Db
     @db.execute "select t.tag, t.color, i.code, i.name, i.description, i.image_link, i.checkout
                  from tags t, tags_items ti, items i
                  where t.id = ti.tag_id
-                   and item_code = i.code
+                   and upper(item_code) = upper(i.code)
                    and t.id = ?
                  order by i.name", id
   end

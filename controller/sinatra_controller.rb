@@ -344,7 +344,7 @@ class SinatraApp < Sinatra::Base
   # Extract data for a specific tag in csv format
   get APP_PATH + '/tag/csv/' do 
     content_type :csv
-    cols = ["tag","color","code","name","description","image_link","checkout"]
+    cols = ["code","name","description"]
     if params['id']
       list = DB.select_items_for_tag params['id']
       list.each { |r|
