@@ -61,7 +61,7 @@ $(document).ready( function() {
 		  <% @tags.each { | tag | %>
 			<li class="list-group-item">
 				<button class="tag btn <%= tag['color'] %>" id="tag<%= tag['id'] %>" type="button" title="<%= _t 'tag' + ' ' + tag['tag']  %>"><%= tag['tag'] %></button>
-        		<a href="<%=APP_PATH %>/tag/delete?id=<%= tag['id'] %>"><span class="glyphicon glyphicon-trash"></span></a>
+        		<a href="<%=APP_PATH %>/tag/delete?id=<%= tag['id'] %>" title='<%= _t "Delete"  %>'><span class="glyphicon glyphicon-trash"></span></a>
 				<span class="badge"><%= tag['count_items'] %></span>
 				<% if tag['sorting_tag']  == 'O' %>
 					<span class="badge"><%= _t "Sorting tag"  %></span>
