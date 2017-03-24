@@ -51,12 +51,11 @@ $(document).ready( function() {
 	// @TODO : put a better confirm box than a gray awfull javascript one :)
 	$('.deleteTag').click(function()
 	{
-		var tagId = $(this).attr("id");
+		var tagId = this.id.replace('delete', '');
 		if (confirm("<%= _t 'Do you really want to delete this tag ? \nAll item links will be lost.' %>")){
 			location.href="<%=APP_PATH %>/tag/delete?id="+tagId;
 		}
 	});
-
 });
 
 </script>
@@ -71,7 +70,11 @@ $(document).ready( function() {
 		  <% @tags.each { | tag | %>
 			<li class="list-group-item">
 				<button class="tag btn <%= tag['color'] %>" id="tag<%= tag['id'] %>" type="button" title="<%= _t 'tag' + ' ' + tag['tag']  %>"><%= tag['tag'] %></button>
-        		<a class="deleteTag" id="<%= tag['id'] %>" href="#" title='<%= _t "Delete"  %>'><span class="glyphicon glyphicon-trash"></span></a>
+
+				<a class="contactTag" id="contact<%= tag['id'] %>" href="#" data-toggle="modal" data-target="#modalTagContactForm" title="<%= _t 'Add a contact' %>"><span class="glyphicon glyphicon-list-alt"></span></a>
+
+        		<a class="deleteTag" id="delete<%= tag['id'] %>" href="#" title='<%= _t "Delete"  %>'><span class="glyphicon glyphicon-trash"></span></a>
+
 				<span class="badge"><%= tag['count_items'] %></span>
 				<% if tag['sorting_tag']  == 'O' %>
 					<span class="badge"><%= _t "Sorting tag"  %></span>
@@ -124,4 +127,26 @@ $(document).ready( function() {
 		  <table id="items_table" class="table stripped"></table>
 		 </div>
 	</div>
+</div>
+
+
+<!-- Modal for adding a contact to the tag -->
+<div class="modal fade" id="modalTagContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="<%= _t 'Close' %>"><span aria-hidden="true" title="<%= _t 'Close' %>">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><%= _t 'Add a contact to this tag' %></h4>
+        <%= _h 'help-add-tag-contact' %>
+      </div>
+      <div class="modal-body">
+        <div class="center-block">
+        Here is the contact form (firstname, lastname, email).
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= _t 'Close' %></button>
+      </div>
+    </div>
+  </div>
 </div>

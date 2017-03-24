@@ -147,6 +147,8 @@ HELP =  {
                                 </ol>"},
   'help-public-catalog-access' => {en: 'Flash this code to access to TechShopIO public catalog on your tablet or smartphone !',
                                    fr: "Accédez au catalogue public de la TechShop sur votre tablette ou smartphone en flashant ce QR-code !<br /><small>(Cela nécessite d'être connecté au même réseau local)</small>"},
+  'help-add-tag-contact' => { en: 'Adding a contact is mandatory to edit the loan sheet.',
+                              fr: 'L\'ajout d\'un contact est obligatoire pour éditer la fiche de prêt.'},
 }
 
 # rubocop:enable Metrics/LineLength
