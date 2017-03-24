@@ -49,6 +49,7 @@ TRANSLATE = {
   'Help' => {fr: 'Aide en ligne'},
   'List' => { fr: 'Liste du matériel'},
   'List of tags' => {fr: 'Liste des tags disponibles'},
+  'Loan sheet' => { fr: 'Fiche de prêt'},
   'Micellenous' => {fr: 'Paramètres avancés'},
   'Mobile access <small>(admin features)</small>' => {fr: 'Accès mobile <small>(administration de la Techshop)</small>'},
   'Modify' => {fr: 'Modifier'},
