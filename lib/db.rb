@@ -233,6 +233,13 @@ class Db
 
   # delete one tag
   def delete_tag(id)
+    # Checkin all items 
+      items = select_items_for_tag id
+      items.each { |i|
+        puts "checking in item ##{i['code']}"
+        checkin i['code']
+      } 
+    # unlink tag from items
     unlink_tag id
     @db.execute "delete from tags where id = ?", id
   end
@@ -256,7 +263,6 @@ class Db
 
   def unlink_item(code)
     tags = select_tags_for_item code
-    puts tags.inspect
     @db.execute "delete from tags_items where item_code = ?", code
     tags.each { |t|
       log_item code, t['id'], IN
