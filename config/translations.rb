@@ -38,6 +38,7 @@ TRANSLATE = {
   'Description' => {fr: 'Description'},
   'Details for tag' => {fr: 'Liste des items pour le tag'},
   'Direct checkin mode ?' => {fr: 'Ré-intégration directe des matériels ?'},
+  'Do you really want to delete this tag ? \nAll item links will be lost.' => {fr: 'Voulez-vous vraiment supprimer ce tag ?\nTous les liens avec les matériels seront perdus.'},
   'elements in the TechShop' => {fr: 'éléments dans la TechShop'},
   'Error !' => {fr: 'Erreur !'},
   'Export to CSV file' => {fr: 'Exporter au format CSV'},
