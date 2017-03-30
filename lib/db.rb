@@ -140,28 +140,28 @@ class Db
   end
 
   def checkout(code)
-    @db.execute "update items set checkout = 'O' where code = ?", code
+    @db.execute "update items set checkout = 'O' where upper(code) = ?", code.upcase
   end
 
   def checkin(code)
-    @db.execute "update items set checkout = 'N' where code = ?", code
+    @db.execute "update items set checkout = 'N' where upper(code) = ?", code.upcase
   end
 
   # Adds an item
   def add_item(code, name, desc, image_link)
     @db.execute 'INSERT INTO items (code, name, 
-        description, image_link) VALUES (?, ?, ?, ?)', [code.to_s, name.to_s, desc.to_s, image_link.to_s]
+        description, image_link) VALUES (?, ?, ?, ?)', [code.to_s.upcase, name.to_s, desc.to_s, image_link.to_s]
   end
 
   # update an item
   def update_item(code, name, desc, image_link)
     @db.execute 'update items  set name = ?, description = ?, image_link = ?
-        where code = ?', [name.to_s, desc.to_s, image_link.to_s, code.to_s]
+        where upper(code) = ?', [name.to_s, desc.to_s, image_link.to_s, code.to_s.upcase]
   end
 
   # Updates an item image_link
   def update_item_image_link(code, image_link)
-    @db.execute 'update items set image_link = ? where code = ?', [image_link.to_s, code.to_s]
+    @db.execute 'update items set image_link = ? where upper(code) = ?', [image_link.to_s, code.to_s.upcase]
   end
 
   def add_serveral_items (data)
@@ -179,7 +179,7 @@ class Db
   # deletes an item
   def delete_item(code)
     unlink_item code
-    @db.execute "delete from items where code = ?", code
+    @db.execute "delete from items where upper(code) = ?", code.upcase
   end
 
   #
@@ -197,15 +197,15 @@ class Db
     @db.execute "select t.id, t.tag, t.color
                  from tags t, tags_items ti
                  where t.id = ti.tag_id
-                   and item_code = ?
-                 order by t.tag", code
+                   and upper(item_code) = ?
+                 order by t.tag", code.upcase
   end
 
   def select_available_tags_for_item(code)
     t1 = @db.execute "select t.id, t.tag, t.color
                  from tags t, tags_items ti
                  where t.id = ti.tag_id
-                   and item_code = ?", code
+                   and upper(item_code) = ?", code.upcase
     t2 = @db.execute "select t.id, t.tag, t.color
                  from tags t 
                  order by t.tag"
@@ -248,7 +248,7 @@ class Db
   # Link / unlink tags
   #
   def link_tag(code, id)
-    @db.execute "insert into tags_items values (?, ?)", [code, id]
+    @db.execute "insert into tags_items values (?, ?)", [code.upcase, id]
     log_item code, id, OUT
   end
 
@@ -257,13 +257,13 @@ class Db
   end
 
   def unlink_tag_from_item(code, id)
-    @db.execute "delete from tags_items where item_code = ? and tag_id = ?", [code, id]
+    @db.execute "delete from tags_items where upper(item_code) = ? and tag_id = ?", [code.upcase, id]
     log_item code, id, IN
   end
 
   def unlink_item(code)
     tags = select_tags_for_item code
-    @db.execute "delete from tags_items where item_code = ?", code
+    @db.execute "delete from tags_items where upper(item_code) = ?", code.upcase
     tags.each { |t|
       log_item code, t['id'], IN
     }
@@ -271,7 +271,7 @@ class Db
 
   # Logging item move (in/out) => move
   def log_item(code, tag_id, move)
-    @db.execute "insert into items_log values (?, ?, ?, ?)", [code, tag_id, move, Time.now.to_s]
+    @db.execute "insert into items_log values (?, ?, ?, ?)", [code.upcase, tag_id, move, Time.now.to_s]
   end
 
 end
