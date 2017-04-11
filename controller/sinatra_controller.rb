@@ -344,6 +344,7 @@ class SinatraApp < Sinatra::Base
   # Extract data for a specific tag in csv format
   get APP_PATH + '/tag/csv/' do 
     content_type :csv
+    # @TODO : add a file description in http header
     cols = ["code","name","description"]
     if params['id']
       list = DB.select_items_for_tag params['id']
