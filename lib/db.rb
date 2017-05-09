@@ -221,6 +221,12 @@ class Db
                  order by i.name", id
   end
 
+  def select_tag(id)
+    @db.execute "select t.tag, t.color
+                 from tags t
+                 where t.id = ?", id
+  end
+
 
   # add tag
   def add_tag(tag, color)
