@@ -355,11 +355,25 @@ class SinatraApp < Sinatra::Base
         r.reject! { |k, _| !cols.include? k }
       }
       column_names = list.first.keys
+
       listcsv = CSV.generate({:col_sep => ";"}) { |csv|
         csv << column_names
         list.each { |x| csv << x.values }
       }  
       listcsv
+    end
+  end
+
+  # Extract data for a specific tag in pdf format
+  get APP_PATH + '/tag/pdf/' do 
+    content_type :pdf
+    if params['id']
+      # add a file description in http header
+      tag = DB.select_tag params['id']
+      attachment tag[0]['tag'] + '.pdf'
+
+      list = DB.select_items_for_tag params['id']
+      puts list.inspect
     end
   end
 
