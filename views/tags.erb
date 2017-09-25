@@ -22,6 +22,12 @@ $(document).ready( function() {
 		$(this).addClass("selected");
 	});
 
+	// Handeling pdf generation button
+	$('#editSheet').click(function()
+	{
+		alert(detailPnl.html());
+	});
+
 	// Handeling tag buttons
 	$('.tag').click(function()
 	{
@@ -39,15 +45,14 @@ $(document).ready( function() {
 			$('#tag-detail').html("<span class='label "+response[0].color+"'>" + response[0].tag + "</span>"); 
 			// Table of items
 			$.each(response, function(i, item) {
-				$('<tr>').html("<td>" + item.code + "</td><td>" + item.name + "</td><td>" + item.description + "</td><td><div class='code'></div></td>").appendTo('#items_table');
-				$('.code').barcode(item.code, "code39", {barHeight: 30}); 
-				
+				$('<tr>').html("<td>" + item.code + "</td><td>" + item.name + "</td><td>" + item.description + "</td><td><div id='code" + item.code+"'></div></td>").appendTo('#items_table');
+				$('#code' + item.code).barcode(item.code, "code39", {barHeight: 30}); 
 			});	
 
 			// Export Link
 			$('#exportToCSV').attr("href", "<%= APP_PATH %>/tag/csv/?id=" + tagID);
 			// Pdf Link
-			$('#editSheet').attr("href", "<%= APP_PATH %>/tag/pdf/?id=" + tagID);
+			//$('#editSheet').attr("href", "<%= APP_PATH %>/tag/pdf/?id=" + tagID);
 		}) 	
 	 	detailPnl.show();
 	});
