@@ -24,3 +24,6 @@ doc/
 config/options.rb
 config/puma.rb
 config/*.yml
+
+# Database
+db/files/*.*
