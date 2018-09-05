@@ -36,6 +36,7 @@
 
 </style>
 
+<form id="checkoutForm" action="<%= APP_PATH %>/item/checkout" method="post">
 <div class="col-md-5 col-md-offset-1">
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -66,14 +67,14 @@
 			<% if USE_CHECKINOUT_DATE == "Y" %>
 				<div class="input-group">
 				  <span class="input-group-addon input-group-lg" title="<%= _t 'Check-out date' %>"><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span class="glyphicon glyphicon-export"></span></span>
-				  <input type="date" id="outDate" class="form-control" value="<%= @item[0]['checkout_date'] || Time.now.strftime('%Y-%m-%d') %>">
+				  <input type="date" id="chkout_date" name="chkout_date" class="form-control" value="<%= @item[0]['checkout_date'] || Time.now.strftime('%Y-%m-%d') %>">
 				</div>
 
-				<div class="input-group" id="inDateGrp">
+				<div class="input-group" id="chkin_date_Grp">
 				  <span class="input-group-addon input-group-lg" title="<%= _t 'Planned check in date' %>"><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span class="glyphicon glyphicon-import"></span></span>
-				  <input type="date" id="inDate" class="form-control" value="<%= @item[0]['checkin_date'] %>">
+				  <input type="date" id="chkin_date" name="chkin_date" class="form-control" value="<%= @item[0]['checkin_date'] %>">
 				</div>
-			    <div class="alert alert-danger" role="alert" id="inDateTT"><%= _t 'Check in date must be further than check out' %></div>
+			    <div class="alert alert-danger" role="alert" id="chkin_date_TT"><%= _t 'Check in date must be further than check out' %></div>
 			<% end %>
 
 				<div class="input-group input-group-lg">
@@ -107,17 +108,16 @@
 </div>
 
 <div class="col-md-10 col-md-offset-1">
-	<form id="checkoutForm" action="<%= APP_PATH %>/item/checkout" method="post">
-		<input type="hidden" name="code"  id="itemCode" value="<%= @code %>">
-	</form>
+	<input type="hidden" name="code" id="itemCode" value="<%= @code %>">
 	<button type="button" class="btn btn-default" id="cancelBtn" title="<%= _t 'Cancel checkout' %>"><%= _t 'Cancel' %></button>
 	<button type="submit" class="btn btn-success" id="checkoutBtn"  title="<%= _t 'Checkout' %>"><%= _t 'Checkout' %>&nbsp;<span class="glyphicon glyphicon-export"></span></button>
 </div>
+</form>
 
 <script>
 $(document).ready( function() {
-	var inDtGrp = $("#inDateGrp");
-	var inDtErrMsg = $("#inDateTT");
+	var inDtGrp = $("#chkin_date_Grp");
+	var inDtErrMsg = $("#chkin_date_TT");
 	var code = $( "#itemCode" ).val();
 	var cancekBtn = $( "#cancelBtn" );
 	var chkBtn = $( "#checkoutBtn" );
@@ -160,8 +160,8 @@ $(document).ready( function() {
 	// Controling check in & out date interval
 	// Check in date value must be later than chek out date
 	function checkDates() {
-		var din = parseInt($('#inDate').val().replace(/-/g, '')),
-			dout = parseInt($('#outDate').val().replace(/-/g, ''));
+		var din = parseInt($('#chkin_date').val().replace(/-/g, '')),
+			dout = parseInt($('#chkout_date').val().replace(/-/g, ''));
 		if (isNaN(din)) {
 			din = 0;
 		}

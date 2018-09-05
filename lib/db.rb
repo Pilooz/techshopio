@@ -25,7 +25,9 @@ class Db
         name varchar(255),
         description varchar(2000),
         image_link varchar2(2000),
-        checkout varchar(1) default 'N'
+        checkout varchar(1) default 'N',
+        chkout_date timestamp,
+        chkin_date timestamp
       );"
     puts "  Creating table tags..."
     @db.execute 'create table tags (
@@ -139,12 +141,14 @@ class Db
     false
   end
 
-  def checkout(code)
-    @db.execute "update items set checkout = 'O' where upper(code) = ?", code.upcase
+  def checkout(code, chkout_date, chkin_date)
+    @db.execute "update items set checkout = 'O', chkout_date = '" + chkout_date.to_s + "'" +
+                ", chkin_date = '" + chkin_date.to_s + "' where upper(code) = ?", code.upcase
   end
 
   def checkin(code)
-    @db.execute "update items set checkout = 'N' where upper(code) = ?", code.upcase
+    @db.execute "update items set checkout = 'N', chkout_date = '' " + 
+                ", chkin_date = '' where upper(code) = ?", code.upcase
   end
 
   # Adds an item

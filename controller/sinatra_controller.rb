@@ -268,7 +268,7 @@ class SinatraApp < Sinatra::Base
    # Checkout item
   post APP_PATH + '/item/checkout' do
     if params['code']
-      DB.checkout params['code']
+      DB.checkout params['code'], params['chkout_date'], params['chkin_date']
     end
     redirect to APP_PATH + "/list"
   end
