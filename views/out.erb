@@ -50,14 +50,27 @@
 				</div>
 			<% end %>
 				<div class="input-group">
-				  <span class="input-group-addon input-group-lg" id="basic-addon1"><span class="glyphicon glyphicon-bookmark"></span></span>
+				  <span class="input-group-addon input-group-lg" id="basic-addon0"><span class="glyphicon glyphicon-bookmark"></span></span>
 				  <input type="text" class="form-control" value="<%= @item[0]['name'] %>">
 				</div>
 
 				<div class="input-group">
-				  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-list-alt"></span></span>
+				  <span class="input-group-addon input-group-lg" id="basic-addon1"><span class="glyphicon glyphicon-list-alt"></span></span>
 				  <input type="text" class="form-control" value="<%= @item[0]['description'] %>">
 				</div>
+
+			<% if USE_CHECKINOUT_DATE == "Y" %>
+				<div class="input-group">
+				  <span class="input-group-addon input-group-lg" title="<%= _t 'Check-out date' %>"><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span class="glyphicon glyphicon-export"></span></span>
+				  <input type="date" id="outDate" class="form-control" value="<%= @item[0]['checkout_date'] || Time.now.strftime('%Y-%m-%d') %>">
+				</div>
+
+				<div class="input-group" id="inDateGrp">
+				  <span class="input-group-addon input-group-lg" title="<%= _t 'Planned check in date' %>"><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span class="glyphicon glyphicon-import"></span></span>
+				  <input type="date" id="inDate" class="form-control" value="<%= @item[0]['checkin_date'] %>">
+				</div>
+			    <div class="alert alert-danger" role="alert" id="inDateTT"><%= _t 'Check in date must be further than check out' %></div>
+			<% end %>
 
 				<div class="input-group input-group-lg">
 				  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-tags"></span></span>
@@ -104,9 +117,10 @@ $(document).ready( function() {
 	var frm = $("#checkoutForm");
 	var cnt = $('#tags-list-panel, #tags-list');
 	var countTags = $( "#ags-list" ).children(); // TODO : Compter le nombre d'éléments existants
+	var check_dates = "<%= USE_CHECKINOUT_DATE %>";
 	// Initial state of the page
 	chkBtn.prop("disabled", true);
-
+	$(".alert").hide();
 
 	cnt.each(function( index ) {
 	  var action = "add";
@@ -136,9 +150,27 @@ $(document).ready( function() {
 	  });
 	});
 
+	// Controling check in & out date interval
+	// Check in date value must be later than chek out date
+	function checkDates() {
+		var din = parseInt($('#inDate').val().replace(/-/g, '')),
+			dout = parseInt($('#outDate').val().replace(/-/g, ''));
+		if (isNaN(din)) {
+			din = 0;
+		}
+		 return (din >= dout);
+	}
+
 	// Checkout button Listener
 	chkBtn.click(function() {
-		frm.submit();
+		$(".alert").hide();
+		var chkdt = (check_dates == "Y") ? checkDates() : true;
+		if (chkdt) {
+			frm.submit();
+		} else {
+			$("#inDateGrp").addClass("has-error");
+			$("#inDateTT").show();
+		}
 	});
 
 });

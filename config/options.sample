@@ -21,5 +21,6 @@ ADMIN_LOGIN = "admin"
 ADMIN_PWD = "secret"
 
 # Application params
-DELETE_ON_LIST = "Y" # Show or hide button on the list (Y/N).
-USE_IMAGE = "Y" 	 # Show or hide images in application (Y/N).
+DELETE_ON_LIST		= "Y" # Show or hide button on the list (Y/N).
+USE_IMAGE 			= "Y" # Show or hide images in application (Y/N).
+USE_CHECKINOUT_DATE	= "Y" # Show or hide check-in return date (Y/N)
