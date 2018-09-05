@@ -116,6 +116,8 @@
 
 <script>
 $(document).ready( function() {
+	var inDtGrp = $("#inDateGrp");
+	var inDtErrMsg = $("#inDateTT");
 	var code = $( "#itemCode" ).val();
 	var cancekBtn = $( "#cancelBtn" );
 	var chkBtn = $( "#checkoutBtn" );
@@ -173,8 +175,8 @@ $(document).ready( function() {
 		if (chkdt) {
 			frm.submit();
 		} else {
-			$("#inDateGrp").addClass("has-error");
-			$("#inDateTT").show();
+			inDtGrp.addClass("has-error");
+			inDtErrMsg.show();
 		}
 	});
 
