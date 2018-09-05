@@ -30,6 +30,10 @@
 	border: 1px dashed #269ABC;
 }
 
+.alert{
+	display:none;
+}
+
 </style>
 
 <div class="col-md-5 col-md-offset-1">
@@ -104,19 +108,20 @@
 
 <div class="col-md-10 col-md-offset-1">
 	<form id="checkoutForm" action="<%= APP_PATH %>/item/checkout" method="post">
-		<input type="hidden" name="code" value="<%= @code %>">
+		<input type="hidden" name="code"  id="itemCode" value="<%= @code %>">
 	</form>
-	<button type="button" class="btn btn-default" title="<%= _t 'Cancel checkout' %>"><%= _t 'Cancel' %></button>
+	<button type="button" class="btn btn-default" id="cancelBtn" title="<%= _t 'Cancel checkout' %>"><%= _t 'Cancel' %></button>
 	<button type="submit" class="btn btn-success" id="checkoutBtn"  title="<%= _t 'Checkout' %>"><%= _t 'Checkout' %>&nbsp;<span class="glyphicon glyphicon-export"></span></button>
 </div>
 
 <script>
 $(document).ready( function() {
-
+	var code = $( "#itemCode" ).val();
+	var cancekBtn = $( "#cancelBtn" );
 	var chkBtn = $( "#checkoutBtn" );
 	var frm = $("#checkoutForm");
 	var cnt = $('#tags-list-panel, #tags-list');
-	var countTags = $( "#ags-list" ).children(); // TODO : Compter le nombre d'éléments existants
+	var countTags = $( "#tags-list" ).children(); // TODO : Compter le nombre d'éléments existants
 	var check_dates = "<%= USE_CHECKINOUT_DATE %>";
 	// Initial state of the page
 	chkBtn.prop("disabled", true);
@@ -171,6 +176,11 @@ $(document).ready( function() {
 			$("#inDateGrp").addClass("has-error");
 			$("#inDateTT").show();
 		}
+	});
+
+	// Annulation Button
+	cancekBtn.click(function(){
+		location.href="<%= APP_PATH %>/item/checkin?code="+code;
 	});
 
 });
