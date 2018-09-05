@@ -37,82 +37,82 @@
 </style>
 
 <form id="checkoutForm" action="<%= APP_PATH %>/item/checkout" method="post">
-<div class="col-md-5 col-md-offset-1">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-	    	<h3 class="panel-title">#<%= @code %></h3>
-	  	</div>
-		<div class="panel-body">
-			<% if USE_IMAGE == "Y" %>
-				<div class="input-group">
-				  <span class="input-group-addon input-group-lg" id="basic-addon3">
-				  <% unless @item[0]['image_link'].empty? %>
-				  	<img src="<%= @item[0]['image_link'] %>" class="img img-responsive img-rounded" alt=""/>
-				  <% else %>
-				  <span class="glyphicon glyphicon-picture"></span>
-				  <% end %>
-				  </span>
-				</div>
-			<% end %>
-				<div class="input-group">
-				  <span class="input-group-addon input-group-lg" id="basic-addon0"><span class="glyphicon glyphicon-bookmark"></span></span>
-				  <input type="text" class="form-control" value="<%= @item[0]['name'] %>">
-				</div>
+	<input type="hidden" name="code" id="itemCode" value="<%= @code %>">
+	<div class="col-md-5 col-md-offset-1">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+		    	<h3 class="panel-title">#<%= @code %></h3>
+		  	</div>
+			<div class="panel-body">
+				<% if USE_IMAGE == "Y" %>
+					<div class="input-group">
+					  <span class="input-group-addon input-group-lg" id="basic-addon3">
+					  <% unless @item[0]['image_link'].empty? %>
+					  	<img src="<%= @item[0]['image_link'] %>" class="img img-responsive img-rounded" alt=""/>
+					  <% else %>
+					  <span class="glyphicon glyphicon-picture"></span>
+					  <% end %>
+					  </span>
+					</div>
+				<% end %>
+					<div class="input-group">
+					  <span class="input-group-addon input-group-lg" id="basic-addon0"><span class="glyphicon glyphicon-bookmark"></span></span>
+					  <input type="text" class="form-control" value="<%= @item[0]['name'] %>">
+					</div>
 
-				<div class="input-group">
-				  <span class="input-group-addon input-group-lg" id="basic-addon1"><span class="glyphicon glyphicon-list-alt"></span></span>
-				  <input type="text" class="form-control" value="<%= @item[0]['description'] %>">
-				</div>
+					<div class="input-group">
+					  <span class="input-group-addon input-group-lg" id="basic-addon1"><span class="glyphicon glyphicon-list-alt"></span></span>
+					  <input type="text" class="form-control" value="<%= @item[0]['description'] %>">
+					</div>
 
-			<% if USE_CHECKINOUT_DATE == "Y" %>
-				<div class="input-group">
-				  <span class="input-group-addon input-group-lg" title="<%= _t 'Check-out date' %>"><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span class="glyphicon glyphicon-export"></span></span>
-				  <input type="date" id="chkout_date" name="chkout_date" class="form-control" value="<%= @item[0]['checkout_date'] || Time.now.strftime('%Y-%m-%d') %>">
-				</div>
+				<% if USE_CHECKINOUT_DATE == "Y" %>
+					<div class="input-group">
+					  <span class="input-group-addon input-group-lg" title="<%= _t 'Check-out date' %>"><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span class="glyphicon glyphicon-export"></span></span>
+					  <input type="date" id="chkout_date" name="chkout_date" class="form-control" value="<%= @item[0]['checkout_date'] || Time.now.strftime('%Y-%m-%d') %>">
+					</div>
 
-				<div class="input-group" id="chkin_date_Grp">
-				  <span class="input-group-addon input-group-lg" title="<%= _t 'Planned check in date' %>"><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span class="glyphicon glyphicon-import"></span></span>
-				  <input type="date" id="chkin_date" name="chkin_date" class="form-control" value="<%= @item[0]['checkin_date'] %>">
-				</div>
-			    <div class="alert alert-danger" role="alert" id="chkin_date_TT"><%= _t 'Check in date must be further than check out' %></div>
-			<% end %>
+					<div class="input-group" id="chkin_date_Grp">
+					  <span class="input-group-addon input-group-lg" title="<%= _t 'Planned check in date' %>"><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span class="glyphicon glyphicon-import"></span></span>
+					  <input type="date" id="chkin_date" name="chkin_date" class="form-control" value="<%= @item[0]['checkin_date'] %>">
+					</div>
+				    <div class="alert alert-danger" role="alert" id="chkin_date_TT"><%= _t 'Check in date must be further than check out' %></div>
+				<% end %>
 
-				<div class="input-group input-group-lg">
-				  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-tags"></span></span>
-				  <div class="form-control" id="tags-list" name="tags-list">
-					  <% @assigned_tags.each { | tag | %>
-						<div class="tag btn <%= tag['color'] %>" id="tag<%= tag['id'] %>">
-						  <span class="tag-title"><%= tag['tag'] %></span> 
-						  <!--span class="badge"><%= tag['count_items'] %></span-->
-						</div>
-					  <% } %>
-				  </div>
-				</div>
+					<div class="input-group input-group-lg">
+					  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-tags"></span></span>
+					  <div class="form-control" id="tags-list" name="tags-list">
+						  <% @assigned_tags.each { | tag | %>
+							<div class="tag btn <%= tag['color'] %>" id="tag<%= tag['id'] %>">
+							  <span class="tag-title"><%= tag['tag'] %></span> 
+							  <!--span class="badge"><%= tag['count_items'] %></span-->
+							</div>
+						  <% } %>
+					  </div>
+					</div>
+			</div>
 		</div>
 	</div>
-</div>
 
-<div class="col-md-5">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-	    	<h3 class="panel-title"><%= _t 'List of tags' %></h3>
-	  	</div>
-		<div class="panel-body" id="tags-list-panel">
-		  <% @available_tags.each { | tag | %>
-			<div class="tag btn <%= tag['color'] %>" id="tag<%= tag['id'] %>">
-			  <span class="tag-title"><%= tag['tag'] %></span> 
-			</div>
-		  <% } %>
-		 </div>
+	<div class="col-md-5">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+		    	<h3 class="panel-title"><%= _t 'List of tags' %></h3>
+		  	</div>
+			<div class="panel-body" id="tags-list-panel">
+			  <% @available_tags.each { | tag | %>
+				<div class="tag btn <%= tag['color'] %>" id="tag<%= tag['id'] %>">
+				  <span class="tag-title"><%= tag['tag'] %></span> 
+				</div>
+			  <% } %>
+			 </div>
+		</div>
 	</div>
-</div>
+</form>
 
 <div class="col-md-10 col-md-offset-1">
-	<input type="hidden" name="code" id="itemCode" value="<%= @code %>">
 	<button type="button" class="btn btn-default" id="cancelBtn" title="<%= _t 'Cancel checkout' %>"><%= _t 'Cancel' %></button>
 	<button type="submit" class="btn btn-success" id="checkoutBtn"  title="<%= _t 'Checkout' %>"><%= _t 'Checkout' %>&nbsp;<span class="glyphicon glyphicon-export"></span></button>
 </div>
-</form>
 
 <script>
 $(document).ready( function() {
