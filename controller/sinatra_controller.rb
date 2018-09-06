@@ -88,7 +88,7 @@ class SinatraApp < Sinatra::Base
         redirect to APP_PATH + "/new?code=#{@code}"
       else
         # Item exist, if it wasn't out, then checkout
-        if !DB.checkout? @code
+        if !DB.checkout? @code 
             redirect to APP_PATH + "/out?code=#{@code}&massive=#{@massive}"
         else
           # If it is allready out, automatic checkin
@@ -139,9 +139,10 @@ class SinatraApp < Sinatra::Base
       @available_tags = DB.select_available_tags_for_item @code # DB.select_all_tags
       erb :out 
     else # If massive checkout, proceed automatically and refresh on list
-      DB.checkout @code
+      DB.checkout @code, params['chkout_date'], params['chkin_date']
       DB.link_tag @code, @massive.to_i
-      redirect to APP_PATH + "/list?massive=#{@massive}"      
+      chk_in_out_dates_params = USE_CHECKINOUT_DATE == "Y" ? "&chkout_date=#{params['chkout_date']}&chkin_date=#{params['chkin_date']}" : ""
+      redirect to APP_PATH + "/list?massive=#{@massive}" + chk_in_out_dates_params   
     end
 
   end

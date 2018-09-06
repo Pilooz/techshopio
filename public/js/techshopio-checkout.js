@@ -11,7 +11,6 @@ $(document).ready( function() {
 	var frm = $("#checkoutForm");
 	var cnt = $('#tags-list-panel, #tags-list');
 	var countTags = $( "#tags-list" ).children(); // TODO : Compter le nombre d'éléments existants
-	var check_dates = USE_CHECKINOUT_DATE;
 	// Initial state of the page
 	chkBtn.prop("disabled", true);
 	$(".alert").hide();
@@ -57,8 +56,9 @@ $(document).ready( function() {
 
 	// Checkout button Listener
 	chkBtn.click(function() {
+		var chkdt = (USE_CHECKINOUT_DATE == "Y") ? checkDates() : true;
 		$(".alert").hide();
-		var chkdt = (check_dates == "Y") ? checkDates() : true;
+		inDtGrp.removeClass("has-error");
 		if (chkdt) {
 			frm.submit();
 		} else {

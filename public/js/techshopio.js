@@ -152,6 +152,14 @@ $(document).ready( function() {
 	});
 
 	//
+	// Reload thumbnail in ajax mode.
+	//
+	function ajax_get_thumbnail(id, name) {
+		var d = new Date();
+		$("#" + id).attr("src", APP_PATH + '/pictures/' + name + "?" + d.getTime());
+	}
+
+	//
     // Massive checkout popup
     //
 	$( "#massiveOutput" ).click(function(){
@@ -168,11 +176,38 @@ $(document).ready( function() {
 		location.href=APP_PATH + "/list";
 	});
 
-	//
-	// Reload thumbnail in ajax mode.
-	//
-	function ajax_get_thumbnail(id, name) {
-		var d = new Date();
-		$("#" + id).attr("src", APP_PATH + '/pictures/' + name + "?" + d.getTime());
+	// Controling check in & out date interval
+	// Check in date value must be later than chek out date
+	function checkDates() {
+		var din = parseInt($('#chkin_date').val().replace(/-/g, '')),
+			dout = parseInt($('#chkout_date').val().replace(/-/g, ''));
+		if (isNaN(din)) {
+			din = 0;
+		}
+		 return (din >= dout);
 	}
+
+	//
+	// Choosing the tag for massive checkout
+	//
+	$("#tagList .btn").click(function(){
+		var inDtGrp = $("#chkin_date_Grp");
+		var inDtErrMsg = $("#chkin_date_TT");
+		var chkdt = (USE_CHECKINOUT_DATE == "Y") ? checkDates() : true;
+		var chkout_date = $('#chkout_date').val(), chkin_date = $('#chkin_date').val();
+
+		var url =  APP_PATH + "/list?massive=" + this.id.replace('tag', '') +
+							  "&chkout_date=" + chkout_date +
+							  "&chkin_date=" + chkin_date;
+		$(".alert").hide();
+		inDtGrp.removeClass("has-error");
+		if (chkdt) {
+			location.href=url;
+		} else {
+			inDtGrp.addClass("has-error");
+			inDtErrMsg.show();
+		}
+
+	});
+
 });

@@ -115,9 +115,13 @@
 	     	   			<% end %>
 	        		<% else %>
 	        			<% if @massive.nil? || @massive.empty? %>
-	        				<a href="<%=APP_PATH + '/out?code=' + item['code'] %>" class="btn btn-default" id="btnCheckout" title="<%= _t 'Checkout' %>"><span class="glyphicon glyphicon-export"></span></a>
+		        				<a href="<%=APP_PATH + '/out?code=' + item['code'] %>" class="btn btn-default" id="btnCheckout" title="<%= _t 'Checkout' %>"><span class="glyphicon glyphicon-export"></span></a>
 	        			<% else %>
-	        				<a href="<%=APP_PATH + '/out?code=' + item['code'] %>&massive=<%= @massive %>" class="btn btn-default" id="btnCheckout" title="<%= _t 'Checkout' %>"><span class="glyphicon glyphicon-export"></span></a>
+	        				<% if USE_CHECKINOUT_DATE == "Y" %>
+		        				<a href="<%=APP_PATH + '/out?code=' + item['code'] %>&massive=<%= @massive %>&chkout_date=<%= params['chkout_date']%>&chkin_date=<%= params['chkin_date']%>" class="btn btn-default" id="btnCheckout" title="<%= _t 'Checkout' %>"><span class="glyphicon glyphicon-export"></span></a>
+	        				<% else %>
+		        				<a href="<%=APP_PATH + '/out?code=' + item['code'] %>&massive=<%= @massive %>" class="btn btn-default" id="btnCheckout" title="<%= _t 'Checkout' %>"><span class="glyphicon glyphicon-export"></span></a>
+	        				<% end %>
 	        			<% end %>
 	        		<% end %>
 
@@ -176,10 +180,10 @@
 			<% if USE_CHECKINOUT_DATE == "Y" %>
 				<%= erb :inout_dates_form %>
 			<% end %>
-			
+
         	<ul id="tagList" class="list-group">
         	 <% @tags.each { | t | %>
-        	 	<li class="list-group-item"><a href="<%= APP_PATH %>/list?massive=<%= t['id'] %>" class="btn btn-xs <%= t['color'] %>"><%= t['tag'] %></a><span class='badge'><%= t['count_items'] %></span>
+        	 	<li class="list-group-item"><span id="tag<%= t['id'] %>" class="btn btn-xs <%= t['color'] %>"><%= t['tag'] %></span><span class='badge'><%= t['count_items'] %></span>
         	 <% } %>	
         	</ul>
         </div>
