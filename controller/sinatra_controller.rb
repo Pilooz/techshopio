@@ -59,6 +59,19 @@ class SinatraApp < Sinatra::Base
       @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == [ADMIN_LOGIN, ADMIN_PWD]
     end
    
+    def get_csv_data(list, cols)
+      list.each { |r|
+        r.reject! { |k, _| !cols.include? k }
+      }
+      column_names = list.first.keys
+
+      listcsv = CSV.generate({:col_sep => ";"}) { |csv|
+        csv << column_names
+        list.each { |x| csv << x.values }
+      }  
+      listcsv
+    end
+
   end
 
   before do
@@ -231,22 +244,6 @@ class SinatraApp < Sinatra::Base
     redirect to APP_PATH + "/list"
   end
 
-  # Extract data at csv format
-  get APP_PATH + '/list/csv' do 
-    cols = ["code","name","description","image_link","checkout"]
-    content_type :csv
-    list = DB.select_all_items false
-      list.each { |r|
-        r.reject! { |k, _| !cols.include? k }
-      }
-    column_names = list.first.keys
-    listcsv = CSV.generate({:col_sep => ";"}) { |csv|
-      csv << column_names
-      list.each { |x| csv << x.values }
-    }  
-    listcsv
-  end
-
    # Create or modify item
   post APP_PATH + '/item/new_modify' do
     if params['code']
@@ -343,29 +340,6 @@ class SinatraApp < Sinatra::Base
     res.to_json
   end
 
-  # Extract data for a specific tag in csv format
-  get APP_PATH + '/tag/csv/' do 
-    content_type :csv
-    cols = ["code","name","description"]
-    if params['id']
-      # add a file description in http header
-      tag = DB.select_tag params['id']
-      attachment tag[0]['tag'] + '.csv'
-
-      list = DB.select_items_for_tag params['id']
-      list.each { |r|
-        r.reject! { |k, _| !cols.include? k }
-      }
-      column_names = list.first.keys
-
-      listcsv = CSV.generate({:col_sep => ";"}) { |csv|
-        csv << column_names
-        list.each { |x| csv << x.values }
-      }  
-      listcsv
-    end
-  end
-
   # Extract data for a specific tag in pdf format
   get APP_PATH + '/tag/pdf/' do 
     content_type :pdf
@@ -400,5 +374,49 @@ class SinatraApp < Sinatra::Base
     {'result' => 'Ok'}.to_json
   end
 
+  #--------------------------------------------------------------------------
+  # CSV Controllers
+  #--------------------------------------------------------------------------
 
+  # Extract list at csv format
+  get APP_PATH + '/list/csv' do 
+    list = DB.select_all_items false
+    content_type :csv
+    attachment 'list.csv'
+    get_csv_data list, ["code","name","description","image_link","checkout"]
+  end
+
+  # Extract data for a specific tag in csv format
+  get APP_PATH + '/tag/csv/' do 
+    content_type :csv
+    if params['id']
+      list = DB.select_items_for_tag params['id']
+      tag = DB.select_tag params['id']
+      # Taking first tag to give the name
+      attachment tag[0]['tag'] + '.csv'
+      get_csv_data list, ["code","name","description"]
+    end
+  end
+
+  # Extract all tags data
+  get APP_PATH + '/tags/csv' do 
+    content_type :csv
+    attachment 'tags.csv'
+    get_csv_data DB.select_tags, ["id","natagme","color"]
+  end
+
+  # Extract all items_log
+  get APP_PATH + '/stats/csv' do 
+    content_type :csv
+    attachment 'items_log.csv'
+    get_csv_data DB.select_all_items_log, ["item_code", "tag_id", "move", "move_date"]
+  end
+
+  # Extract all tags_items
+  get APP_PATH + '/tags_items/csv' do 
+    content_type :csv
+    attachment 'tags_items.csv'
+    get_csv_data DB.select_all_tags_items, ["item_code", "tag_id"]
+  end
+  
 end

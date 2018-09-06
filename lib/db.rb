@@ -231,6 +231,10 @@ class Db
                  where t.id = ?", id
   end
 
+  def select_tags
+    @db.execute "select t.id, t.tag, t.color from tags t order by t.tag"
+  end
+
 
   # add tag
   def add_tag(tag, color)
@@ -255,8 +259,12 @@ class Db
   end
 
   #
-  # Link / unlink tags
+  # Link / unlink tags : table tags_items
   #
+  def select_all_tags_items
+    @db.execute "select item_code, tag_id from tags_items order by item_code"
+  end
+
   def link_tag(code, id)
     @db.execute "insert into tags_items values (?, ?)", [code.upcase, id]
     log_item code, id, OUT
@@ -279,9 +287,15 @@ class Db
     }
   end
 
+  #
   # Logging item move (in/out) => move
+  #
   def log_item(code, tag_id, move)
     @db.execute "insert into items_log values (?, ?, ?, ?)", [code.upcase, tag_id, move, Time.now.to_s]
+  end
+
+  def select_all_items_log
+    @db.execute "select item_code, tag_id, move, move_date from items_log order by move_date"
   end
 
 end
