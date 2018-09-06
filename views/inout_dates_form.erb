@@ -1,0 +1,10 @@
+<div class="input-group">
+  <span class="input-group-addon input-group-lg" title="<%= _t 'Check-out date' %>"><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span class="glyphicon glyphicon-export"></span></span>
+  <input type="date" id="chkout_date" name="chkout_date" class="form-control" value="<%= @item[0]['checkout_date'] || Time.now.strftime('%Y-%m-%d') %>">
+</div>
+
+<div class="input-group" id="chkin_date_Grp">
+  <span class="input-group-addon input-group-lg" title="<%= _t 'Planned check in date' %>"><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span class="glyphicon glyphicon-import"></span></span>
+  <input type="date" id="chkin_date" name="chkin_date" class="form-control" value="<%= @item[0]['checkin_date'] %>">
+</div>
+<div class="alert alert-danger" role="alert" id="chkin_date_TT"><%= _t 'Check in date must be further than check out' %></div>

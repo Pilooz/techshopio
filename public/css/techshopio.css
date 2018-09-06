@@ -239,4 +239,39 @@
         background-color: #fff;
       }
 
+/*
+*   CSS resources for checkout page, out.erb model 
+*/
 
+[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+ 
+#tags-list .tag {
+    cursor: alias;
+}
+
+#tags-list-panel .tag {
+    cursor: grab;
+}
+
+.tag {
+  margin: 2px;
+}
+
+.tag-title {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+}
+
+.dropTarget {
+  background-color: #fafafa;
+  border: 1px dashed #269ABC;
+}
+
+.alert{
+  display:none;
+}
