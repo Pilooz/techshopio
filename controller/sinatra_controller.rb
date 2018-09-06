@@ -4,6 +4,7 @@ require 'socket'
 require 'data_uri'
 require 'csv'
 require 'tilt/erb'
+require 'date'
 
 # Application Sinatra servant de base
 class SinatraApp < Sinatra::Base

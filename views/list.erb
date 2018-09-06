@@ -39,6 +39,14 @@
 	          <th>
 	          	<%= _t 'Assigned' %> ?
 	          </th>
+	          <% if USE_CHECKINOUT_DATE == "Y" %>
+	          <th>
+	          	<%= _t 'Check-out date' %>
+	          </th>
+	          <th>
+	          	<%= _t 'Planned check in date' %>
+	          </th>
+	          <% end %>
 	          <% unless @publiclist %>
 	          <th>
 	          	<%= _t 'Actions' %>
@@ -74,6 +82,28 @@
 	        	<%= _t 'Available' %>
 	        	<% end %>
 	        	</td>
+
+				<% if USE_CHECKINOUT_DATE == "Y" %>
+					<td>
+						<span class="btn-xs btn-default"><%= item['chkout_date'] %>
+					</td>
+					<td>
+						<% if !item['chkin_date'].to_s.empty? %>
+							<% if item['chkin_date'].to_s.gsub(/-/, '').to_i <= item['chkout_date'].to_s.gsub(/-/, '').to_i %>
+								<span class="btn-xs btn-danger" title="<%= _t 'The planned check-in date has passed !'%>"><%= item['chkin_date'] %></span>
+							<% else %>
+								<% if item['chkin_date'].to_s.gsub(/-/, '').to_i <= item['chkout_date'].to_s.gsub(/-/, '').to_i + 1 %>
+									<span class="btn-xs btn-warning" title="<%= _t 'Close to the planned check-in date !'%>"><%= item['chkin_date'] %></span>
+								<% else %>
+									<span class="btn-xs btn-default"><%= item['chkin_date'] %></span>
+								<% end%>
+							<% end %>
+						<%else %>
+							&nbsp;
+						<% end %>
+					</td>
+				<% end %>
+
 
 	        	<% unless @publiclist %>
 	        	<td>
