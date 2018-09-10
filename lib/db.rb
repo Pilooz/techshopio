@@ -33,7 +33,10 @@ class Db
     @db.execute 'create table tags (
         id integer,
         tag varchar(255),
-        color varchar(50)
+        color varchar(50),
+        firsname varchar(255),
+        lastname varchar(255),
+        email varchar(255)
         );'
     puts "  Creating table tags_items..."
     @db.execute 'create table tags_items (
@@ -57,6 +60,12 @@ class Db
     rescue
       false
     end
+  end
+
+  # True if database is supposed empty
+  def empty_DB?
+    r = @db.execute "select count(1) as cnt from Items" 
+    return r[0]["cnt"] == 0
   end
 
   # Synchronize image with DB
@@ -152,9 +161,10 @@ class Db
   end
 
   # Adds an item
-  def add_item(code, name, desc, image_link)
+  def add_item(code, name, desc, image_link, checkout, chkout_date, chkin_date)
     @db.execute 'INSERT INTO items (code, name, 
-        description, image_link) VALUES (?, ?, ?, ?)', [code.to_s.upcase, name.to_s, desc.to_s, image_link.to_s]
+        description, image_link, checkout, chkout_date, chkin_date) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+        [code.to_s.upcase, name.to_s, desc.to_s, image_link.to_s, checkout.to_s, chkout_date, chkin_date]
   end
 
   # update an item
@@ -174,7 +184,7 @@ class Db
       |k, v| k == 'code' 
     }.each { |row|
       puts "adding #{row[1]} ##{row[0]}"
-      add_item(row[0], row[1], row[2], '') unless row[0].empty?
+      add_item(row[0], row[1], row[2], row[3], row[4], row[5], row[6]) unless row[0].empty?
       n = n + 1
     }
     puts "#{n} inserted rows"
@@ -245,6 +255,20 @@ class Db
     end
   end
 
+  # adding several tags (for DB restore routine)
+  def add_serveral_tags (data)
+    n = 0
+    data.reject! { 
+      |k, v| k == 'id' 
+    }.each { |row|
+      puts "adding #{row[1]} ##{row[0]}"
+      @db.execute "insert into tags values ( ?, ?, ?, ?, ?, ?)", 
+                  [row[0], row[1], row[2], row[3], row[4], row[5]] unless row[0].empty?
+      n = n + 1
+    }
+    puts "#{n} inserted rows"
+  end
+
   # delete one tag
   def delete_tag(id)
     # Checkin all items 
@@ -285,6 +309,19 @@ class Db
     tags.each { |t|
       log_item code, t['id'], IN
     }
+  end
+
+  # Adding several links between items and tags (for db restore)
+  def add_serveral_tags_items(data)
+    n = 0
+    data.reject! { 
+      |k, v| k == 'item_code' 
+    }.each { |row|
+      puts "adding #{row[1]} ##{row[0]}"
+      link_tag(row[0], row[1]) unless row[0].empty?
+      n = n + 1
+    }
+    puts "#{n} inserted rows"
   end
 
   #

@@ -5,6 +5,7 @@ require 'data_uri'
 require 'csv'
 require 'tilt/erb'
 require 'date'
+require 'json'
 
 # Application Sinatra servant de base
 class SinatraApp < Sinatra::Base
@@ -402,7 +403,7 @@ class SinatraApp < Sinatra::Base
   get APP_PATH + '/tags/csv' do 
     content_type :csv
     attachment 'tags.csv'
-    get_csv_data DB.select_tags, ["id","natagme","color"]
+    get_csv_data DB.select_tags, ["id", "tag", "color", "firsname", "lastname", "email"]
   end
 
   # Extract all items_log
@@ -418,5 +419,88 @@ class SinatraApp < Sinatra::Base
     attachment 'tags_items.csv'
     get_csv_data DB.select_all_tags_items, ["item_code", "tag_id"]
   end
-  
+
+  #--------------------------------------------------------------------------
+  # dbsave Controller : Admin path to save database
+  #--------------------------------------------------------------------------
+  get APP_PATH + '/dbsavetocsv' do 
+
+    def write_file(filename, data)
+      puts "writing file #{filename}"
+      File.open("#{APP_ROOT}/db/files/"+filename, 'w') { |file| file.write(data) }
+      puts "done !"
+    end
+
+    #content_type :text
+    puts '----------> Saving database to CSV files... <----------'
+    puts "The target directory is #{APP_ROOT}/db/files/"
+    puts 'get csv of items table...'
+    items = get_csv_data DB.select_all_items(false), ["code","name","description","image_link","checkout", "chkout_date", "chkin_date"]
+    write_file "items.csv", items
+    puts 'get csv of tags table...'
+    tags = get_csv_data DB.select_tags, ["id", "tag", "color", "firsname", "lastname", "email"]
+    write_file "tags.csv", tags
+    # puts 'get csv of items_log table...'
+    # items_log = get_csv_data DB.select_all_items_log, ["item_code", "tag_id", "move", "move_date"]
+    # write_file "items_log.csv", items_log
+    puts 'get csv of tags_items table...'
+    tags_items = get_csv_data DB.select_all_tags_items, ["item_code", "tag_id"]
+    write_file "tags_items.csv", tags_items
+    puts '----------> Done ! Database exported to CSV <----------'
+  end
+ 
+  #--------------------------------------------------------------------------
+  # dbrestore Controller : Admin path to restore database only it is empty.
+  #--------------------------------------------------------------------------
+  get APP_PATH + '/dbrestorefromcsv' do 
+    db_path = "#{APP_ROOT}/db/files/"
+    files = ['items', 'tags', 'tags_items']
+    all_file_exist = true
+
+    def is_int(str)
+      # Check if a string should be an integer
+      return !!(str =~ /^[-+]?[1-9]([0-9]*)?$/)
+    end
+
+    # Preparing data for DB insertions
+    def prepareData(csv_filename)
+      data = []
+      puts "Converting '#{csv_filename}'  into json..."
+      CSV.foreach("#{APP_ROOT}/db/files/#{csv_filename}", col_sep: ";" ) do |row|
+        data.push row
+      end
+      data
+    end
+
+
+    puts '----------> Restoring database from CSV files... <----------'
+    if DB.empty_DB?
+      puts 'Verifying CSV file existance...'
+      files.each { |f| 
+        if !File.exists? db_path + f + ".csv"
+          all_file_exist = false
+          puts "ERROR ! The file '#{f}.csv' was not found !"
+        end
+      }
+      
+      if all_file_exist
+        puts 'All required cvs files found ! DB Restore can start...'
+        json_data = {}
+        files.each { |f| 
+          data = prepareData f + ".csv"
+          puts "Calling DB.add_serveral_" + f 
+          DB.send("add_serveral_#{f}", data)  
+        }
+        
+      else
+        puts 'ERROR ! A csv file is missing, unable to restore database properly.'
+      end
+
+    else
+      puts 'ERROR ! Database is not empty !'
+    end
+    puts '----------> Done ! Database imported from CSV <----------'
+    # Redirect to the Techshop's list
+    redirect to APP_PATH + "/list"
+  end
 end
