@@ -321,7 +321,8 @@ class SinatraApp < Sinatra::Base
 
   # Receive tags data
   post APP_PATH + '/tag/add' do
-    DB.add_tag params['tag'], params['color']
+    DB.add_tag params['tag'], params['color'], params['firstname'] , params['lastname'] , params['email']
+
     # Redirect to the tags' list
     redirect to APP_PATH + "/tags"
   end
@@ -343,14 +344,18 @@ class SinatraApp < Sinatra::Base
 
   # Extract data for a specific tag in pdf format
   get APP_PATH + '/tag/pdf/' do 
-    content_type :pdf
     if params['id']
       # add a file description in http header
       tag = DB.select_tag params['id']
       attachment tag[0]['tag'] + '.pdf'
 
       list = DB.select_items_for_tag params['id']
-      puts list.inspect
+      #puts list.inspect
+      doc = Pdf.new("<h1>This is my Pdf for tag :"+list[0]['tag']+"</h1>");
+
+      content_type :pdf
+      attachment tag[0]['tag'] + '.pdf'
+      doc
     end
   end
 
@@ -431,7 +436,6 @@ class SinatraApp < Sinatra::Base
       puts "done !"
     end
 
-    #content_type :text
     puts '----------> Saving database to CSV files... <----------'
     puts "The target directory is #{APP_ROOT}/db/files/"
     puts 'get csv of items table...'
@@ -440,9 +444,7 @@ class SinatraApp < Sinatra::Base
     puts 'get csv of tags table...'
     tags = get_csv_data DB.select_tags, ["id", "tag", "color", "firsname", "lastname", "email"]
     write_file "tags.csv", tags
-    # puts 'get csv of items_log table...'
-    # items_log = get_csv_data DB.select_all_items_log, ["item_code", "tag_id", "move", "move_date"]
-    # write_file "items_log.csv", items_log
+
     puts 'get csv of tags_items table...'
     tags_items = get_csv_data DB.select_all_tags_items, ["item_code", "tag_id"]
     write_file "tags_items.csv", tags_items

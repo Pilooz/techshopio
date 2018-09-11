@@ -34,9 +34,9 @@ class Db
         id integer,
         tag varchar(255),
         color varchar(50),
-        firsname varchar(255),
-        lastname varchar(255),
-        email varchar(255)
+        firsname varchar(255) default null,
+        lastname varchar(255) default null,
+        email varchar(255) default null
         );'
     puts "  Creating table tags_items..."
     @db.execute 'create table tags_items (
@@ -236,22 +236,22 @@ class Db
   end
 
   def select_tag(id)
-    @db.execute "select t.tag, t.color
+    @db.execute "select t.tag, t.color, t.firstname, t.lastname, t.email
                  from tags t
                  where t.id = ?", id
   end
 
   def select_tags
-    @db.execute "select t.id, t.tag, t.color from tags t order by t.tag"
+    @db.execute "select t.id, t.tag, t.color, t.firstname, t.lastname, t.email from tags t order by t.tag"
   end
 
 
   # add tag
-  def add_tag(tag, color)
+  def add_tag(tag, color, firstname, lastname, email)
     unless tag.empty?
       newid = lastid('tags', col='id')
       newid = newid + 1
-      @db.execute "insert into tags values ( ?, ?, ?)", [newid, tag, color]
+      @db.execute "insert into tags values ( ?, ?, ?, ?, ?, ?)", [newid, tag, color, firstname, lastname, email]
     end
   end
 
