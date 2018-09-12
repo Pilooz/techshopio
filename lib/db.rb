@@ -34,7 +34,7 @@ class Db
         id integer,
         tag varchar(255),
         color varchar(50),
-        firsname varchar(255) default null,
+        firstname varchar(255) default null,
         lastname varchar(255) default null,
         email varchar(255) default null
         );'
@@ -200,10 +200,10 @@ class Db
   # Tags routines
   #
   def select_all_tags
-    @db.execute "select t.id, t.tag, t.color, count(ti.item_code) count_items
+    @db.execute "select t.id, t.tag, t.color, t.firstname, t.lastname, t.email, count(ti.item_code) count_items
                  from tags t left join tags_items ti
                  on t.id = ti.tag_id
-                 group by t.id, t.tag, t.color
+                 group by t.id, t.tag, t.color, t.firstname, t.lastname, t.email
                  order by t.tag"
   end
 
@@ -236,7 +236,7 @@ class Db
   end
 
   def select_tag(id)
-    @db.execute "select t.tag, t.color, t.firstname, t.lastname, t.email
+    @db.execute "select t.id, t.tag, t.color, t.firstname, t.lastname, t.email
                  from tags t
                  where t.id = ?", id
   end
@@ -252,6 +252,14 @@ class Db
       newid = lastid('tags', col='id')
       newid = newid + 1
       @db.execute "insert into tags values ( ?, ?, ?, ?, ?, ?)", [newid, tag, color, firstname, lastname, email]
+    end
+  end
+
+  # add tag
+  def add_contact_to_tag(id, firstname, lastname, email)
+    unless id.empty?
+      @db.execute "update tags set firstname = ?, lastname = ?, email = ? where id = ?", 
+                  [firstname.to_s, lastname.to_s, email.to_s, id]
     end
   end
 
@@ -331,9 +339,27 @@ class Db
     @db.execute "insert into items_log values (?, ?, ?, ?)", [code.upcase, tag_id, move, Time.now.to_s]
   end
 
+  def delete_items_log
+    @db.execute "delete from items_log"
+  end
+
   def select_all_items_log
     @db.execute "select item_code, tag_id, move, move_date from items_log order by move_date"
   end
+
+  # Adding several links between items and tags (for db restore)
+  def add_serveral_items_log(data)
+    n = 0
+    data.reject! { 
+      |k, v| k == 'item_code' 
+    }.each { |row|
+      puts "adding #{row[1]} ##{row[0]}, #{row[3]}"
+      @db.execute "insert into items_log values (?, ?, ?, ?)", [row[0], row[1], row[2], row[3]]
+      n = n + 1
+    }
+    puts "#{n} inserted rows"
+  end
+
 
 end
 

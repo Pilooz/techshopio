@@ -11,6 +11,10 @@ gem 'rake'
 gem 'rest-client'
 gem 'sinatra'
 gem 'data_uri'
+# For PDF transformations
+gem 'pdfkit'
+gem 'wkhtmltopdf-binary'
+#
 
 group :development do
   gem 'sinatra-contrib'

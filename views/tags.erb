@@ -7,6 +7,9 @@
 		display: none;
 	}
 
+	.space_right {
+		margin-right: 10px;
+	}
 </style>
 
 <script>
@@ -25,12 +28,7 @@ $(document).ready( function() {
 	// Handeling pdf generation button
 	$('#editSheet').click(function()
 	{
-		$.ajax({
-		  url: "<%= APP_PATH %>/tag/pdf/?id=" + tagID
-		})
-		.success(function(response) {
-			// Do something pretty to show that all is ok !
-		});
+		location.href="<%= APP_PATH %>/tag/pdf/?id=" + tagID;
 	});
 
 	// Handeling tag buttons
@@ -39,7 +37,7 @@ $(document).ready( function() {
 		// Gathering informations
 		tagID = this.id.replace('tag', '');
 		$.ajax({
-		  url: "<%= APP_PATH %>/tag/info/?id=" + tagID
+		  url: "<%= APP_PATH %>/tag/info/?id=" + tagID + "&expand=Y"
 		})
 		  .success(function(response) {
 		  	// Displaying all checked item with this tag
@@ -56,8 +54,6 @@ $(document).ready( function() {
 
 			// Export Link
 			$('#exportToCSV').attr("href", "<%= APP_PATH %>/tag/csv/?id=" + tagID);
-			// Pdf Link
-			//$('#editSheet').attr("href", "<%= APP_PATH %>/tag/pdf/?id=" + tagID);
 		}) 	
 	 	detailPnl.show();
 	});
@@ -71,6 +67,38 @@ $(document).ready( function() {
 			location.href="<%=APP_PATH %>/tag/delete?id="+tagId;
 		}
 	});
+
+	// handeling 'Adding contact' button
+	$("#frmContactBtn").click(function(){
+		$("#frmContact").submit();
+	});
+
+
+	// Handeling picto "add contact" to get TagID
+	$(".contactTag").click(function(){
+		$("#contactTagLabel").html("").removeClass("btn-blue btn-lavande btn-violet btn-pink btn-red btn-orange btn-yellow btn-lightgreen btn-green btn-brown btn-black btn-gray ");
+		tagID = this.id.replace('contact', '');
+	});
+
+	// Event for the Modal "Add Contact" Window
+	$('#modalTagContactForm').on('shown.bs.modal', function () {
+		$.ajax({
+		  url: "<%= APP_PATH %>/tag/info/?id=" + tagID + "&expand=N"
+		})
+		  .success(function(response) {
+		  	tagData = $.parseJSON(response)[0];
+		  	console.log(tagData);
+		  	// Label
+			$("#contactTagLabel").addClass(tagData['color'])
+		  						 .attr("title", tagData['tag'])
+		  						 .html(tagData['tag']);
+		  	// Binding data of the choosen tag
+		  	$("#tagid").val(tagData['id']);
+		  	$("#firstname").val(tagData['firstname']);
+		  	$("#lastname").val(tagData['lastname']);
+		  	$("#email").val(tagData['email']);
+		  });	  
+	});	
 });
 
 </script>
@@ -86,14 +114,15 @@ $(document).ready( function() {
 			<li class="list-group-item">
 				<button class="tag btn <%= tag['color'] %>" id="tag<%= tag['id'] %>" type="button" title="<%= _t 'tag' + ' ' + tag['tag']  %>"><%= tag['tag'] %></button>
 
-				<a class="contactTag" id="contact<%= tag['id'] %>" href="#" data-toggle="modal" data-target="#modalTagContactForm" title="<%= _t 'Add a contact' %>"><span class="glyphicon glyphicon-list-alt"></span></a>
+				<a class="contactTag space_right" id="contact<%= tag['id'] %>" href="#" data-toggle="modal" data-target="#modalTagContactForm" title="<%= _t 'Add a contact' %>"><span class="glyphicon glyphicon-list-alt"></span></a>
+				<% if tag['email'] != '' %>
+					<span class=""><a href="mailto:<%= tag['email'] %>"><%= tag['firstname'] %>&nbsp;<%= tag['lastname'] %></a></span>
+				<% else %>
+					<span class=""><%= tag['firstname'] %>&nbsp;<%= tag['lastname'] %></span>
+				<% end %>
+        		<a class="deleteTag pull-right" id="delete<%= tag['id'] %>" href="#" title='<%= _t "Delete"  %>'><span class="glyphicon glyphicon-trash"></span></a>
 
-        		<a class="deleteTag" id="delete<%= tag['id'] %>" href="#" title='<%= _t "Delete"  %>'><span class="glyphicon glyphicon-trash"></span></a>
-
-				<span class="badge"><%= tag['count_items'] %></span>
-				<% if tag['sorting_tag']  == 'O' %>
-					<span class="badge"><%= _t "Sorting tag"  %></span>
-				<% end %>	
+				<span class="badge space_right"><%= tag['count_items'] %></span>
 			</li> 
 		  <% } %>
 		</ul>
@@ -153,16 +182,39 @@ $(document).ready( function() {
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="<%= _t 'Close' %>"><span aria-hidden="true" title="<%= _t 'Close' %>">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><%= _t 'Add a contact to this tag' %></h4>
+        <h4 class="modal-title" id="myModalLabel">
+        	<%= _t 'Attach a contact to' %> 
+        	<span id="contactTagLabel" class="btn btn-xs" title=""></span>
+        </h4>
         <%= _h 'help-add-tag-contact' %>
       </div>
       <div class="modal-body">
         <div class="center-block">
-        Here is the contact form (firstname, lastname, email).
+        	<form method="post" id="frmContact" action="<%=APP_PATH + '/tag/add_contact' %>">
+        		<input type="hidden" name="tagid" id="tagid" value="">
+				<div class="input-group">
+				  <span class="input-group-addon input-group-lg" id="firstname-txt"><span class="glyphicon glyphicon-user"></span></span>
+				  <input type="text" class="form-control" id="firstname" name="firstname" placeholder="<%= _t 'Firstname' %>" aria-describedby="firstname-txt" value="">
+				</div>
+
+				<div class="input-group">
+				  <span class="input-group-addon input-group-lg" id="lastname-txt"><span class="glyphicon glyphicon-chevron-right"></span></span>
+				  <input type="text" class="form-control" id="lastname" name="lastname" placeholder="<%= _t 'Lastname' %>" aria-describedby="lastname-txt" value="">
+				</div>
+
+				<div class="input-group">
+				  <span class="input-group-addon input-group-lg" id="email-txt"><span class="glyphicon glyphicon-envelope"></span></span>
+				  <input type="text" class="form-control" id="email" name="email" placeholder="<%= _t 'Email' %>" aria-describedby="email-txt" value="">
+				</div>
+
+    		</form>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><%= _t 'Close' %></button>
+		<button type="button" class="btn btn-success" id="frmContactBtn">
+			<span class="glyphicon" id="frmContactBtnLabel" title="<%= _t 'Ok' %>"></span>&nbsp;<%= _t 'Ok' %>
+		</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= _t 'Cancel' %></button>
       </div>
     </div>
   </div>

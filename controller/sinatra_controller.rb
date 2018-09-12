@@ -6,6 +6,7 @@ require 'csv'
 require 'tilt/erb'
 require 'date'
 require 'json'
+require 'pdfkit'
 
 # Application Sinatra servant de base
 class SinatraApp < Sinatra::Base
@@ -322,7 +323,6 @@ class SinatraApp < Sinatra::Base
   # Receive tags data
   post APP_PATH + '/tag/add' do
     DB.add_tag params['tag'], params['color'], params['firstname'] , params['lastname'] , params['email']
-
     # Redirect to the tags' list
     redirect to APP_PATH + "/tags"
   end
@@ -336,8 +336,10 @@ class SinatraApp < Sinatra::Base
   # sending Tag infos
   get APP_PATH + '/tag/info/' do
     res = nil
-    if params['id']
+    if params['id'] && params['expand'] == 'Y'
       res = DB.select_items_for_tag params['id']
+    else
+      res = DB.select_tag params['id']
     end
     res.to_json
   end
@@ -345,19 +347,33 @@ class SinatraApp < Sinatra::Base
   # Extract data for a specific tag in pdf format
   get APP_PATH + '/tag/pdf/' do 
     if params['id']
-      # add a file description in http header
+       # add a file description in http header
       tag = DB.select_tag params['id']
-      attachment tag[0]['tag'] + '.pdf'
+      # attachment tag[0]['tag'] + '.pdf'
 
       list = DB.select_items_for_tag params['id']
-      #puts list.inspect
-      doc = Pdf.new("<h1>This is my Pdf for tag :"+list[0]['tag']+"</h1>");
+      # doc = Pdf.new("<h1>This is my Pdf for tag :"+list[0]['tag']+"</h1>")
+      # doc = Pdf.new("test")
+      # kit = PDFKit.new("http://localhost:#{APP_PORT}#{APP_PATH}/tag/info/?id=" + params['id'])
+      kit = PDFKit.new("<h1>This is my Pdf for tag :"+list[0]['tag']+"</h1>", :page_size => 'A4')
+      # kit.stylesheets <<  __dir__('../public/css/bootstrap.css')
+      pdf = kit.to_pdf
 
-      content_type :pdf
-      attachment tag[0]['tag'] + '.pdf'
-      doc
+      content_type 'application/pdf'  # :pdf
+      attachment list[0]['tag'] + '.pdf'
+      pdf
     end
   end
+
+  post APP_PATH + '/tag/add_contact' do
+
+    if params['tagid']
+      DB.add_contact_to_tag params['tagid'], params['firstname'] , params['lastname'] , params['email']
+    end
+    # Redirect to the tags' list
+    redirect to APP_PATH + "/tags"
+  end
+
 
   get APP_PATH + '/tags/list' do
     res = DB.select_all_tags
@@ -408,7 +424,7 @@ class SinatraApp < Sinatra::Base
   get APP_PATH + '/tags/csv' do 
     content_type :csv
     attachment 'tags.csv'
-    get_csv_data DB.select_tags, ["id", "tag", "color", "firsname", "lastname", "email"]
+    get_csv_data DB.select_tags, ["id", "tag", "color", "firstname", "lastname", "email"]
   end
 
   # Extract all items_log
@@ -441,13 +457,19 @@ class SinatraApp < Sinatra::Base
     puts 'get csv of items table...'
     items = get_csv_data DB.select_all_items(false), ["code","name","description","image_link","checkout", "chkout_date", "chkin_date"]
     write_file "items.csv", items
+
     puts 'get csv of tags table...'
-    tags = get_csv_data DB.select_tags, ["id", "tag", "color", "firsname", "lastname", "email"]
+    tags = get_csv_data DB.select_tags, ["id", "tag", "color", "firstname", "lastname", "email"]
     write_file "tags.csv", tags
 
     puts 'get csv of tags_items table...'
     tags_items = get_csv_data DB.select_all_tags_items, ["item_code", "tag_id"]
     write_file "tags_items.csv", tags_items
+
+    puts 'get csv of items_log table...'
+    items_log = get_csv_data DB.select_all_items_log, ["item_code", "tag_id", "move", "move_date"]
+    write_file "items_log.csv", items_log
+
     puts '----------> Done ! Database exported to CSV <----------'
   end
  
@@ -493,6 +515,13 @@ class SinatraApp < Sinatra::Base
           puts "Calling DB.add_serveral_" + f 
           DB.send("add_serveral_#{f}", data)  
         }
+
+        # Specific deal for Items_log table
+        puts "Delete all data from items_log"
+        DB.delete_items_log
+        puts "Calling DB.add_serveral_items_log" 
+        data = prepareData "items_log.csv"
+        DB.add_serveral_items_log data
         
       else
         puts 'ERROR ! A csv file is missing, unable to restore database properly.'
