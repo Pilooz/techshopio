@@ -180,9 +180,9 @@ class Db
 
   def add_serveral_items (data)
     n = 0
-    data.reject! { 
-      |k, v| k == 'code' 
-    }.each { |row|
+    data.reject! { |k, v| k == 'code' }
+    .reject! { | row | exists? row[0] }
+    .each { |row|
       puts "adding #{row[1]} ##{row[0]}"
       add_item(row[0], row[1], row[2], row[3], row[4], row[5], row[6]) unless row[0].empty?
       n = n + 1
