@@ -24,7 +24,7 @@ $(document).ready( function() {
   function generateBarcode(){
   	var barcodetitle = $("#barcodeValueTitle").val();
   	var radical = $("#barcodeValueRadical").val();
-    var value = $("#barcodeValueFrom").val();
+    var value = $("#barcodeValueFrom").val() == "" ? 0 : $("#barcodeValueFrom").val();
     var value2 = $("#barcodeValueTo").val() == "" ? value : $("#barcodeValueTo").val();
     var btype = $("input[name=btype]:checked").val();
     var renderer = 'css'; // $("input[name=renderer]:checked").val();
@@ -52,8 +52,8 @@ $(document).ready( function() {
 	$("#canvasTarget").hide();
 	$("#barcodeTarget").html("").show();
     // Verify if values are numbers, verify settings
- 	if (checkOrder(value, value2) 
- 		&& checkTypeValidity(radical, btype)
+ 	if ( //checkOrder(value, value2) &&
+ 		 checkTypeValidity(radical, btype)
  	   ) {
 			// $("#errorTitle").html("<%= _t 'Barcodes' %> <%= _t 'From' %> "  + value +  " <%= _t 'To' %> " + value2);
 			$('#printButton').show();
@@ -61,7 +61,12 @@ $(document).ready( function() {
 			$(".barcodeParamZone").hide();
 			$("h1, h2, h3, h4, nav, ul, li").hide();
 			// Creates divs
-	 		for ( var v = value; v <= value2; v++ ) {
+			if(parseInt(value) >= parseInt(value2)) {
+				tmp = value2;
+				value2 = value;
+				value = tmp;
+			}
+	 		for ( var v = parseInt(value); v <= parseInt(value2); v++ ) {
 	 			$("#barcodeTarget").append("<div id='code-"+ v +"' class='gen'>"+ v +"</div>");
 	 			//$("#barcodeTarget").append("<div class='title'>"+ barcodetitle +"</div>");
 	 			$("#code-" + v ).barcode( "" + radical + v, btype, settings);
@@ -72,7 +77,6 @@ $(document).ready( function() {
  		$("#barcodeWorkingZone").show();
  		$("#errorTitle").html("<%= _t 'Error !' %>");
  		$("#errorMsg").html(error_message);
- 		//$("#barcodeTarget").toggleClass("panel panel-danger");
  	}
   }
 
@@ -99,7 +103,7 @@ $(document).ready( function() {
   function checkOrder(v1, v2) {
   	v1 = v1 =="" ? 0 : v1;
   	v2 = v2 =="" ? 0 : v2;
-  	if (v2 >= v1) return true;
+  	if ( v2 >= v1) return true;
   	else {
   		error_message = "<%= _h 'Please check values. You should put numeric values in order to generate several barcodes.' %>";
   		return false;
@@ -235,13 +239,6 @@ $(document).ready( function() {
 		  <div class="col-md-6">
 		    <form method="get">
 
-<!-- 		      <div class="input-group input-group-ld">
-		        <span class="input-group-addon" id="codefradical">
-		        	<%= _t 'Barcode title' %> : 
-		        </span>
-		        <input type="text" class="form-control" id="barcodeValueTitle" name="barcodeValueTitle" placeholder="<%=_t "Title used on every barcode" %>" aria-describedby="barcodeValueTitle" value="<%= @title %>">
-		      </div>
- -->
 		      <div class="input-group input-group-ld">
 		        <span class="input-group-addon" id="codefradical">
 		        	<%= _t 'Radical' %> : 
