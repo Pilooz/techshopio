@@ -8,6 +8,6 @@
     "jquery": "latest",
     "bootstrap": "latest",
     "jquery-barcode": "latest",
-    "d3": "latest"
+    "chart.js": "^2.7.2"
   }
- }
+}

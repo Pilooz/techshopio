@@ -19,7 +19,7 @@ class SinatraApp < Sinatra::Base
     set :protection, true
     set :lock, true
     set :bind, '0.0.0.0' # allowing acces to the lan
-    set :environment, ENV['RACK_ENV']
+    # set :environment, ENV['RACK_ENV']
     mime_type :csv, 'text/csv'
     mime_type :pdf, 'application/pdf'
   end
@@ -229,7 +229,7 @@ class SinatraApp < Sinatra::Base
 
   # Route for checkout stats
   get APP_PATH + '/stats' do
-    # Propose list of TechShop on index page
+    @tags = DB.select_all_tags
     @nav_stats = 'active'
     @main_title = _t 'Check-out statistics'
     erb :stats
