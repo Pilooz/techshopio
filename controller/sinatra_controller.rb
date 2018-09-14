@@ -19,7 +19,9 @@ class SinatraApp < Sinatra::Base
     set :protection, true
     set :lock, true
     set :bind, '0.0.0.0' # allowing acces to the lan
+    set :environment, ENV['RACK_ENV']
     mime_type :csv, 'text/csv'
+    mime_type :pdf, 'application/pdf'
   end
 
   configure :development do
@@ -359,7 +361,7 @@ class SinatraApp < Sinatra::Base
       # kit.stylesheets <<  __dir__('../public/css/bootstrap.css')
       pdf = kit.to_pdf
 
-      content_type 'application/pdf'  # :pdf
+      content_type :pdf
       attachment list[0]['tag'] + '.pdf'
       pdf
     end
