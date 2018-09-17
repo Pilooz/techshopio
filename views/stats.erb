@@ -1,26 +1,47 @@
 <script src="<%= APP_PATH %>/app/vendor/chart.js/dist/Chart.bundle.min.js"></script>
 
+<!-- <style>
+
+.blue { background-color: #4babef; color: #ffffff; }
+.lavande { background-color: #6675ca; color: #ffffff; }
+.violet { background-color: #a463e7; color: #ffffff; }
+.pink { background-color: #a463e7; color: #ffffff; }
+.red { background-color: #a463e7; color: #ffffff; }
+.orange { background-color: #a463e7; color: #ffffff; }
+.yellow { background-color: #a463e7; color: #1A1A00; }
+.lightgreen { background-color: #7ed042; color: #1A1A00; }
+.green { background-color: #61b821; color: #ffffff; }
+.brown { background-color: #A38566; color: #ffffff; }
+.black { background-color: #384048; color: #ffffff; }
+.gray { background-color: #dedede; color: #1A1A00; }
+
+</style> -->
+
 <div class="col-md-4 col-md-offset-1">
-	<div class="table-responsive" id="chart-layout">
-    <%= _t "Checkout Statistics" %>
+  <div class="table-responsive" id="chart-layout">
+    <%= _t "Checkout count by tag" %>
     <canvas id="chart-area"></canvas>
-	</div>
+  </div>
+</div>
+
+<div class="col-md-4 col-md-offset-1">
+  <div class="table-responsive" id="chart-layout">
+    <%= _t "Checkin/Checkout Timeline" %>
+    <canvas id="line-area"></canvas>
+  </div>
 </div>
 
 <script>
   $(document).ready( function() {
-    // getting checkout counts for tags
-    // $.ajax({
-    //   url: "<%= APP_PATH %>/tag/info/?id=" + tagID + "&expand=N"
-    // })
-    //   .success(function(response) {
+    //
+    // Chart repatition by tag
+    //
 
-    // });
-        var dataChart = [], colorChart = [], labelChart = [];
+    var dataChart = [], colorChart = [], labelChart = [];
      <% @tags.each { | tag | %>
         dataChart.push('<%= tag['count_items'] %>');              
         colorChart.push('<%= tag['color'].sub!("btn-","") %>');  
-        labelChart.push('<%= tag['tag'] %>');            
+        labelChart.push('<%= tag['tag'].sub!("\'"," ") %>');            
       <% } %>
 
     console.log(dataChart);
@@ -53,10 +74,89 @@
       }
     };
 
-    //window.onload = function() {
       var ctx = $('#chart-area')[0].getContext('2d');
       myDoughnut = new Chart(ctx, config);
       myDoughnut.update();
-    //};
+
+    //
+    // Checkin checkout histogram
+    //
+    var timeFormat = 'MM/DD/YYYY HH:mm';
+
+    var dataLine = [], colorLine = [], labelLine = [];
+     <% @tags.each { | tag | %>
+        dataLine.push('<%= tag['count_items'] %>');              
+        colorLine.push('<%= tag['color'].sub!("btn-","") %>');  
+        labelLine.push('<%= tag['tag'].sub!("\'"," ") %>');            
+      <% } %>
+
+    console.log(dataLine);
+    console.log(colorLine);
+    console.log(labelLine);
+
+    var color = Chart.helpers.color;
+    var configLine = {
+      type: 'bar',
+      data: {
+        labels: [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+                ],
+        datasets: [{
+          type: 'bar',
+          label: "<%= _t 'Checked out' %>",
+          backgroundColor: color("red").alpha(0.5).rgbString(),
+          borderColor: "red",
+          data: [
+            -1,
+            -2,
+            -3,
+            -4,
+            -5,
+            -6,
+            -7
+          ],
+        }, {
+          type: 'bar',
+          label: "<%= _t 'Checked in' %>",
+          backgroundColor: color("blue").alpha(0.5).rgbString(),
+          borderColor: "blue",
+          data: [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+        }]
+      },
+      options: {
+        title: {
+          text: 'Chart.js Combo Time Scale'
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            display: true,
+            time: {
+              format: timeFormat,
+              // round: 'day'
+            }
+          }],
+        },
+      }
+    };
+
+      var ctxLine = $('#line-area')[0].getContext('2d');
+      myLine = new Chart(ctxLine, configLine);
+      myLine.update();
+
   });
   </script>
