@@ -254,7 +254,7 @@ class SinatraApp < Sinatra::Base
       begin
         if params['action'] == 'new'
           # TODO : Deals with Image Upload !!
-          DB.add_item params['code'], params['name'], params['description'], params['image_link']
+          DB.add_item params['code'], params['name'], params['description'], params['image_link'], "N", "", ""
         else
           DB.update_item params['code'], params['name'], params['description'], params['image_link']
         end
