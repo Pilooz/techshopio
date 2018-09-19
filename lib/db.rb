@@ -347,6 +347,16 @@ class Db
     @db.execute "select item_code, tag_id, move, move_date from items_log order by move_date"
   end
 
+  def select_checkin_out_by_hour(dir)
+    @db.execute "select count(l.move) as move, substr(l.move_date,1,13) as move_date 
+                from items i, items_log l, tags t 
+                where t.id = l.tag_id 
+                  and i.code = l.item_code
+                  and l.move = " + dir + "
+                group by substr(l.move_date,1,13)
+                order by move_date"
+  end
+
   # Adding several links between items and tags (for db restore)
   def add_serveral_items_log(data)
     n = 0

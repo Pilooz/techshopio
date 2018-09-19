@@ -17,14 +17,14 @@
 
 </style> -->
 
-<div class="col-md-4 col-md-offset-1">
+<div class="col-md-6 col-md-offset-1">
   <div class="table-responsive" id="chart-layout">
     <%= _t "Checkout count by tag" %>
     <canvas id="chart-area"></canvas>
   </div>
 </div>
 
-<div class="col-md-4 col-md-offset-1">
+<div class="col-md-6 col-md-offset-1">
   <div class="table-responsive" id="chart-layout">
     <%= _t "Checkin/Checkout Timeline" %>
     <canvas id="line-area"></canvas>
@@ -37,16 +37,10 @@
     // Chart repatition by tag
     //
 
-    var dataChart = [], colorChart = [], labelChart = [];
-     <% @tags.each { | tag | %>
-        dataChart.push('<%= tag['count_items'] %>');              
-        colorChart.push('<%= tag['color'].sub!("btn-","") %>');  
-        labelChart.push('<%= tag['tag'].sub!("\'"," ") %>');            
-      <% } %>
-
-    console.log(dataChart);
-    console.log(colorChart);
-    console.log(labelChart);
+    var colorChart = [], labelChart = [];
+    var dataChart = [<% @tags.each_with_index { | tag, index | %>"<%= tag['count_items'] %>"<%= (index == @tags.count()-1) ? '' : ',' %><% } %>];
+    var colorChart = [<% @tags.each_with_index { | tag, index | %>"<%= tag['color'].sub!('btn-','') %>"<%= (index == @tags.count()-1) ? '' : ',' %><% } %>];
+    var labelChart = [<% @tags.each_with_index { | tag, index | %>"<%= tag['tag'] %>"<%= (index == @tags.count()-1) ? '' : ',' %><% } %>];
 
     var config = {
       type: 'doughnut',
@@ -81,82 +75,70 @@
     //
     // Checkin checkout histogram
     //
-    var timeFormat = 'MM/DD/YYYY HH:mm';
+    var timeFormat = 'YYYY-MM-DD HH:mm:ss';
+    var labelsLine = [], chkoutLine = [], chkintLine = [];
 
-    var dataLine = [], colorLine = [], labelLine = [];
-     <% @tags.each { | tag | %>
-        dataLine.push('<%= tag['count_items'] %>');              
-        colorLine.push('<%= tag['color'].sub!("btn-","") %>');  
-        labelLine.push('<%= tag['tag'].sub!("\'"," ") %>');            
-      <% } %>
+    $.ajax({
+      url: "<%= APP_PATH %>/stats/data/logs?dir=1"
+    })
+      .success(function(response) {
+        $.each(response.logs, function(i, log) {
+          labelsLine.push(log.move_date);
+          chkoutLine.push(-log.move);
+        });
+    });
 
-    console.log(dataLine);
-    console.log(colorLine);
-    console.log(labelLine);
+    $.ajax({
+      url: "<%= APP_PATH %>/stats/data/logs?dir=0"
+    })
+      .success(function(response) {
+        $.each(response.logs, function(i, log) {
+          chkintLine.push(log.move);
+        });
 
-    var color = Chart.helpers.color;
-    var configLine = {
-      type: 'bar',
-      data: {
-        labels: [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6
-                ],
-        datasets: [{
+        var color = Chart.helpers.color;
+        var configLine = {
           type: 'bar',
-          label: "<%= _t 'Checked out' %>",
-          backgroundColor: color("red").alpha(0.5).rgbString(),
-          borderColor: "red",
-          data: [
-            -1,
-            -2,
-            -3,
-            -4,
-            -5,
-            -6,
-            -7
-          ],
-        }, {
-          type: 'bar',
-          label: "<%= _t 'Checked in' %>",
-          backgroundColor: color("blue").alpha(0.5).rgbString(),
-          borderColor: "blue",
-          data: [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7
-          ],
-        }]
-      },
-      options: {
-        title: {
-          text: 'Chart.js Combo Time Scale'
-        },
-        scales: {
-          xAxes: [{
-            type: 'time',
-            display: true,
-            time: {
-              format: timeFormat,
-              // round: 'day'
+          data: {
+            labels: labelsLine,
+            datasets: [{
+              type: 'bar',
+              label: "<%= _t 'Checked out' %>",
+              backgroundColor: color("red").alpha(0.5).rgbString(),
+              borderColor: "red",
+              data: chkoutLine,
             }
-          }],
-        },
-      }
-    };
+            , {
+              type: 'bar',
+              label: "<%= _t 'Checked in' %>",
+              backgroundColor: color("blue").alpha(0.5).rgbString(),
+              borderColor: "blue",
+              data: chkintLine,
+            }
+            ]
+          },
+          options: {
+            title: {
+              text: 'Chart.js Combo Time Scale'
+            },
+            // scales: {
+            //   xAxes: [{
+            //     type: 'time',
+            //     display: true,
+            //     // time: {
+            //     //   format: timeFormat,
+            //     //   round: 'days'
+            //     //  }
+            //   }],
+            // },
+          }
+        };
 
       var ctxLine = $('#line-area')[0].getContext('2d');
       myLine = new Chart(ctxLine, configLine);
       myLine.update();
+    }); // end .success
+
 
   });
   </script>

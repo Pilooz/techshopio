@@ -21,6 +21,7 @@ class SinatraApp < Sinatra::Base
     set :bind, '0.0.0.0' # allowing acces to the lan
     # set :environment, ENV['RACK_ENV']
     mime_type :csv, 'text/csv'
+    mime_type :json, 'text/json'
     mime_type :pdf, 'application/pdf'
   end
 
@@ -396,6 +397,21 @@ class SinatraApp < Sinatra::Base
       DB.unlink_tag_from_item params['code'], params['id']
     end
     {'result' => 'Ok'}.to_json
+  end
+
+
+  # Data API for stats page
+  get APP_PATH + '/stats/data/tags' do
+    @tags = DB.select_all_tags
+    content_type :json
+    { 'tags' => @tags }.to_json
+  end
+
+  # Data API for stats page
+  get APP_PATH + '/stats/data/logs?' do
+    timeline_log = DB.select_checkin_out_by_hour params['dir']
+    content_type :json
+    { 'logs' => timeline_log }.to_json
   end
 
   #--------------------------------------------------------------------------
