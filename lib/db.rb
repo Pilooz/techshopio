@@ -182,9 +182,10 @@ class Db
     n = 0
     data.reject! { |k, v| k == 'code' }
     .reject! { | row | exists? row[0] }
-    .each { |row|
+    
+    data.each { |row|
       puts "adding #{row[1]} ##{row[0]}"
-      add_item(row[0], row[1], row[2], row[3], row[4], row[5], row[6]) unless row[0].empty?
+      add_item(row[0], row[1], row[2], row[3], row[4] || "N", row[5], row[6]) unless row[0].empty?
       n = n + 1
     }
     puts "#{n} inserted rows"
