@@ -156,7 +156,7 @@ DEPENDENCIES
   rake
   rb-readline
   rest-client
-  rspec (= 2.14.1)
+  rspec
   rubocop
   shotgun
   simplecov
