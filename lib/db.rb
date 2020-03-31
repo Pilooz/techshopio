@@ -27,7 +27,10 @@ class Db
         image_link varchar2(2000),
         checkout varchar(1) default 'N',
         chkout_date timestamp,
-        chkin_date timestamp
+        chkin_date timestamp,
+        consumable varchar(1) default 'N',
+        price decimal(10,2) default 0.00,
+        quantity integer default 1
       );"
     puts "  Creating table tags..."
     @db.execute 'create table tags (
@@ -113,7 +116,8 @@ class Db
   end
 
   def empty_row
-    [{'code' => '', 'name' => '', 'description' => '',  'image_link' => '', 'checkout' => ''}]
+    [{'code' => '', 'name' => '', 'description' => '',  'image_link' => '', 'checkout' => '', 
+      'chkout_date' => '', 'chkin_date' => '', 'consumable' => '', 'price' => '', 'quantity' => ''}]
   end
 
   # select data
