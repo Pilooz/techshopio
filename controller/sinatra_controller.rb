@@ -176,6 +176,8 @@ class SinatraApp < Sinatra::Base
     @main_title = _t 'Modifying stuff in TechShop'
     @nav_new = 'active'
     @action = 'modify'
+    puts "------------------> #{@code}"
+    puts @item
     # Getting all affected tags for this item
     @assigned_tags = DB.select_tags_for_item @code
     erb :new_modify
@@ -258,7 +260,7 @@ class SinatraApp < Sinatra::Base
           # TODO : Deals with Image Upload !!
           DB.add_item params['code'], params['name'], params['description'], params['image_link'], "N", "", "", params['consumable'], params['price'], params['quantity']
         else
-          DB.update_item params['code'], params['name'], params['description'], params['image_link']
+          DB.update_item params['code'], params['name'], params['description'], params['image_link'], params['consumable'], params['price'], params['quantity']
         end
       rescue Exception => e
         puts "#{e.message}"

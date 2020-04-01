@@ -172,9 +172,9 @@ class Db
   end
 
   # update an item
-  def update_item(code, name, desc, image_link)
-    @db.execute 'update items  set name = ?, description = ?, image_link = ?
-        where upper(code) = ?', [name.to_s, desc.to_s, image_link.to_s, code.to_s.upcase]
+  def update_item(code, name, desc, image_link, consumable, price, quantity)
+    @db.execute 'update items  set name = ?, description = ?, image_link = ?, consumable = ?, price = ?, quantity = ?
+        where upper(code) = ?', [name.to_s, desc.to_s, image_link.to_s, consumable, price, quantity, code.to_s.upcase]
   end
 
   # Updates an item image_link
