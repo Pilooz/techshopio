@@ -696,3 +696,29 @@ footer {
 .alert{
   display:none;
 }
+
+/*
+*   CSS resources for checkout page, add-modify.erb model 
+*/
+
+#consumable-field {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#consumable-addon {
+  border-right-color: rgb(204, 204, 204);
+  border-right-style: solid;
+  border-right-width: 1px;
+}
+
+#consumable-button {
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#consumable-complement .well {
+  margin: 5px;
+  margin-top: 0px;
+}

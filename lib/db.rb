@@ -117,7 +117,7 @@ class Db
 
   def empty_row
     [{'code' => '', 'name' => '', 'description' => '',  'image_link' => '', 'checkout' => '', 
-      'chkout_date' => '', 'chkin_date' => '', 'consumable' => '', 'price' => '', 'quantity' => ''}]
+      'chkout_date' => '', 'chkin_date' => '', 'consumable' => 'N', 'price' => '0.00', 'quantity' => '1'}]
   end
 
   # select data
@@ -165,10 +165,10 @@ class Db
   end
 
   # Adds an item
-  def add_item(code, name, desc, image_link, checkout, chkout_date, chkin_date)
+  def add_item(code, name, desc, image_link, checkout, chkout_date, chkin_date, consumable, price, quantity)
     @db.execute 'INSERT INTO items (code, name, 
-        description, image_link, checkout, chkout_date, chkin_date) VALUES (?, ?, ?, ?, ?, ?, ?)', 
-        [code.to_s.upcase, name.to_s, desc.to_s, image_link.to_s, checkout.to_s, chkout_date, chkin_date]
+        description, image_link, checkout, chkout_date, chkin_date, consumable, price, quantity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+        [code.to_s.upcase, name.to_s, desc.to_s, image_link.to_s, checkout.to_s, chkout_date, chkin_date, consumable, price, quantity]
   end
 
   # update an item

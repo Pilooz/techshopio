@@ -53,6 +53,38 @@
 					  <span class="input-group-addon input-group-lg" id="basic-addon2"><span class="glyphicon glyphicon-list-alt"></span></span>
 					  <textarea class="form-control" id="description" name="description" placeholder="<%= _t 'Description' %>" aria-describedby="basic-addon2" rows="3"><%= @item[0]['description'] %></textarea>
 					</div>
+
+					<div class="input-group" id="consumable-field">
+						<span class="input-group-addon input-group-lg" id="consumable-addon"><span class="glyphicon glyphicon-piggy-bank"></span></span>
+
+						<button class="btn btn-default" type="button" id="consumable-button" data-toggle="collapse" data-target="#consumable-complement" aria-expanded="false" aria-controls="consumable-complement">
+							<%= _t 'Consumable' %>
+						</button>
+						<input type="hidden" id="consumable" name="consumable" value="<%= @item[0]['consumable'] %>">
+						<div class="collapse" id="consumable-complement">
+							<div class="well">
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-addon"><%= _t 'Price' %></div>
+										<input type="text" class="form-control col-xs-4" id="price" name="price" placeholder="<%= _t '0.00 per unit' %>" value="<%= @item[0]['price'] %>">
+										<div class="input-group-addon"><%= _t '$' %></div>
+									</div>
+								</div>
+		
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-addon"><%= _t 'Quantity' %></div>
+										<input type="number" class="form-control col-xs-4" id="quantity" name="quantity" placeholder="<%= _t 'Number of units' %>" value="<%= @item[0]['quantity'] %>">
+										<div class="input-group-addon"><%= _t 'Unit(s)' %></div>
+									</div>
+								</div>
+		
+							</div>
+						</div>
+					</div>
+
+
 				</div>
 
 				<div class="col-md-12">
@@ -95,6 +127,10 @@
 					<%= _h 'help-new-desc' %>
 				</li>
 				<li class="list-group-item">
+					<span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;
+					<%= _h 'help-new-consumable' %>
+				</li>
+				<li class="list-group-item">
 					<span class="glyphicon glyphicon-picture"></span>&nbsp;
 					<%= _h 'help-new-picture' %>
 				</li>
@@ -111,6 +147,38 @@
 	</div>
 </div>
 <script>
+$(function() {
+	var but = $('#consumable-button');
+	var hid = $('#consumable');
+	var code = $('#code');
+
+	// setting state of the button
+	function set_button_state(state) {
+		but.removeClass("btn-default").removeClass("btn-info");
+		hid.val(state);
+		if (state == 'Y') {
+			but.addClass("btn-info");
+			//code.prop("disabled",true);
+		} else {
+			but.addClass("btn-default");
+			//code.prop("disabled",false);
+		}
+
+	}
+
+	// Event listener on consumable checkbox
+	$('#consumable-button').on('click', function () {
+		if (hid.val() == 'Y') {
+			set_button_state('N');
+		} else {
+			set_button_state('Y');
+		}
+  	});
+
+	// Setting button state
+	set_button_state(hid.val());
 	// Focusing on name textfield
 	$("#name").focus();
+
+});
 </script>

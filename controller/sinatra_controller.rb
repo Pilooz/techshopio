@@ -251,11 +251,12 @@ class SinatraApp < Sinatra::Base
 
    # Create or modify item
   post APP_PATH + '/item/new_modify' do
+    params.each { |p| puts "#{p}"}
     if params['code']
       begin
         if params['action'] == 'new'
           # TODO : Deals with Image Upload !!
-          DB.add_item params['code'], params['name'], params['description'], params['image_link'], "N", "", ""
+          DB.add_item params['code'], params['name'], params['description'], params['image_link'], "N", "", "", params['consumable'], params['price'], params['quantity']
         else
           DB.update_item params['code'], params['name'], params['description'], params['image_link']
         end
