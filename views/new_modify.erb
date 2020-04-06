@@ -54,12 +54,29 @@
 					  <textarea class="form-control" id="description" name="description" placeholder="<%= _t 'Description' %>" aria-describedby="basic-addon2" rows="3"><%= @item[0]['description'] %></textarea>
 					</div>
 
+	    			<% if @action == 'modify' %>
+	    				<input type="hidden" name="quantity" value="<%= @item[0]['quantity'] %>">
+					<% else %>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon"><span class="glyphicon glyphicon-duplicate"></span></div>
+								<input type="number" class="form-control col-xs-4" id="quantity" name="quantity" placeholder="<%= _t 'Number of units' %>" value="<%= @item[0]['quantity'] %>">
+								<div class="input-group-addon"><%= _t 'Unit(s)' %></div>
+							</div>
+						</div>
+					<% end %>
+
 					<div class="input-group" id="consumable-field">
 						<span class="input-group-addon input-group-lg" id="consumable-addon"><span class="glyphicon glyphicon-piggy-bank"></span></span>
 
+					<% if @action == 'modify' %>
+						<!-- Read only button -->
+						<button class="btn btn-info" type="button" id="consumable-button-read-only"><%= _t 'Consumable' %></button>
+					<% else %>
 						<button class="btn btn-default" type="button" id="consumable-button" data-toggle="collapse" data-target="#consumable-complement" aria-expanded="false" aria-controls="consumable-complement">
 							<%= _t 'Consumable' %>
 						</button>
+					<% end %>
 						<input type="hidden" id="consumable" name="consumable" value="<%= @item[0]['consumable'] %>">
 						<div class="collapse" id="consumable-complement">
 							<div class="well">
@@ -69,14 +86,6 @@
 										<div class="input-group-addon"><%= _t 'Price' %></div>
 										<input type="text" class="form-control col-xs-4" id="price" name="price" placeholder="<%= _t '0.00 per unit' %>" value="<%= @item[0]['price'] %>">
 										<div class="input-group-addon"><%= _t '$' %></div>
-									</div>
-								</div>
-		
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-addon"><%= _t 'Quantity' %></div>
-										<input type="number" class="form-control col-xs-4" id="quantity" name="quantity" placeholder="<%= _t 'Number of units' %>" value="<%= @item[0]['quantity'] %>">
-										<div class="input-group-addon"><%= _t 'Unit(s)' %></div>
 									</div>
 								</div>
 		
@@ -127,6 +136,10 @@
 					<%= _h 'help-new-desc' %>
 				</li>
 				<li class="list-group-item">
+					<span class="glyphicon glyphicon-duplicate"></span>&nbsp;
+					<%= _h 'help-new-quantity' %>
+				</li>
+				<li class="list-group-item">
 					<span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;
 					<%= _h 'help-new-consumable' %>
 				</li>
@@ -158,13 +171,16 @@ $(function() {
 		hid.val(state);
 		if (state == 'Y') {
 			but.addClass("btn-info");
-			//code.prop("disabled",true);
 		} else {
 			but.addClass("btn-default");
-			//code.prop("disabled",false);
 		}
 
 	}
+
+	// Event listener for read only button (modifying mode)
+	$('#consumable-button-read-only').on('click', function () {
+		return false;
+	});
 
 	// Event listener on consumable checkbox
 	$('#consumable-button').on('click', function () {
@@ -177,6 +193,9 @@ $(function() {
 
 	// Setting button state
 	set_button_state(hid.val());
+	if (hid.val() == "Y") {
+		$('#consumable-complement').addClass("in");
+	}
 	// Focusing on name textfield
 	$("#name").focus();
 

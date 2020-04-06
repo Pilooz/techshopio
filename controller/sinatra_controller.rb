@@ -176,8 +176,6 @@ class SinatraApp < Sinatra::Base
     @main_title = _t 'Modifying stuff in TechShop'
     @nav_new = 'active'
     @action = 'modify'
-    puts "------------------> #{@code}"
-    puts @item
     # Getting all affected tags for this item
     @assigned_tags = DB.select_tags_for_item @code
     erb :new_modify
@@ -251,16 +249,61 @@ class SinatraApp < Sinatra::Base
     redirect to APP_PATH + "/list"
   end
 
-   # Create or modify item
+  # Create or modify item as many as the quantity specifies
+  # When modifying, we modify all similar items 
+  # name & description is the composite key
+  # TODO : Deals with Image Upload !!
   post APP_PATH + '/item/new_modify' do
-    params.each { |p| puts "#{p}"}
-    if params['code']
+    if @code
+
+      # --------------------------------------------------------------------------------
+      # If there are several Items, we de concatenate code
+      # If not, let the code as it is : otherwise the code will not be created correctly
+      # For example : 
+      # I have a uniq code like "KJRHD738HFD980". If there is no restriction, code will be deconcatenated as 
+      #   prefix = KJRHDHFD
+      #   lastid = 0
+      # The crated code will be KJRHDHFD0 and NOT KJRHD738HFD980
+      #
+      # So let's preserve uniq barcodes
+      # --------------------------------------------------------------------------------
+      codes = []
+
+      if params['quantity'] > "1"
+        # 1. Extract the prefix (Forcing the prefix to 'CONSO' if item is consumable)
+        prefix = params['consumable'] == "Y" ? "CONSO" : @code.get_prefix_of_code()
+        if prefix.nil? 
+          prefix = ""
+        end
+        # 2. Getting the lastid
+        lastid = DB.get_last_item_id prefix
+        # 3 Generating a list of codes
+        index = lastid
+        ( 1 .. params['quantity'].to_i ).each {
+          while DB.exists? prefix + index.to_s
+            index += 1
+          end
+          codes.push prefix + index.to_s
+          index += 1
+        }
+      else
+        # Quantity is 1 so only one element in codes' array
+        codes.push @code
+      end
+      
       begin
         if params['action'] == 'new'
-          # TODO : Deals with Image Upload !!
-          DB.add_item params['code'], params['name'], params['description'], params['image_link'], "N", "", "", params['consumable'], params['price'], params['quantity']
+          # Creating items as the quantity said
+            codes.each { |code|
+              DB.add_item code, params['name'], params['description'], params['image_link'], "N", "", "", params['consumable'], params['price'], 1
+            }
         else
-          DB.update_item params['code'], params['name'], params['description'], params['image_link'], params['consumable'], params['price'], params['quantity']
+          # We update all item having the same couple of "name, description"
+          siblings = DB.select_similar_items_as @code
+          # Updating all
+          siblings.each { |similar|
+          DB.update_item similar['code'], params['name'], params['description'], params['image_link'], params['consumable'], params['price'], params['quantity']
+        }
         end
       rescue Exception => e
         puts "#{e.message}"
@@ -269,7 +312,7 @@ class SinatraApp < Sinatra::Base
       end
 
     end
-     redirect to APP_PATH + "/list"
+    redirect to APP_PATH + "/list"
   end
 
    # Checkout item

@@ -115,6 +115,17 @@ class Db
     last
   end
 
+  # get the last id of consumable items
+  def get_last_item_id(prefix)
+    last = 0
+    r = @db.get_first_row 'select replace(code, "' + prefix + '", "") as max from items where substr(code, 1, ' + prefix.length.to_s + ') = "' + prefix + '" order by cast(substr(code, ' + (prefix.length+1).to_s + ') as Int) desc'
+    unless r.nil?
+      last = r['max']
+    end
+    puts "selecting last id of consumable items : ##{last}"
+    last.to_i
+  end
+
   def empty_row
     [{'code' => '', 'name' => '', 'description' => '',  'image_link' => '', 'checkout' => '', 
       'chkout_date' => '', 'chkin_date' => '', 'consumable' => 'N', 'price' => '0.00', 'quantity' => '1'}]
@@ -128,6 +139,11 @@ class Db
       row['taglist'] = taglist
     } if extract_tag
     res
+  end
+
+  def select_similar_items_as(code)
+    pattern_item = read code
+    r = @db.execute 'select code from items where name = ? and description = ?', pattern_item[0]['name'], pattern_item[0]['description']
   end
 
   def read(code)

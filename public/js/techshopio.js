@@ -45,6 +45,9 @@ $(document).ready( function() {
 	// Bind submit button for new/modify view
 	//
 	$('#btnSubmit').click(function(){
+		if ($('#quantity').val() < 1) {
+			$('#quantity').val(1);
+		}
 		$('#newModifyFrm').submit();
 	});
 
