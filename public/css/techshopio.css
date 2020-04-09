@@ -722,3 +722,7 @@ footer {
   margin: 5px;
   margin-top: 0px;
 }
+
+.double-icon {
+  margin-left: -10px;
+}

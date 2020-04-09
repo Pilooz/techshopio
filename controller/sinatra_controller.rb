@@ -176,6 +176,7 @@ class SinatraApp < Sinatra::Base
     @main_title = _t 'Modifying stuff in TechShop'
     @nav_new = 'active'
     @action = 'modify'
+    @siblings = DB.select_similar_items_as(@code).length > 1
     # Getting all affected tags for this item
     @assigned_tags = DB.select_tags_for_item @code
     erb :new_modify
@@ -298,9 +299,16 @@ class SinatraApp < Sinatra::Base
               DB.add_item code, params['name'], params['description'], params['image_link'], "N", "", "", params['consumable'], params['price'], 1
             }
         else
-          # We update all item having the same couple of "name, description"
-          siblings = DB.select_similar_items_as @code
-          # Updating all
+          puts params
+          # We update all item having the same couple of "name, description" only if the param 'modify_all_items' is Y
+          if params['modify_all_items'] == 'Y'
+            # Updating all siblings
+            siblings = DB.select_similar_items_as @code
+          else
+            # Updating only the item displayed
+            siblings = [{ "code" => @code }]
+          end
+          # Updating 
           siblings.each { |similar|
           DB.update_item similar['code'], params['name'], params['description'], params['image_link'], params['consumable'], params['price'], params['quantity']
         }

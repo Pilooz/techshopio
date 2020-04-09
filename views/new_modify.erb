@@ -101,13 +101,22 @@
 						<a href="<%= APP_PATH %>/list" class="btn btn-default">
 							<span class="glyphicon glyphicon-hand-left" title="<%= _t 'Back to list' %>"></span>&nbsp;<%= _t 'Back to list' %>
 						</a>
-						<button type="button" class="btn btn-success" id="btnSubmit">
 						<% if @action  == 'new' %>
+						<button type="button" class="btn btn-success" id="btnSubmit">
 							<span class="glyphicon glyphicon-plus" title="<%= _t 'Add' %>"></span>&nbsp;<%= _t 'Add' %>
-						<% else %>
-							<span class="glyphicon glyphicon-ok" title="<%= _t 'Modify' %>"></span>&nbsp;<%= _t 'Modify' %>
-						<% end %>
 						</button>
+						<% else %>
+						<input type="hidden" id="modify_all_items" name="modify_all_items" value="">
+						<button type="button" class="btn btn-success" id="btnSubmit">
+							<span class="glyphicon glyphicon-ok" title="<%= _t 'Modify' %>"></span>&nbsp;<%= _t 'Modify' %>
+						</button>
+							<% if @siblings %>
+								<button type="button" class="btn btn-success" id="btnSubmitModifyAll">
+									<span class="glyphicon glyphicon-ok" title="<%= _t 'Modify' %>"></span>
+									<span class="glyphicon glyphicon-ok double-icon"></span>&nbsp;<%= _t 'Modify all' %>
+								</button>
+							<% end %>
+						<% end %>
 					</div>
 				</div>
 
@@ -151,10 +160,22 @@
 					<span class="glyphicon glyphicon-camera"></span>&nbsp;
 					<%= _h 'help-new-camera' %>
 				</li>
+			<% if @action  == 'new' %>
 				<li class="list-group-item">
 					<span class="glyphicon glyphicon-plus"></span>&nbsp;
 					<%= _h 'help-new-plus' %>
 				</li>
+			<% else %>
+				<li class="list-group-item">
+					<span class="glyphicon glyphicon-ok"></span>&nbsp;
+					<%= _h 'help-modify' %>
+				</li>
+				<li class="list-group-item">
+					<span class="glyphicon glyphicon-ok"></span>
+					<span class="glyphicon glyphicon-ok double-icon"></span>&nbsp;
+					<%= _h 'help-modify-all' %>
+				</li>
+			<% end %>
 			</ul>
 		</div>
 	</div>

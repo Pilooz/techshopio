@@ -44,11 +44,21 @@ $(document).ready( function() {
 	//
 	// Bind submit button for new/modify view
 	//
-	$('#btnSubmit').click(function(){
+	function submitNewModifyForm() {
 		if ($('#quantity').val() < 1) {
 			$('#quantity').val(1);
 		}
 		$('#newModifyFrm').submit();
+	}
+
+	$('#btnSubmitModifyAll').click(function(){
+		$('#modify_all_items').val('Y');
+		submitNewModifyForm();
+	});
+
+	$('#btnSubmit').click(function(){
+		$('#modify_all_items').val('N');
+		submitNewModifyForm();
 	});
 
 	//
